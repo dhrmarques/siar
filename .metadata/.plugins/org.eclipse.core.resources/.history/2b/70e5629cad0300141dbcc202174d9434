@@ -1,0 +1,25 @@
+<%@ include file="/WEB-INF/views/headers.jsp" %>
+<html>
+<body>
+    <h2>SpringData MVC example</h2>
+ 
+        <form action="customer/save" method="post">
+            <label for="name">Customer Name</label>
+            <input type="text" id="name" name="name"/>
+                        <label for="address">Customer Address</label>
+            <input type="text" id="address" name="address"/>
+            
+            <input type="submit" value="Submit"/>
+        </form>
+ 
+    <table border="2">
+        <c:forEach var="acidente" items="${acidenteSiarList}">
+            <tr>
+                <td>${acidente.descricao}</td>
+                <td>${acidente.prioridade}</td>
+                
+            </tr>
+        </c:forEach>
+    </table>  
+</body>
+</html>

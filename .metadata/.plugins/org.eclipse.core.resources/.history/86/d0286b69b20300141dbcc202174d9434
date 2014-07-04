@@ -1,0 +1,42 @@
+package br.com.siar.models;
+
+import org.springframework.data.annotation.Id;
+
+
+public class AcidenteSiar {
+	
+	@Id
+	private Long _id;
+
+	public String descricao;
+	public String prioridade;
+	
+	public AcidenteSiar() {
+		
+	}
+	
+	public Long getId() {
+		return _id;
+	}
+
+	public void setId(Long _id) {
+		this._id = _id;
+	}
+	
+	public String getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(String prioridade) {
+		this.prioridade = prioridade;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+}

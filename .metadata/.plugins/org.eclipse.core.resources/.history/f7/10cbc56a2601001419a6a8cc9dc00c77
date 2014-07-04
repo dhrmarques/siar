@@ -1,0 +1,22 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<html>
+<head>
+	<title>Index</title>
+</head>
+<body>
+<h1>
+	List of friends that came today  
+</h1>
+<p>${friendsnames}</p>
+<c:if test="${friendsnames ne null or not empty friendsnames}">
+	<p>There are friends in your list!</p>
+</c:if>
+<ul>
+	<c:forEach items="${friendsnames}" var="friend">
+		<li>${friend}</li>
+	</c:forEach>
+</ul>
+<p>Have a nice day!</p>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<html>
+<head>
+	<title>Index</title>
+</head>
+<body>
+<h1>
+	List of friends that came today  
+</h1>
+<ul>
+	<c:forEach items="${friendsNames}" var="name">
+		<li>name</li>
+	</c:forEach>
+</ul>
+</body>
+</html>

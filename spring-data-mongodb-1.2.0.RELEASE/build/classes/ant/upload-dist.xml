@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<project name="upload-dist-tasks">
+    <taskdef resource="org/springframework/build/aws/ant/antlib.xml" />
+    <target name="upload-distribution">
+        <checksum file="/opt/bamboo-home/xml-data/build-dir/SPRINGDATAMONGODB-MONGO-JOB1/spring-data-mongodb/target/spring-data-mongodb-1.2.0.RELEASE-distribution.zip" algorithm="sha1"/>
+        <s3 accessKey="0SCA5K7NAW330XGHMT02" secretKey="voXvAIMUsYCus5DymV7AS0NkqPU3UAvGktjD7hTs">
+            <upload bucketName="dist.springframework.org" file="/opt/bamboo-home/xml-data/build-dir/SPRINGDATAMONGODB-MONGO-JOB1/spring-data-mongodb/target/spring-data-mongodb-1.2.0.RELEASE-distribution.zip"
+                    toFile="snapshot/${dist.key}/spring-data-mongodb-1.2.0.RELEASE.zip" publicRead="true">
+                <metadata name="project.name" value="spring-data-mongodb"/>
+                <metadata name="release.type" value="snapshot"/>
+                <metadata name="bundle.version" value="1.2.0.RELEASE"/>
+                <metadata name="package.file.name" value="spring-data-mongodb-1.2.0.RELEASE.zip"/>
+            </upload>
+            <upload bucketName="dist.springframework.org" file="/opt/bamboo-home/xml-data/build-dir/SPRINGDATAMONGODB-MONGO-JOB1/spring-data-mongodb/target/spring-data-mongodb-1.2.0.RELEASE-distribution.zip.sha1"
+                    toFile="snapshot/${dist.key}/spring-data-mongodb-1.2.0.RELEASE.zip.sha1" publicRead="true">
+            </upload>
+        </s3>
+    </target>
+</project>
