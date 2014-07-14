@@ -24,16 +24,20 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>
+	<!-- Define the MongoTemplate which handles connectivity with MongoDB -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate" depends-on="mongo">
+	    <constructor-arg name="mongo" ref="mongo"/>
+	    <constructor-arg name="databaseName" value="acidenteSiarTable"/>
+	</bean>
 	<bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
 		<property name="host" value="localhost" />
 	</bean>
 	<!-- MongoTemplate for connecting and quering the documents in the database -->
-	<bean id="customermongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+	<bean id="siarmongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongo" ref="mongo" />
-		<constructor-arg name="databaseName" value="customerdb" />
+		<constructor-arg name="databaseName" value="siardb" />
 	</bean>
 	<bean id="acidenteSiarService" class="br.com.siar.services.AcidenteSiarService">
-<!-- 		<property name="customermongoTemplate" ref="mongoTemplate" />
- -->
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
 </beans> 
