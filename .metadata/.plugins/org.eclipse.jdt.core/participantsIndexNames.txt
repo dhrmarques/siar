@@ -1,7 +1,0 @@
-INDEX VERSION 1.127
-C:\Users\dmarques\Desktop\workspace-sts-3.6.0.M1\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2475654768.index
-\siar\src\main\java
-C:\Users\dmarques\Desktop\workspace-sts-3.6.0.M1\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\668804027.index
-\siar\src\main\java
-C:\Users\dmarques\Desktop\workspace-sts-3.6.0.M1\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3221245766.index
-\SiAR StarterVer\src\main\java
