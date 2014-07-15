@@ -12,7 +12,7 @@
 hs_err_pid*
 
 # Folders #
-.metadata/*
-Servers/*
-RemoteSystemsTempFiles/*
-spring-data-mongodb-1.2.0-RELEASE/*
+.metadata/
+Servers/
+RemoteSystemsTempFiles/
+spring-data-mongodb-1.2.0-RELEASE/
