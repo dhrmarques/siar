@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.UsuarioSiar;
 
 /**
@@ -13,11 +14,19 @@ import br.com.siar.models.UsuarioSiar;
  * @author dmarques
  *
  */
-public class UsuarioService {
+public class UsuarioSiarService {
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
 	
+	public MongoTemplate getSiarmongoTemplate() {
+		return siarmongoTemplate;
+	}
+
+	public void setSiarmongoTemplate(MongoTemplate siarmongoTemplate) {
+		this.siarmongoTemplate = siarmongoTemplate;
+	}
+
 	//Creating an user in the repository.
 	public void createUsuario(UsuarioSiar usuarioSiar) {
 		if (!siarmongoTemplate.collectionExists(UsuarioSiar.class)) {
@@ -49,4 +58,8 @@ public class UsuarioService {
 		siarmongoTemplate.remove(existingUser, "usuarioSiarTable");
 	}
 	
+	//Finds an user by its id in the repository.
+	public UsuarioSiar findUsuarioById(String id){
+		return siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, "usuarioSiarTable");
+	}
 }

@@ -3,21 +3,50 @@ package br.com.siar.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
-import br.com.siar.services.UsuarioService;
+import br.com.siar.models.UsuarioSiar;
+import br.com.siar.services.UsuarioSiarService;
 
 @Controller
 public class UsuarioSiarController {
 	
 	@Autowired
-	private UsuarioService usuarioSiarService;
+	private UsuarioSiarService usuarioSiarService;
 
-	@RequestMapping(value = "/acidentesiar", method = RequestMethod.GET)
-	public String getAcidentesList(ModelMap model) {
+	@RequestMapping(value = "/usuariosiar", method = RequestMethod.GET)
+	public String getUsuariosList(ModelMap model) {
 		model.addAttribute("usuarioSiarList", usuarioSiarService.listUsuarios());
 		return "usuariosiar";
+	}
+	
+	@RequestMapping(value = "/usuariosiar/save", method = RequestMethod.POST)
+	public View createUsuario(@ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
+		usuarioSiarService.createUsuario(usuarioSiar);
+		return new RedirectView("/usuariosiar");
+	}
+	
+	@RequestMapping(value = "/usuariosiar/delete/{id}")
+	public View removeUsuario(@PathVariable String id, ModelMap model) {
+		try {
+			usuarioSiarService.removeUsuario(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			//TODO Criar página de redirecionamento de erro
+			return new RedirectView("/usuariosiar/error");
+		}
+		return new RedirectView("/usuariosiar");
+	}
+	
+	@RequestMapping(value = "/usuariosiar/updateusuario/{id}", method = RequestMethod.GET)
+	public String updateAcidente(@PathVariable String id, ModelMap model){
+		model.addAttribute("usuarioUpdate", usuarioSiarService.findUsuarioById(id));
+		return "updateusuario";
 	}
 	
 }
