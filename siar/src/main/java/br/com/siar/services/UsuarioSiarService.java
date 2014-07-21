@@ -70,4 +70,9 @@ public class UsuarioSiarService {
 	public UsuarioSiar findUsuarioById(String id){
 		return siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, "usuarioSiar");
 	}
+	
+	public UsuarioSiar verify(String email, String senha) {
+		// TODO
+		return null;
+	}
 }
