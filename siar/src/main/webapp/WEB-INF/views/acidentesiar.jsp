@@ -12,7 +12,7 @@
             <input type="submit" value="Submit"/>
         </form>
  
-    <table border="1">
+    <table border="2">
         <tr>
             <th>Descrição</th>
             <th>Prioridade</th>
