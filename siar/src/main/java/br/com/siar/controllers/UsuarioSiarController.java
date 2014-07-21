@@ -1,7 +1,10 @@
 package br.com.siar.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.services.UsuarioSiarService;
+import br.com.siar.utils.SessionHelper;
 
 @Controller
 public class UsuarioSiarController {
@@ -47,6 +51,27 @@ public class UsuarioSiarController {
 	public String updateAcidente(@PathVariable String id, ModelMap model){
 		model.addAttribute("usuarioUpdate", usuarioSiarService.findUsuarioById(id));
 		return "updateusuario";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(HttpServletRequest request, Model model) {
+		//logger.info("Trying to log in...");
+		
+		String email = request.getParameter("login_email").toString();
+		String senha = request.getParameter("login_password").toString();
+		
+		//logger.debug("UsuarioSiarService: " + us.toString());
+		UsuarioSiar usuario = usuarioSiarService.verify(email, senha);
+		if (usuario != null) {
+			
+			SessionHelper.setUsuarioLogado(request, usuario);
+			return "redirect:/home";
+		}
+		else {
+			
+			return "redirect:/";
+		}
+		
 	}
 	
 }

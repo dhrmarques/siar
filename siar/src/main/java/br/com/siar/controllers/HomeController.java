@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import br.com.siar.models.UsuarioSiar;
-import br.com.siar.services.UsuarioSiarService;
 import br.com.siar.utils.SessionHelper;
 
 /**
@@ -34,27 +32,6 @@ public class HomeController {
 			logger.warn("Already logged in...");
 			return "home";
 		}
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpServletRequest request, Model model) {
-		logger.info("Trying to log in...");
-		
-		String email = request.getParameter("login_email").toString();
-		String senha = request.getParameter("login_password").toString();
-		
-		UsuarioSiarService us = new UsuarioSiarService();
-		UsuarioSiar usuario = us.verify(email, senha);
-		if (usuario != null) {
-			
-			SessionHelper.setUsuarioLogado(request, usuario);
-			return "redirect:/home";
-		}
-		else {
-			
-			return "redirect:/";
-		}
-		
 	}
 	
 	/**
