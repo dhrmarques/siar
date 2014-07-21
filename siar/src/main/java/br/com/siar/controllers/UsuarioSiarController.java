@@ -26,9 +26,9 @@ public class UsuarioSiarController {
 	}
 	
 	@RequestMapping(value = "/usuariosiar/save", method = RequestMethod.POST)
-	public View createUsuario(@ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
-		usuarioSiarService.createUsuario(usuarioSiar);
-		return new RedirectView("/usuariosiar");
+	public View saveUsuario(@ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
+		usuarioSiarService.saveUsuario(usuarioSiar);
+		return new RedirectView("/siar/usuariosiar");
 	}
 	
 	@RequestMapping(value = "/usuariosiar/delete/{id}")
@@ -38,9 +38,9 @@ public class UsuarioSiarController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			//TODO Criar página de redirecionamento de erro
-			return new RedirectView("/usuariosiar/error");
+			return new RedirectView("/siar/usuariosiar/error");
 		}
-		return new RedirectView("/usuariosiar");
+		return new RedirectView("/siar/usuariosiar");
 	}
 	
 	@RequestMapping(value = "/usuariosiar/updateusuario/{id}", method = RequestMethod.GET)
