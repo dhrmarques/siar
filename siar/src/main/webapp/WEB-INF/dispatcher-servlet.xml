@@ -43,4 +43,5 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean id="usuarioSiarService" class="br.com.siar.services.UsuarioSiarService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 </beans> 

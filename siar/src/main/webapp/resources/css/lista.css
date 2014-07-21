@@ -1,0 +1,22 @@
+.table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th{
+	padding: 20px;
+}
+
+.pagina{
+	height: 100%;
+}
+
+footer{
+	position: relative;
+	height: 50px;
+	bottom: 0;
+	color: gray;	
+}
+
+span{
+	line-height: 34px;
+}
+
+.new-acidente-form{
+	padding-top: 20px;
+}
