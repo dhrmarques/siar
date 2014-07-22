@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,19 +26,25 @@ public class UsuarioSiarController {
 	private UsuarioSiarService usuarioSiarService;
 
 	@RequestMapping(value = "/usuariosiar", method = RequestMethod.GET)
-	public String getUsuariosList(ModelMap model) {
+	public String getUsuariosList(HttpServletRequest request, ModelMap model) {
+		if (!autorizado(request))
+			return Constants.RETURN_UNAUTHORIZED;
 		model.addAttribute("usuarioSiarList", usuarioSiarService.listUsuarios());
 		return "usuariosiar";
 	}
 	
 	@RequestMapping(value = "/usuariosiar/save", method = RequestMethod.POST)
-	public View saveUsuario(@ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
+	public View saveUsuario(HttpServletRequest request, @ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
+		if (!autorizado(request))
+			return new RedirectView("/");
 		usuarioSiarService.saveUsuario(usuarioSiar);
 		return new RedirectView("/siar/usuariosiar");
 	}
 	
 	@RequestMapping(value = "/usuariosiar/delete/{id}")
-	public View removeUsuario(@PathVariable String id, ModelMap model) {
+	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+		if (!autorizado(request))
+			return new RedirectView("/");
 		try {
 			usuarioSiarService.removeUsuario(id);
 		} catch (Exception e) {
@@ -51,13 +56,15 @@ public class UsuarioSiarController {
 	}
 	
 	@RequestMapping(value = "/usuariosiar/updateusuario/{id}", method = RequestMethod.GET)
-	public String updateAcidente(@PathVariable String id, ModelMap model){
+	public String updateUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model){
+		if (!autorizado(request))
+			return Constants.RETURN_UNAUTHORIZED;
 		model.addAttribute("usuarioUpdate", usuarioSiarService.findUsuarioById(id));
 		return "updateusuario";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpServletRequest request, Model model) {
+	public String login(HttpServletRequest request) {
 		//logger.info("Trying to log in...");
 		
 		String email = request.getParameter("login_email").toString();
@@ -80,6 +87,11 @@ public class UsuarioSiarController {
 			return "redirect:/";
 		}
 		
+	}
+	
+	private boolean autorizado(HttpServletRequest request) {
+		
+		return SessionHelper.isUsuarioLogadoTipo(request, UsuarioSiar.TipoUsuario.ADMINISTRADOR);
 	}
 	
 }

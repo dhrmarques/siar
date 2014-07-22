@@ -25,6 +25,14 @@ public class SessionHelper {
 		
 		return null;
 	}
+	
+	public static final boolean isUsuarioLogadoTipo(HttpServletRequest request, UsuarioSiar.TipoUsuario tipo) {
+		
+		UsuarioSiar user = getUsuarioLogado(request);
+		if (user == null)
+			return false;
+		return user.getTipoUsuario().equals(tipo);
+	}
 
 	public static final void setUsuarioLogado(HttpServletRequest request, UsuarioSiar usuario) {
 		logger.info("Saving session for user " + usuario.getNome());

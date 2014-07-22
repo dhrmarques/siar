@@ -94,4 +94,12 @@ public class HomeController {
 		}
 	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request, SessionStatus status) {
+		
+		request.getSession().removeAttribute(Constants.SESSION_KEY_USER);
+		status.setComplete();
+		return Constants.RETURN_NOT_LOGGED;
+	}
+	
 }
