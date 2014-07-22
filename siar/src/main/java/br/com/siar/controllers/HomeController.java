@@ -22,7 +22,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model) {
 		logger.info("Homepage");
-		
+
 		if (SessionHelper.getUsuarioLogado(request) == null) {
 			
 			model.addAttribute("title", "Login SiAR");
