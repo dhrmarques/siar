@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.services.UsuarioSiarService;
+import br.com.siar.utils.Constants;
 import br.com.siar.utils.SessionHelper;
 
 @Controller
+@SessionAttributes("erro")
 public class UsuarioSiarController {
 	
 	@Autowired
@@ -60,6 +63,11 @@ public class UsuarioSiarController {
 		String email = request.getParameter("login_email").toString();
 		String senha = request.getParameter("login_password").toString();
 		
+		if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
+			request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_FORM_INCOMPLETE);
+			return "redirect:/";
+		}
+		
 		//logger.debug("UsuarioSiarService: " + us.toString());
 		UsuarioSiar usuario = usuarioSiarService.verify(email, senha);
 		if (usuario != null) {
@@ -68,7 +76,7 @@ public class UsuarioSiarController {
 			return "redirect:/home";
 		}
 		else {
-			
+			request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_LOGIN_NO_MATCH);
 			return "redirect:/";
 		}
 		

@@ -12,6 +12,9 @@
 	<body>
 		
 		<div style="text-align:center;">
+			<div class="well" style="visibility:${show_box}; border-color:red;">
+				${box_text}
+			</div>
 			<form action="login" method="POST" class="well" style="margin:30px;">
 				<div class="form-group">
 					<label>email: <input type="text" name="login_email" class="form-control"/></label>

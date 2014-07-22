@@ -76,7 +76,7 @@ public class UsuarioSiarService {
 	public UsuarioSiar verify(String email, String senha) {
 		
 		Query q = new Query();
-		q.addCriteria(Criteria.where("cpf").is(email).and("senha").is(senha));
+		q.addCriteria(Criteria.where("email").is(email).and("senha").is(senha));
 
 		System.out.print("Query: " + q + "\nSMT: " + siarmongoTemplate);
 		UsuarioSiar user = siarmongoTemplate.findOne(q, UsuarioSiar.class, "usuarioSiar");
