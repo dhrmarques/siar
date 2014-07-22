@@ -19,7 +19,7 @@ import br.com.siar.utils.Constants;
 import br.com.siar.utils.SessionHelper;
 
 @Controller
-@SessionAttributes("erro")
+@SessionAttributes({"erro", "email"})
 public class UsuarioSiarController {
 	
 	@Autowired
@@ -71,22 +71,24 @@ public class UsuarioSiarController {
 		String senha = request.getParameter("login_password").toString();
 		
 		if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
-			request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_FORM_INCOMPLETE);
-			return "redirect:/";
-		}
-		
-		//logger.debug("UsuarioSiarService: " + us.toString());
-		UsuarioSiar usuario = usuarioSiarService.verify(email, senha);
-		if (usuario != null) {
 			
-			SessionHelper.setUsuarioLogado(request, usuario);
-			return "redirect:/home";
+			request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_FORM_INCOMPLETE);
 		}
 		else {
-			request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_LOGIN_NO_MATCH);
-			return "redirect:/";
+			//logger.debug("UsuarioSiarService: " + us.toString());
+			UsuarioSiar usuario = usuarioSiarService.verify(email, senha);
+			if (usuario != null) {
+				
+				SessionHelper.setUsuarioLogado(request, usuario);
+				return "redirect:/home";
+			}
+			else {
+				request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_LOGIN_NO_MATCH);
+			}
 		}
-		
+		if (email != null)
+			request.getSession().setAttribute(Constants.SESSION_EMAIL, email);
+		return Constants.RETURN_NOT_LOGGED;
 	}
 	
 	private boolean autorizado(HttpServletRequest request) {

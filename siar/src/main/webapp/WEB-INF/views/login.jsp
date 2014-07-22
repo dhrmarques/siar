@@ -17,7 +17,7 @@
 			</div>
 			<form action="login" method="POST" class="well" style="margin:30px;">
 				<div class="form-group">
-					<label>email: <input type="text" name="login_email" class="form-control"/></label>
+					<label>email: <input type="text" name="login_email" class="form-control" value="${email}"/></label>
 				</div>
 				<div class="form-group">
 					<label>senha: <input type="password" name="login_password" class="form-control"/></label>

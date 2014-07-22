@@ -20,7 +20,7 @@ import br.com.siar.utils.SessionHelper;
  * Handles requests for the application home page.
  */
 @Controller
-@SessionAttributes("erro")
+@SessionAttributes({"erro", "email"})
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -49,9 +49,16 @@ public class HomeController {
 					
 				case Constants.ERROR_LOGIN_NO_MATCH:
 					msg = "Combinação usuário/senha inválida";
+					
 					break;
 				}
 				model.addAttribute("box_text", msg);
+				
+				String email = (String) session.getAttribute(Constants.SESSION_EMAIL);
+				if (session.getAttribute(Constants.SESSION_EMAIL) != null) {
+					logger.info("Email recuperado: " + email);
+					model.addAttribute("email", session.getAttribute(Constants.SESSION_EMAIL));
+				}
 			}
 			model.addAttribute("show_box", visibility);
 			
