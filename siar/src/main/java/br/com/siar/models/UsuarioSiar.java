@@ -7,6 +7,7 @@ public class UsuarioSiar {
 
 	@Id
 	private ObjectId id;
+	private String email;
 	private String nome;
 	private String cpf;
 	private String senha;
@@ -34,6 +35,18 @@ public class UsuarioSiar {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 

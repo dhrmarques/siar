@@ -5,6 +5,8 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.UsuarioSiar;
 
@@ -69,5 +71,18 @@ public class UsuarioSiarService {
 	//Finds an user by its id in the repository.
 	public UsuarioSiar findUsuarioById(String id){
 		return siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, "usuarioSiar");
+	}
+	
+	public UsuarioSiar verify(String email, String senha) {
+		
+		Query q = new Query();
+		q.addCriteria(Criteria.where("email").is(email).and("senha").is(senha));
+
+		System.out.print("Query: " + q + "\nSMT: " + siarmongoTemplate);
+		UsuarioSiar user = siarmongoTemplate.findOne(q, UsuarioSiar.class, "usuarioSiar");
+		System.out.println("resultado: " + user);
+		if (user != null) 
+			return user;
+		return null;
 	}
 }

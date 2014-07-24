@@ -1,0 +1,27 @@
+div#header_container {
+	display:inline-block;
+	width:100%;
+}
+div#header_left {
+	float:left;
+	display:inline;
+	padding:15px;
+}
+div#header_logo {
+	float:left;
+}
+div#header_logo img {
+	height:100px;
+	border:3px groove #888;
+}
+div#header_title {
+	float:right;
+	font-family:Arial;
+	font-size:32pt;
+	padding:15px 40px;
+}
+div#header_right {
+	float:right;
+	text-align:right;
+	padding:30px;
+}

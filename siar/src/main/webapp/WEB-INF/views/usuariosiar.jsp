@@ -1,11 +1,18 @@
 <%@ include file="/WEB-INF/views/headers.jsp" %>
 <html>
-<body>
-    <h2>Usuários - Siar v.0.2</h2>
- 
+	<head>
+		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+		<title>${title}</title>
+	</head>
+	<body>
+	    <%@ include file="/WEB-INF/views/layout_header.jsp" %>
+
         <form action="/siar/usuariosiar/save" method="post">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome"/>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email"/>
             <label for="senha">Senha</label>
             <input type="password" id="senha" name="senha"/>
             <label for="cpf">CPF</label>
@@ -24,6 +31,7 @@
     <table border="1">
         <tr>
             <th>Nome</th>
+            <th>Email</th>
             <th>CPF</th>
             <th>Tipo de Usuário</th>
             <th>Atualizar</th>
@@ -32,6 +40,7 @@
         <c:forEach var="usuario" items="${usuarioSiarList}">
             <tr>
                 <td>${usuario.nome}</td>
+                <td>${usuario.email}</td>
                 <td>${usuario.cpf}</td>
                 <td>${usuario.tipoUsuario}</td>
                 <td><a href="/siar/usuariosiar/updateusuario/${usuario.id}"><button>Update</button></a></td>
