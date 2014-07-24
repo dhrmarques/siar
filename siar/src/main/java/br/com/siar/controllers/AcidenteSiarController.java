@@ -27,7 +27,7 @@ public class AcidenteSiarController {
 	@RequestMapping(value = "/acidentesiar", method = RequestMethod.GET)
 	public String getAcidentesList(HttpServletRequest request, ModelMap model) {
 		if (!autorizado(request))
-			return Constants.RETURN_UNAUTHORIZED;
+			return Constants.REDIRECT_UNAUTHORIZED;
 		model.addAttribute("acidenteSiarList", acidenteSiarService.listAcidentes());
 		return "acidentesiar";
 	}
@@ -51,7 +51,7 @@ public class AcidenteSiarController {
 	@RequestMapping(value = "/acidentesiar/updateacidente/{id}", method = RequestMethod.GET)
 	public String updateAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model){
 		if (!autorizado(request))
-			return Constants.RETURN_UNAUTHORIZED;
+			return Constants.REDIRECT_UNAUTHORIZED;
 		model.addAttribute("acidenteUpdate", acidenteSiarService.findAcidenteById(id));
 		return "updateacidente";
 	}

@@ -27,15 +27,18 @@ public class UsuarioSiarController {
 
 	@RequestMapping(value = "/usuariosiar", method = RequestMethod.GET)
 	public String getUsuariosList(HttpServletRequest request, ModelMap model) {
-		if (!autorizado(request))
-			return Constants.RETURN_UNAUTHORIZED;
+		model.addAttribute("title", "Usuários");
+		
+		if (!autorizado(request, model))
+			return Constants.REDIRECT_UNAUTHORIZED;
 		model.addAttribute("usuarioSiarList", usuarioSiarService.listUsuarios());
 		return "usuariosiar";
 	}
 	
 	@RequestMapping(value = "/usuariosiar/save", method = RequestMethod.POST)
 	public View saveUsuario(HttpServletRequest request, @ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
-		if (!autorizado(request))
+		
+		if (!autorizado(request, model))
 			return new RedirectView("/");
 		usuarioSiarService.saveUsuario(usuarioSiar);
 		return new RedirectView("/siar/usuariosiar");
@@ -43,7 +46,7 @@ public class UsuarioSiarController {
 	
 	@RequestMapping(value = "/usuariosiar/delete/{id}")
 	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request))
+		if (!autorizado(request, model))
 			return new RedirectView("/");
 		try {
 			usuarioSiarService.removeUsuario(id);
@@ -57,15 +60,16 @@ public class UsuarioSiarController {
 	
 	@RequestMapping(value = "/usuariosiar/updateusuario/{id}", method = RequestMethod.GET)
 	public String updateUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model){
-		if (!autorizado(request))
-			return Constants.RETURN_UNAUTHORIZED;
+		model.addAttribute("title", "Editar usuário");
+		
+		if (!autorizado(request, model))
+			return Constants.REDIRECT_UNAUTHORIZED;
 		model.addAttribute("usuarioUpdate", usuarioSiarService.findUsuarioById(id));
 		return "updateusuario";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest request) {
-		//logger.info("Trying to log in...");
 		
 		String email = request.getParameter("login_email").toString();
 		String senha = request.getParameter("login_password").toString();
@@ -75,12 +79,11 @@ public class UsuarioSiarController {
 			request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_FORM_INCOMPLETE);
 		}
 		else {
-			//logger.debug("UsuarioSiarService: " + us.toString());
 			UsuarioSiar usuario = usuarioSiarService.verify(email, senha);
 			if (usuario != null) {
 				
 				SessionHelper.setUsuarioLogado(request, usuario);
-				return "redirect:/home";
+				return Constants.REDIRECT_HOME;
 			}
 			else {
 				request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_LOGIN_NO_MATCH);
@@ -88,12 +91,18 @@ public class UsuarioSiarController {
 		}
 		if (email != null)
 			request.getSession().setAttribute(Constants.SESSION_EMAIL, email);
-		return Constants.RETURN_NOT_LOGGED;
+		return Constants.REDIRECT_NOT_LOGGED;
 	}
 	
-	private boolean autorizado(HttpServletRequest request) {
+	private boolean autorizado(HttpServletRequest request, ModelMap model) {
 		
-		return SessionHelper.isUsuarioLogadoTipo(request, UsuarioSiar.TipoUsuario.ADMINISTRADOR);
+		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
+		if (usuario != null && usuario.getTipoUsuario().equals(UsuarioSiar.TipoUsuario.ADMINISTRADOR)) {
+			model.addAttribute("nome", usuario.getNome());
+			model.addAttribute("tipo_usuario", "Administrador");
+			return true;
+		}
+		return false;
 	}
 	
 }

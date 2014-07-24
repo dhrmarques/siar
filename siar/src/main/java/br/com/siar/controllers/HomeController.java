@@ -35,6 +35,7 @@ public class HomeController {
 		if (user == null) {
 			
 			model.addAttribute("title", "Login SiAR");
+			model.addAttribute("hide_header_right", Boolean.TRUE);
 			
 			String visibility = "hidden";
 			Integer error = (Integer) session.getAttribute(Constants.SESSION_ERROR_CODE);
@@ -49,7 +50,6 @@ public class HomeController {
 					
 				case Constants.ERROR_LOGIN_NO_MATCH:
 					msg = "Combinação usuário/senha inválida";
-					
 					break;
 				}
 				model.addAttribute("box_text", msg);
@@ -81,24 +81,30 @@ public class HomeController {
 			return "redirect:/";
 		
 		model.addAttribute("nome", user.getNome());
+		model.addAttribute("title", "Homepage");
 		
 		switch (user.getTipoUsuario()) {
 		case ADMINISTRADOR:
+			model.addAttribute("tipo_usuario", "Administrador");
 			return "admin";
 			
 		case CHEFE_MISSAO:
+			model.addAttribute("tipo_usuario", "Chefe de missão");
 			return "chefemissao";
 			
 		case COORDENADOR:
+			model.addAttribute("tipo_usuario", "Coordenador");
 			return "coordenador";
 			
 		case ESPECIALISTA:
+			model.addAttribute("tipo_usuario", "Especialista");
 			return "especialista";
 			
 		default:
 			return "redirect:/";
 		
 		}
+
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -106,7 +112,7 @@ public class HomeController {
 		
 		request.getSession().removeAttribute(Constants.SESSION_KEY_USER);
 		status.setComplete();
-		return Constants.RETURN_NOT_LOGGED;
+		return Constants.REDIRECT_NOT_LOGGED;
 	}
 	
 }

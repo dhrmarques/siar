@@ -1,8 +1,13 @@
 <%@ include file="/WEB-INF/views/headers.jsp" %>
 <html>
-<body>
-    <h2>Usuários - Siar v.0.2</h2>
- 
+	<head>
+		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+		<title>${title}</title>
+	</head>
+	<body>
+	    <%@ include file="/WEB-INF/views/layout_header.jsp" %>
+
         <form action="/siar/usuariosiar/save" method="post">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome"/>

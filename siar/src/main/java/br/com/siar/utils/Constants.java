@@ -11,6 +11,7 @@ public class Constants {
 	
 	public static final int ERROR_LOGIN_NO_MATCH = 5;
 
-	public static final String RETURN_NOT_LOGGED = "redirect:/";
-	public static final String RETURN_UNAUTHORIZED = "redirect:/home";
+	public static final String REDIRECT_NOT_LOGGED = "redirect:/";
+	public static final String REDIRECT_HOME = "redirect:/home";
+	public static final String REDIRECT_UNAUTHORIZED = REDIRECT_HOME;
 }
