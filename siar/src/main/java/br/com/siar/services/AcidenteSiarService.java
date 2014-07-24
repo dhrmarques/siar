@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import br.com.siar.models.AcidenteSiar;
 
 public class AcidenteSiarService {
+	
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
 	private static Logger logger;
