@@ -88,9 +88,15 @@ public class UsuarioSiar {
 
 
 	public enum TipoUsuario {
-		ADMINISTRADOR,
-		COORDENADOR,
-		ESPECIALISTA,
-		CHEFE_MISSAO
+		ADMINISTRADOR("Administrador"),
+		COORDENADOR("Coordenador"),
+		ESPECIALISTA("Especialista"),
+		CHEFE_MISSAO("Chefe de missão");
+		
+		TipoUsuario(String str) {
+			desc = str;
+		}
+		
+		public String desc;
 	}
 }

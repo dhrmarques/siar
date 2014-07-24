@@ -14,8 +14,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.UsuarioSiar;
+import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.AcidenteSiarService;
-import br.com.siar.utils.Constants;
+import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
 @Controller
@@ -26,38 +27,54 @@ public class AcidenteSiarController {
 	
 	@RequestMapping(value = "/acidentesiar", method = RequestMethod.GET)
 	public String getAcidentesList(HttpServletRequest request, ModelMap model) {
-		if (!autorizado(request))
-			return Constants.REDIRECT_UNAUTHORIZED;
+		if (!autorizado(request, model))
+			return Const.REDIRECT_UNAUTHORIZED;
+		
+		model.addAttribute(Const.ATTR_TITLE, "Acidentes");
 		model.addAttribute("acidenteSiarList", acidenteSiarService.listAcidentes());
 		return "acidentesiar";
 	}
 	
 	@RequestMapping(value = "/acidentesiar/save", method = RequestMethod.POST)
 	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model) {
-		if (!autorizado(request))
-			return new RedirectView("/");
+		if (!autorizado(request, model))
+			return new RedirectView(Const.HOME_ADDRESS);
+		
 		acidenteSiarService.saveAcidente(acidenteSiar);
 		return new RedirectView("/siar/acidentesiar");
 	}
 	
 	@RequestMapping(value = "/acidentesiar/delete/{id}", method = RequestMethod.GET)
 	public View removeAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request))
-			return new RedirectView("/");
+		if (!autorizado(request, model))
+			return new RedirectView(Const.HOME_ADDRESS);
+		
 		acidenteSiarService.removeAcidente(id);
 		return new RedirectView("/siar/acidentesiar");
 	}
 	
 	@RequestMapping(value = "/acidentesiar/updateacidente/{id}", method = RequestMethod.GET)
 	public String updateAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model){
-		if (!autorizado(request))
-			return Constants.REDIRECT_UNAUTHORIZED;
+		if (!autorizado(request, model))
+			return Const.REDIRECT_UNAUTHORIZED;
+		
+		model.addAttribute(Const.ATTR_TITLE, "Editar acidente");
 		model.addAttribute("acidenteUpdate", acidenteSiarService.findAcidenteById(id));
 		return "updateacidente";
 	}
 	
-	private boolean autorizado(HttpServletRequest request) {
+	private boolean autorizado(HttpServletRequest request, ModelMap model) {
 		
-		return SessionHelper.isUsuarioLogadoTipo(request, UsuarioSiar.TipoUsuario.COORDENADOR);
+		TipoUsuario tipo = TipoUsuario.COORDENADOR;
+		
+		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
+		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
+			
+			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
+			model.addAttribute(Const.ATTR_USER_TYPE, tipo.desc);
+			
+			return true;
+		}
+		return false;
 	}
 }
