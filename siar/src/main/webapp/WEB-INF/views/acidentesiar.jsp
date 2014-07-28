@@ -14,7 +14,7 @@
 	    
 	    <div class="col-sm-12">
 	    	<ul class="menu nav nav-tabs">
-	    		<li class="active"><a hfref="#">Acidentes</a></li>
+	    		<li class="active"><a href="#">Acidentes</a></li>
 	    		<li><a href="recursosiar">Recursos</a></li>
 	    	</ul>
 	    </div>

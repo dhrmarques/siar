@@ -21,19 +21,19 @@
  			<div class="new-recurso-form">
 	        <form class="form-inline" action="/siar/recursos/save" method="post" role="form">
 	        	<div class="container">
-		        	<div class="form-group col-sm-2">
+		        	<div class="form-group col-sm-3">
 			            <label for="nome">Nome</label>
 			            <input class="form-control" type="text" id="nome" name="nome"/>
 		            </div>
-		        	<div class="form-group col-sm-2">
+		        	<div class="form-group col-sm-3">
 			            <label for="descricao">Descrição</label>
 			            <input class="form-control" type="text" id="descricao" name="descricao"/>
 		            </div>
-		        	<div class="form-group col-sm-2">
-			            <label for="rh">RH?</label>
+		        	<div class="form-group col-sm-1">
+			            <label for="recursoHumano">RH?</label><br/>
 			            <input class="form-control" type="checkbox" id="recursoHumano" name="recursoHumano"/>
 		            </div>
-		        	<div class="form-group col-sm-2">
+		        	<div class="form-group col-sm-3">
 			            <label for="qtdPropria">Qtd SiAR</label>
 			            <input class="form-control" type="text" id="qtdPropria" name="qtdPropria"/>
 		            </div>
