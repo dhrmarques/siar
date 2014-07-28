@@ -12,5 +12,7 @@
 		<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/143_33630631-cf93-40bd-a6bb-a75fac2aea44.gif"></iframe>
 		<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/145_a7c9b5fa-5a59-44d3-ad9f-d2932203669a.gif"></iframe>
 		<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/151_2ff0693e-9a8a-4833-8d9a-c35f82e067c8.gif"></iframe>
+		<br>
+		<a href="/siar/home"><input type="button" value="Voltar"></a>
 	</body>
 </html>
