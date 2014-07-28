@@ -14,8 +14,9 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.UsuarioSiar;
+import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.UsuarioSiarService;
-import br.com.siar.utils.Constants;
+import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
 @Controller
@@ -27,10 +28,10 @@ public class UsuarioSiarController {
 
 	@RequestMapping(value = "/usuariosiar", method = RequestMethod.GET)
 	public String getUsuariosList(HttpServletRequest request, ModelMap model) {
-		model.addAttribute("title", "Usuários");
+		model.addAttribute(Const.ATTR_TITLE, "Usuários");
 		
 		if (!autorizado(request, model))
-			return Constants.REDIRECT_UNAUTHORIZED;
+			return Const.REDIRECT_UNAUTHORIZED;
 		model.addAttribute("usuarioSiarList", usuarioSiarService.listUsuarios());
 		return "usuariosiar";
 	}
@@ -39,7 +40,7 @@ public class UsuarioSiarController {
 	public View saveUsuario(HttpServletRequest request, @ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
 		
 		if (!autorizado(request, model))
-			return new RedirectView("/");
+			return new RedirectView(Const.ROOT_ADDRESS);
 		usuarioSiarService.saveUsuario(usuarioSiar);
 		return new RedirectView("/siar/usuariosiar");
 	}
@@ -47,7 +48,7 @@ public class UsuarioSiarController {
 	@RequestMapping(value = "/usuariosiar/delete/{id}")
 	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
 		if (!autorizado(request, model))
-			return new RedirectView("/");
+			return new RedirectView(Const.ROOT_ADDRESS);
 		try {
 			usuarioSiarService.removeUsuario(id);
 		} catch (Exception e) {
@@ -60,10 +61,10 @@ public class UsuarioSiarController {
 	
 	@RequestMapping(value = "/usuariosiar/updateusuario/{id}", method = RequestMethod.GET)
 	public String updateUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model){
-		model.addAttribute("title", "Editar usuário");
+		model.addAttribute(Const.ATTR_TITLE, "Editar usuário");
 		
 		if (!autorizado(request, model))
-			return Constants.REDIRECT_UNAUTHORIZED;
+			return Const.REDIRECT_UNAUTHORIZED;
 		model.addAttribute("usuarioUpdate", usuarioSiarService.findUsuarioById(id));
 		return "updateusuario";
 	}
@@ -76,30 +77,34 @@ public class UsuarioSiarController {
 		
 		if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
 			
-			request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_FORM_INCOMPLETE);
+			request.getSession().setAttribute(Const.SESSION_ERROR_CODE, Const.ERROR_FORM_INCOMPLETE);
 		}
 		else {
 			UsuarioSiar usuario = usuarioSiarService.verify(email, senha);
 			if (usuario != null) {
 				
 				SessionHelper.setUsuarioLogado(request, usuario);
-				return Constants.REDIRECT_HOME;
+				return Const.REDIRECT_HOME;
 			}
 			else {
-				request.getSession().setAttribute(Constants.SESSION_ERROR_CODE, Constants.ERROR_LOGIN_NO_MATCH);
+				request.getSession().setAttribute(Const.SESSION_ERROR_CODE, Const.ERROR_LOGIN_NO_MATCH);
 			}
 		}
 		if (email != null)
-			request.getSession().setAttribute(Constants.SESSION_EMAIL, email);
-		return Constants.REDIRECT_NOT_LOGGED;
+			request.getSession().setAttribute(Const.SESSION_EMAIL, email);
+		return Const.REDIRECT_NOT_LOGGED;
 	}
 	
 	private boolean autorizado(HttpServletRequest request, ModelMap model) {
 		
+		TipoUsuario tipo = TipoUsuario.ADMINISTRADOR;
+		
 		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
-		if (usuario != null && usuario.getTipoUsuario().equals(UsuarioSiar.TipoUsuario.ADMINISTRADOR)) {
-			model.addAttribute("nome", usuario.getNome());
-			model.addAttribute("tipo_usuario", "Administrador");
+		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
+			
+			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
+			model.addAttribute(Const.ATTR_USER_TYPE, tipo.desc);
+			
 			return true;
 		}
 		return false;

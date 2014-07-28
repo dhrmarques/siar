@@ -17,6 +17,6 @@ span{
 	line-height: 34px;
 }
 
-.new-acidente-form{
+.new-acidente-form, .new-recurso-form {
 	padding-top: 20px;
 }

@@ -1,7 +1,12 @@
 <%@ include file="/WEB-INF/views/headers.jsp" %>
 <html>
+	<head>
+		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+		<title>${title}</title>
+	</head>
 	<body>
-		<h2>Editar Acidente</h2>
+		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 		
 		<form action="/siar/acidentesiar/save" method="post">
             <input type="hidden" id="id" name="id" value="${acidenteUpdate.id}">
