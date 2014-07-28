@@ -2,8 +2,8 @@
 <html>
 	<head>
 		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
 		<title>${title}</title>
 		<style>
 			input.form-control {
@@ -12,12 +12,17 @@
 		</style>
 	</head>
 	<body>
+		<div class="container">
+	
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 		
 		<div id="login_container">
 			<div id="login_warning" class="well" style="visibility:${show_box};">
 				${box_text}
 			</div>
+			<div class="row">
+			<div class="col-sm-offset-3 col-sm-6">
+			
 			<form action="login" method="POST" class="well" style="margin:30px;">
 				<div class="form-group">
 					<label for="login_email">email:</label>
@@ -27,9 +32,11 @@
 					<label for="login_email">senha:</label>
 					<input id="login_password" type="password" name="login_password" class="form-control"/>
 				</div>
-				<input type="submit" value="Login" class="btn btn-default"/>
+				<input type="submit" value="Login" class="btn btn-default btn-primary"/>
 			</form>
+			</div>
+			</div>
 		</div>
-	
+		</div>
 	</body>
 </html>
