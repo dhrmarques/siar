@@ -3,9 +3,16 @@
  */
 package br.com.siar.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +21,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
+import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.MissaoSiar;
+import br.com.siar.models.TipoMissaoSiar;
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
+import br.com.siar.models.response.MissaoResponse;
+import br.com.siar.services.AcidenteSiarService;
 import br.com.siar.services.MissaoSiarService;
+import br.com.siar.services.TipoMissaoSiarService;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
@@ -25,10 +37,18 @@ import br.com.siar.utils.SessionHelper;
  * @author Leo
  *
  */
-public class MissaoSiarController {
+@Controller
+public class MissaoSiarController implements ApplicationContextAware {
 
 	@Autowired
-	private MissaoSiarService service;
+	private MissaoSiarService missaoService;
+	
+	private AcidenteSiarService getAcidenteService() {
+		return appContext.getBean(AcidenteSiarService.class);
+	}
+	private TipoMissaoSiarService getTipoMissaoService() {
+		return appContext.getBean(TipoMissaoSiarService.class);
+	}
 	
 	@RequestMapping(value = "/missoes", method = RequestMethod.GET)
 	public String getMissoesList(HttpServletRequest request, ModelMap model) {
@@ -36,8 +56,20 @@ public class MissaoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Missões");
-		model.addAttribute("missaoSiarList", service.listMissoes());
-		return "missaoosiar";
+		List<MissaoSiar> missoes = missaoService.listMissoes();
+		List<MissaoResponse> list = new ArrayList<MissaoResponse>();
+		
+		AcidenteSiarService acidenteService = getAcidenteService();
+		TipoMissaoSiarService tipoMissaoService = getTipoMissaoService();
+		
+		for (MissaoSiar missao : missoes) {
+			AcidenteSiar acidente = acidenteService.findAcidenteById(missao.getAcidenteId());
+			TipoMissaoSiar tipoMissao = tipoMissaoService.findTipoMissaoById(missao.getTipoMissaoId());
+			list.add(new MissaoResponse(missao, acidente, tipoMissao, "status?"));
+		}
+		
+		model.addAttribute("missaoSiarList", list);
+		return "missaosiar";
 	}
 	
 	@RequestMapping(value = "/missoes/save", method = RequestMethod.POST)
@@ -45,7 +77,7 @@ public class MissaoSiarController {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		service.saveMissao(missao);
+		missaoService.saveMissao(missao);
 		return new RedirectView("/siar/missoes");
 	}
 	
@@ -54,7 +86,7 @@ public class MissaoSiarController {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		service.removeMissao(id);
+		missaoService.removeMissao(id);
 		return new RedirectView("/siar/missoes");
 	}
 	
@@ -64,7 +96,14 @@ public class MissaoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar missão");
-		model.addAttribute("missaoUpdate", service.findMissaoById(id));
+		
+		MissaoSiar missao = missaoService.findMissaoById(id);
+		MissaoResponse response = new MissaoResponse(missao,
+				getAcidenteService().findAcidenteById(missao.getAcidenteId()),
+				getTipoMissaoService().findTipoMissaoById(missao.getTipoMissaoId()),
+				"Status...");
+		
+		model.addAttribute("missaoUpdate", response);
 		return "updatemissao";
 	}
 	
@@ -81,5 +120,12 @@ public class MissaoSiarController {
 			return true;
 		}
 		return false;
+	}
+
+	protected ApplicationContext appContext;
+	@Override
+	public void setApplicationContext(ApplicationContext arg0)
+			throws BeansException {
+		appContext = arg0;
 	}
 }

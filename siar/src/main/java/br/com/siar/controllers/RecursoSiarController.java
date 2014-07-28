@@ -30,7 +30,7 @@ import br.com.siar.utils.SessionHelper;
 public class RecursoSiarController {
 	
 	@Autowired
-	private RecursoSiarService service;
+	private RecursoSiarService recursoService;
 	
 	@RequestMapping(value = "/recursos", method = RequestMethod.GET)
 	public String getRecursosList(HttpServletRequest request, ModelMap model) {
@@ -38,7 +38,7 @@ public class RecursoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Recursos");
-		model.addAttribute("recursoSiarList", service.listRecursos());
+		model.addAttribute("recursoSiarList", recursoService.listRecursos());
 		return "recursosiar";
 	}
 	
@@ -47,7 +47,7 @@ public class RecursoSiarController {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		service.saveRecurso(recurso);
+		recursoService.saveRecurso(recurso);
 		return new RedirectView("/siar/recursos");
 	}
 	
@@ -56,7 +56,7 @@ public class RecursoSiarController {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		service.removeRecurso(id);
+		recursoService.removeRecurso(id);
 		return new RedirectView("/siar/recursos");
 	}
 	
@@ -66,7 +66,7 @@ public class RecursoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar recurso");
-		model.addAttribute("recursoUpdate", service.findRecursoById(id));
+		model.addAttribute("recursoUpdate", recursoService.findRecursoById(id));
 		return "updaterecurso";
 	}
 	

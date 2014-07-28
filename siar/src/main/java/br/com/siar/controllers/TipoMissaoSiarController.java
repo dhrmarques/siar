@@ -6,6 +6,7 @@ package br.com.siar.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +26,11 @@ import br.com.siar.utils.SessionHelper;
  * @author Leo
  *
  */
+@Controller
 public class TipoMissaoSiarController {
 
 	@Autowired
-	private TipoMissaoSiarService service;
+	private TipoMissaoSiarService tipoMissaoService;
 	
 	@RequestMapping(value = "/tiposmissao", method = RequestMethod.GET)
 	public String getMissoesList(HttpServletRequest request, ModelMap model) {
@@ -36,7 +38,7 @@ public class TipoMissaoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Tipos de missão");
-		model.addAttribute("tipoMissaoSiarList", service.listTiposMissao());
+		model.addAttribute("tipoMissaoSiarList", tipoMissaoService.listTiposMissao());
 		return "tipomissaosiar";
 	}
 	
@@ -45,7 +47,7 @@ public class TipoMissaoSiarController {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		service.saveTipoMissao(tipo);
+		tipoMissaoService.saveTipoMissao(tipo);
 		return new RedirectView("/siar/tiposmissao");
 	}
 	
@@ -54,7 +56,7 @@ public class TipoMissaoSiarController {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		service.removeTipoMissao(id);
+		tipoMissaoService.removeTipoMissao(id);
 		return new RedirectView("/siar/tiposmissao");
 	}
 	
@@ -64,7 +66,7 @@ public class TipoMissaoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar missão");
-		model.addAttribute("tipoMissaoUpdate", service.findTipoMissaoById(id));
+		model.addAttribute("tipoMissaoUpdate", tipoMissaoService.findTipoMissaoById(id));
 		return "updatetipomissao";
 	}
 	

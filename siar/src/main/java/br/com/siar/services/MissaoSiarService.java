@@ -50,6 +50,7 @@ public class MissaoSiarService {
 	}
 	
 	public List<MissaoSiar> listMissoes() {
+		
 		return siarmongoTemplate.findAll(MissaoSiar.class, COLLECTION_NAME);
 	}
 	
