@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import br.com.siar.models.UsuarioSiar;
-import br.com.siar.utils.Constants;
+import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
 /**
@@ -34,30 +34,30 @@ public class HomeController {
 		
 		if (user == null) {
 			
-			model.addAttribute("title", "Login SiAR");
-			model.addAttribute("hide_header_right", Boolean.TRUE);
+			model.addAttribute(Const.ATTR_TITLE, "Login SiAR");
+			model.addAttribute(Const.ATTR_HIDE_HR, Boolean.TRUE);
 			
 			String visibility = "hidden";
-			Integer error = (Integer) session.getAttribute(Constants.SESSION_ERROR_CODE);
+			Integer error = (Integer) session.getAttribute(Const.SESSION_ERROR_CODE);
 			if (error != null && error != 0) {
 				visibility = "visible";
 				
 				String msg = "";
 				switch (error) {
-				case Constants.ERROR_FORM_INCOMPLETE:
+				case Const.ERROR_FORM_INCOMPLETE:
 					msg = "Preencha todos os campos";
 					break;
 					
-				case Constants.ERROR_LOGIN_NO_MATCH:
+				case Const.ERROR_LOGIN_NO_MATCH:
 					msg = "Combinação usuário/senha inválida";
 					break;
 				}
 				model.addAttribute("box_text", msg);
 				
-				String email = (String) session.getAttribute(Constants.SESSION_EMAIL);
-				if (session.getAttribute(Constants.SESSION_EMAIL) != null) {
+				String email = (String) session.getAttribute(Const.SESSION_EMAIL);
+				if (session.getAttribute(Const.SESSION_EMAIL) != null) {
 					logger.info("Email recuperado: " + email);
-					model.addAttribute("email", session.getAttribute(Constants.SESSION_EMAIL));
+					model.addAttribute("email", session.getAttribute(Const.SESSION_EMAIL));
 				}
 			}
 			model.addAttribute("show_box", visibility);
@@ -68,7 +68,7 @@ public class HomeController {
 		else {
 			
 			logger.warn("Already logged in...");
-			return "redirect:/home";
+			return Const.REDIRECT_HOME;
 			
 		}
 	}
@@ -101,7 +101,7 @@ public class HomeController {
 			return "especialista";
 			
 		default:
-			return "redirect:/";
+			return Const.REDIRECT_NOT_LOGGED;
 		
 		}
 
@@ -110,9 +110,9 @@ public class HomeController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, SessionStatus status) {
 		
-		request.getSession().removeAttribute(Constants.SESSION_KEY_USER);
+		request.getSession().removeAttribute(Const.SESSION_KEY_USER);
 		status.setComplete();
-		return Constants.REDIRECT_NOT_LOGGED;
+		return Const.REDIRECT_NOT_LOGGED;
 	}
 	
 }

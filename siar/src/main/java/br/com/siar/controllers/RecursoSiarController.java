@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package br.com.siar.controllers;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,60 +15,64 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
-import br.com.siar.models.AcidenteSiar;
+import br.com.siar.models.RecursoSiar;
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
-import br.com.siar.services.AcidenteSiarService;
+import br.com.siar.services.RecursoSiarService;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
+/**
+ * @author Leo
+ *
+ */
 @Controller
-public class AcidenteSiarController {
-
+public class RecursoSiarController {
+	
 	@Autowired
-	private AcidenteSiarService acidenteSiarService;
+	private RecursoSiarService service;
 	
-	@RequestMapping(value = "/acidentesiar", method = RequestMethod.GET)
-	public String getAcidentesList(HttpServletRequest request, ModelMap model) {
+	@RequestMapping(value = "/recursos", method = RequestMethod.GET)
+	public String getRecursosList(HttpServletRequest request, ModelMap model) {
 		if (!autorizado(request, model))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Acidentes");
-		model.addAttribute("acidenteSiarList", acidenteSiarService.listAcidentes());
-		return "acidentesiar";
+		model.addAttribute(Const.ATTR_TITLE, "Recursos");
+		model.addAttribute("recursoSiarList", service.listRecursos());
+		return "recursosiar";
 	}
 	
-	@RequestMapping(value = "/acidentesiar/save", method = RequestMethod.POST)
-	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model) {
+	@RequestMapping(value = "/recursos/save", method = RequestMethod.POST)
+	public View saveRecurso(HttpServletRequest request, @ModelAttribute RecursoSiar recurso, ModelMap model) {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		acidenteSiarService.saveAcidente(acidenteSiar);
-		return new RedirectView("/siar/acidentesiar");
+		service.saveRecurso(recurso);
+		return new RedirectView("/siar/recursos");
 	}
 	
-	@RequestMapping(value = "/acidentesiar/delete/{id}", method = RequestMethod.GET)
-	public View removeAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	@RequestMapping(value = "/recursos/delete/{id}", method = RequestMethod.GET)
+	public View removeRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model) {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		acidenteSiarService.removeAcidente(id);
-		return new RedirectView("/siar/acidentesiar");
+		service.removeRecurso(id);
+		return new RedirectView("/siar/recursos");
 	}
 	
-	@RequestMapping(value = "/acidentesiar/updateacidente/{id}", method = RequestMethod.GET)
-	public String updateAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model){
+	@RequestMapping(value = "/recursos/update/{id}", method = RequestMethod.GET)
+	public String updateRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model){
 		if (!autorizado(request, model))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Editar acidente");
-		model.addAttribute("acidenteUpdate", acidenteSiarService.findAcidenteById(id));
-		return "updateacidente";
+		model.addAttribute(Const.ATTR_TITLE, "Editar recurso");
+		model.addAttribute("recursoUpdate", service.findRecursoById(id));
+		return "updaterecurso";
 	}
 	
 	private boolean autorizado(HttpServletRequest request, ModelMap model) {
 		
-		TipoUsuario tipo = TipoUsuario.COORDENADOR;
+		TipoUsuario tipo = TipoUsuario.ADMINISTRADOR;
 		
 		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
 		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
@@ -77,4 +84,5 @@ public class AcidenteSiarController {
 		}
 		return false;
 	}
+
 }

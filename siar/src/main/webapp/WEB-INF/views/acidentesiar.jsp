@@ -1,24 +1,21 @@
 <%@ include file="/WEB-INF/views/headers.jsp" %>
 <html>
-<head>
-	<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/lista.css" />" rel="stylesheet">
-	<style type="text/css">
-	</style>
-</head>
+	<head>
+		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/lista.css" />" rel="stylesheet">
+		<style type="text/css">
+		</style>
+		<title>${title}</title>
+	</head>
 	
-<body>
-	<div class="pagina container">
-		<div class="row">
-			<div class="title col-sm-12">
-		  		<h2>Acidentes - Siar v.0.1</h2>
-		    </div>
-		</div>
+	<body>
+		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 	    
 	    <div class="col-sm-12">
 	    	<ul class="menu nav nav-tabs">
-	    		<li class="active"><a hfref="#">Acidentes</a></li>
-	    		<li><a href="#">Recursos</a></li>
+	    		<li class="active"><a href="#">Acidentes</a></li>
+	    		<li><a href="recursosiar">Recursos</a></li>
 	    	</ul>
 	    </div>
 

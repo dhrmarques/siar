@@ -13,7 +13,7 @@ public class SessionHelper {
 
 	public static final UsuarioSiar getUsuarioLogado(HttpServletRequest request) {
 		
-		Object attr = request.getSession().getAttribute(Constants.SESSION_KEY_USER);
+		Object attr = request.getSession().getAttribute(Const.SESSION_KEY_USER);
 		if (attr != null && attr instanceof UsuarioSiar) {
 			UsuarioSiar usuario = (UsuarioSiar) attr;
 			
@@ -36,6 +36,6 @@ public class SessionHelper {
 
 	public static final void setUsuarioLogado(HttpServletRequest request, UsuarioSiar usuario) {
 		logger.info("Saving session for user " + usuario.getNome());
-		request.getSession().setAttribute(Constants.SESSION_KEY_USER, usuario);
+		request.getSession().setAttribute(Const.SESSION_KEY_USER, usuario);
 	}
 }
