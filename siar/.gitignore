@@ -16,3 +16,5 @@ hs_err_pid*
 Servers/
 RemoteSystemsTempFiles/
 spring-data-mongodb-1.2.0-RELEASE/
+
+*.properties
