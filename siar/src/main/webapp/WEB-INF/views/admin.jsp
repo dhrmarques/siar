@@ -9,7 +9,7 @@
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 		<ul>
 			<li><a href="usuariosiar/">Gerenciar usuários</a></li>
-			<li><a href="recursosiar/">Gerenciar recursos</a></li>
+			<li><a href="recursos">Gerenciar recursos</a></li>
 		</ul>
 	</body>
 </html>
