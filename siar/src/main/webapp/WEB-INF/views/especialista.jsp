@@ -8,8 +8,8 @@
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>	
 		<ul>
-			<li><a href="missaosiar">Gerenciar missões</a></li>
-			<li><a href="tipomissaosiar">Gerenciar tipos de missão</a></li>
+			<li><a href="missoes">Gerenciar missões</a></li>
+			<li><a href="tiposmissao">Gerenciar tipos de missão</a></li>
 		</ul>
 	</body>
 </html>

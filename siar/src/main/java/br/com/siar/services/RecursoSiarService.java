@@ -34,33 +34,33 @@ public class RecursoSiarService {
 	}
 	
 	//Service methods.
-		public void saveRecurso(RecursoSiar recurso) {
-			if (!siarmongoTemplate.collectionExists(RecursoSiar.class)) {
-				siarmongoTemplate.createCollection(RecursoSiar.class);
-			}
-			//Checking if the object already exists
-			if ((siarmongoTemplate.findById(recurso.getId(), RecursoSiar.class, COLLECTION_NAME)) != null) {
-				siarmongoTemplate.save(recurso, COLLECTION_NAME);
-			}
-			siarmongoTemplate.insert(recurso, COLLECTION_NAME);
+	public void saveRecurso(RecursoSiar recurso) {
+		if (!siarmongoTemplate.collectionExists(RecursoSiar.class)) {
+			siarmongoTemplate.createCollection(RecursoSiar.class);
 		}
-		
-		public RecursoSiar findRecursoById(String id){
-			return siarmongoTemplate.findById(new ObjectId(id), RecursoSiar.class, COLLECTION_NAME);
+		//Checking if the object already exists
+		if ((siarmongoTemplate.findById(recurso.getId(), RecursoSiar.class, COLLECTION_NAME)) != null) {
+			siarmongoTemplate.save(recurso, COLLECTION_NAME);
 		}
-		
-		public List<RecursoSiar> listRecursos() {
-			return siarmongoTemplate.findAll(RecursoSiar.class, COLLECTION_NAME);
+		siarmongoTemplate.insert(recurso, COLLECTION_NAME);
+	}
+	
+	public RecursoSiar findRecursoById(String id){
+		return siarmongoTemplate.findById(new ObjectId(id), RecursoSiar.class, COLLECTION_NAME);
+	}
+	
+	public List<RecursoSiar> listRecursos() {
+		return siarmongoTemplate.findAll(RecursoSiar.class, COLLECTION_NAME);
+	}
+	
+	public void removeRecurso(String id) {
+		try {
+			ObjectId _id = new ObjectId(id);
+			RecursoSiar recurso = siarmongoTemplate.findById(_id, RecursoSiar.class, COLLECTION_NAME);
+			siarmongoTemplate.remove(recurso, COLLECTION_NAME);
+		} catch(Exception e) {
+			logger.warn("Houve um erro ao remover o recurso indicado", e);
 		}
-		
-		public void removeRecurso(String id) {
-			try {
-				ObjectId _id = new ObjectId(id);
-				RecursoSiar recurso = siarmongoTemplate.findById(_id, RecursoSiar.class, COLLECTION_NAME);
-				siarmongoTemplate.remove(recurso, COLLECTION_NAME);
-			} catch(Exception e) {
-				logger.warn("Houve um erro ao remover o recurso indicado", e);
-			}
-		}
+	}
 
 }

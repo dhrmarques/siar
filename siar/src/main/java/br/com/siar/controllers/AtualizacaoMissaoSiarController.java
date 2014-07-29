@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.com.siar.controllers;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,59 +12,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
-import br.com.siar.models.RecursoSiar;
+import br.com.siar.models.AtualizacaoMissaoSiar;
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
-import br.com.siar.services.RecursoSiarService;
+import br.com.siar.services.AtualizacaoMissaoSiarService;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
-/**
- * @author Leo
- *
- */
 @Controller
-public class RecursoSiarController {
-	
+public class AtualizacaoMissaoSiarController {
+
 	@Autowired
-	private RecursoSiarService recursoService;
+	private AtualizacaoMissaoSiarService amsService;
 	
-	@RequestMapping(value = "/recursos", method = RequestMethod.GET)
-	public String getRecursosList(HttpServletRequest request, ModelMap model) {
+	@RequestMapping(value = "/ams", method = RequestMethod.GET)
+	public String getAtualizacoesList(HttpServletRequest request, ModelMap model) {
 		if (!autorizado(request, model))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Recursos");
-		model.addAttribute("recursoSiarList", recursoService.listRecursos());
-		return "recursosiar";
+		model.addAttribute(Const.ATTR_TITLE, "Atualizações de Missão");
+		model.addAttribute("amsList", amsService.listarAtualizacoes());
+		return "ams";
 	}
 	
-	@RequestMapping(value = "/recursos/save", method = RequestMethod.POST)
-	public View saveRecurso(HttpServletRequest request, @ModelAttribute RecursoSiar recurso, ModelMap model) {
+	@RequestMapping(value = "/ams/save", method = RequestMethod.POST)
+	public View saveAtualizacao(HttpServletRequest request, @ModelAttribute AtualizacaoMissaoSiar ams, ModelMap model) {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		recursoService.saveRecurso(recurso);
-		return new RedirectView("/siar/recursos");
+		amsService.saveAtualizacao(ams);
+		return new RedirectView("/siar/ams");
 	}
 	
-	@RequestMapping(value = "/recursos/delete/{id}", method = RequestMethod.GET)
-	public View removeRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request, model))
-			return new RedirectView(Const.HOME_ADDRESS);
-		
-		recursoService.removeRecurso(id);
-		return new RedirectView("/siar/recursos");
-	}
-	
-	@RequestMapping(value = "/recursos/update/{id}", method = RequestMethod.GET)
-	public String updateRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model){
+	@RequestMapping(value = "/ams/update/{id}", method = RequestMethod.GET)
+	public String updateAtualizacao(HttpServletRequest request, @PathVariable String id, ModelMap model){
 		if (!autorizado(request, model))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Editar recurso");
-		model.addAttribute("recursoUpdate", recursoService.findRecursoById(id));
-		return "updaterecurso";
+		model.addAttribute(Const.ATTR_TITLE, "Editar Atualização");
+		model.addAttribute("amsUpdate", amsService.findAtualizacaoById(id));
+		return "updateams";
 	}
 	
 	private boolean autorizado(HttpServletRequest request, ModelMap model) {
@@ -84,5 +68,5 @@ public class RecursoSiarController {
 		}
 		return false;
 	}
-
+	
 }

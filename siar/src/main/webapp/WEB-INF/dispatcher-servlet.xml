@@ -43,7 +43,19 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean id="usuarioSiarService" class="br.com.siar.services.UsuarioSiarService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
-	<bean id="service" class="br.com.siar.services.RecursoSiarService">
+	<bean id="recursoService" class="br.com.siar.services.RecursoSiarService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
+	<bean id="missaoService" class="br.com.siar.services.MissaoSiarService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
+	<bean id="tipoMissaoService" class="br.com.siar.services.TipoMissaoSiarService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
+	<bean id="amsService" class="br.com.siar.services.AtualizacaoMissaoSiarService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
+	<bean id="fornecedorService" class="br.com.siar.services.FornecedorSiarService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
 </beans> 

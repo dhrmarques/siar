@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
-import br.com.siar.models.RecursoSiar;
+import br.com.siar.models.TipoMissaoSiar;
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
-import br.com.siar.services.RecursoSiarService;
+import br.com.siar.services.TipoMissaoSiarService;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
@@ -27,52 +27,52 @@ import br.com.siar.utils.SessionHelper;
  *
  */
 @Controller
-public class RecursoSiarController {
-	
+public class TipoMissaoSiarController {
+
 	@Autowired
-	private RecursoSiarService recursoService;
+	private TipoMissaoSiarService tipoMissaoService;
 	
-	@RequestMapping(value = "/recursos", method = RequestMethod.GET)
-	public String getRecursosList(HttpServletRequest request, ModelMap model) {
+	@RequestMapping(value = "/tiposmissao", method = RequestMethod.GET)
+	public String getMissoesList(HttpServletRequest request, ModelMap model) {
 		if (!autorizado(request, model))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Recursos");
-		model.addAttribute("recursoSiarList", recursoService.listRecursos());
-		return "recursosiar";
+		model.addAttribute(Const.ATTR_TITLE, "Tipos de missão");
+		model.addAttribute("tipoMissaoSiarList", tipoMissaoService.listTiposMissao());
+		return "tipomissaosiar";
 	}
 	
-	@RequestMapping(value = "/recursos/save", method = RequestMethod.POST)
-	public View saveRecurso(HttpServletRequest request, @ModelAttribute RecursoSiar recurso, ModelMap model) {
+	@RequestMapping(value = "/tiposmissao/save", method = RequestMethod.POST)
+	public View saveTipoMissao(HttpServletRequest request, @ModelAttribute TipoMissaoSiar tipo, ModelMap model) {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		recursoService.saveRecurso(recurso);
-		return new RedirectView("/siar/recursos");
+		tipoMissaoService.saveTipoMissao(tipo);
+		return new RedirectView("/siar/tiposmissao");
 	}
 	
-	@RequestMapping(value = "/recursos/delete/{id}", method = RequestMethod.GET)
-	public View removeRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	@RequestMapping(value = "/tiposmissao/delete/{id}", method = RequestMethod.GET)
+	public View removeTipoMissao(HttpServletRequest request, @PathVariable String id, ModelMap model) {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		recursoService.removeRecurso(id);
-		return new RedirectView("/siar/recursos");
+		tipoMissaoService.removeTipoMissao(id);
+		return new RedirectView("/siar/tiposmissao");
 	}
 	
-	@RequestMapping(value = "/recursos/update/{id}", method = RequestMethod.GET)
-	public String updateRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model){
+	@RequestMapping(value = "/tiposmissao/update/{id}", method = RequestMethod.GET)
+	public String updateTipoMissao(HttpServletRequest request, @PathVariable String id, ModelMap model){
 		if (!autorizado(request, model))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Editar recurso");
-		model.addAttribute("recursoUpdate", recursoService.findRecursoById(id));
-		return "updaterecurso";
+		model.addAttribute(Const.ATTR_TITLE, "Editar missão");
+		model.addAttribute("tipo", tipoMissaoService.findTipoMissaoById(id));
+		return "updatetipomissao";
 	}
 	
 	private boolean autorizado(HttpServletRequest request, ModelMap model) {
 		
-		TipoUsuario tipo = TipoUsuario.ADMINISTRADOR;
+		TipoUsuario tipo = TipoUsuario.ESPECIALISTA;
 		
 		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
 		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
@@ -84,5 +84,4 @@ public class RecursoSiarController {
 		}
 		return false;
 	}
-
 }

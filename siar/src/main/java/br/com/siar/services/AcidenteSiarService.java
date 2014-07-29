@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.AcidenteSiar;
 
@@ -42,6 +44,13 @@ public class AcidenteSiarService {
 	
 	public List<AcidenteSiar> listAcidentes() {
 		return siarmongoTemplate.findAll(AcidenteSiar.class, "acidenteSiar");
+	}
+	
+	public List<AcidenteSiar> listActiveAcidentes() {
+		Query q = new Query(); // TODO
+		q.addCriteria(Criteria.where("prioridade").is("Baixa"));
+
+		return siarmongoTemplate.find(q, AcidenteSiar.class, "acidenteSiar");
 	}
 	
 	public void removeAcidente(String id) {
