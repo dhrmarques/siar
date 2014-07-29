@@ -46,4 +46,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean id="service" class="br.com.siar.services.RecursoSiarService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
+	<bean id="amsService" class="br.com.siar.services.AtualizacaoMissaoSiarService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
 </beans> 

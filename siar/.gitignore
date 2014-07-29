@@ -17,4 +17,6 @@ Servers/
 RemoteSystemsTempFiles/
 spring-data-mongodb-1.2.0-RELEASE/
 
-*.properties
+*/pom.properties
+*/MANIFEST.MF
+*.gitignore
