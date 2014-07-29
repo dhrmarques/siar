@@ -22,18 +22,20 @@
 		    <table class="table table-condensed">
 		        <tr>
 		            <th>Acidente</th>
-		            <th>Status</th>
+		            <th>Tipo</th>
 		            <th>Detalhes</th>
+		            <th>Status</th>
 		            <th>Atualizar</th>
 		            <th>Remover</th>
 		        </tr>
-		        <c:forEach var="missao" items="${missaoSiarList}">
+		        <c:forEach var="response" items="${responseList}">
 		            <tr>
-		                <td><span>${missao.acidenteId}</span></td>
-		                <td><span>${missao.statusMissaoId}</span></td>
-		                <td><span>${missao.detalhes}</span></td>
-		                <td><a href="/siar/missoes/update/${missao.id}"><button class="btn btn-warning">Update</button></a></td>
-		                <td><a href="/siar/missoes/delete/${missao.id}"><button class="btn">Remove</button></a></td>
+		                <td>${response.acidenteDesc}</td>
+		                <td>${response.tipoMissao.titulo}</td>
+		                <td>${response.missao.detalhes}</td>
+		                <td>${response.statusAtual}</td>
+		                <td><a href="/siar/missoes/update/${response.missao.id}"><button class="btn btn-warning">Update</button></a></td>
+		                <td><a href="/siar/missoes/delete/${response.missao.id}"><button class="btn">Remove</button></a></td>
 		            </tr>
 		        </c:forEach>
 		    </table> 

@@ -68,7 +68,7 @@ public class MissaoSiarController implements ApplicationContextAware {
 			list.add(new MissaoResponse(missao, acidente, tipoMissao, "status?"));
 		}
 		
-		model.addAttribute("missaoSiarList", list);
+		model.addAttribute("responseList", list);
 		return "missaosiar";
 	}
 	

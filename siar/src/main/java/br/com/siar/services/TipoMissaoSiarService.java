@@ -50,7 +50,8 @@ public class TipoMissaoSiarService {
 	}
 	
 	public List<TipoMissaoSiar> listTiposMissao() {
-		return siarmongoTemplate.findAll(TipoMissaoSiar.class, COLLECTION_NAME);
+		List<TipoMissaoSiar> list = siarmongoTemplate.findAll(TipoMissaoSiar.class, COLLECTION_NAME);
+		return list;
 	}
 	
 	public void removeTipoMissao(String id) {
