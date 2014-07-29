@@ -90,6 +90,19 @@ public class MissaoSiarController implements ApplicationContextAware {
 		return new RedirectView("/siar/missoes");
 	}
 	
+	@RequestMapping(value = "/missoes/new", method = RequestMethod.POST)
+	public String createMissao(HttpServletRequest request, ModelMap model){
+		if (!autorizado(request, model))
+			return Const.REDIRECT_UNAUTHORIZED;
+		
+		String acidenteId = request.getParameter("acidenteId").toString();
+		
+		model.addAttribute(Const.ATTR_TITLE, "Criar missão");
+		model.addAttribute("acidente", getAcidenteService().findAcidenteById(acidenteId));
+		model.addAttribute("tiposMissao", getTipoMissaoService().listTiposMissao());
+		return "createmissao";
+	}
+	
 	@RequestMapping(value = "/missoes/update/{id}", method = RequestMethod.GET)
 	public String updateMissao(HttpServletRequest request, @PathVariable String id, ModelMap model){
 		if (!autorizado(request, model))
