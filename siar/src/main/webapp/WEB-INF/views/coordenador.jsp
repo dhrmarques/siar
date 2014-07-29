@@ -10,6 +10,7 @@
 		<ul>
 			<li><a href="acidentesiar/">Gerenciar acidentes</a></li>
 			<li>Alocar recursos</li>
+			<li><a href="acessosvc">Acessar SVC</a></li>
 		</ul>
 	</body>
 </html>
