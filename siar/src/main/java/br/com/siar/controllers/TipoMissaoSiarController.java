@@ -66,7 +66,7 @@ public class TipoMissaoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar missão");
-		model.addAttribute("tipoMissaoUpdate", tipoMissaoService.findTipoMissaoById(id));
+		model.addAttribute("tipo", tipoMissaoService.findTipoMissaoById(id));
 		return "updatetipomissao";
 	}
 	
