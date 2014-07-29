@@ -20,27 +20,31 @@
  		<div class="col-sm-12">
  			<div class="new-recurso-form">
 	        <form class="form-inline" action="/siar/recursos/save" method="post" role="form">
-	        	<div class="container">
-		        	<div class="form-group col-sm-3">
-			            <label for="nome">Nome</label>
-			            <input class="form-control" type="text" id="nome" name="nome"/>
+		        	<div class="form-group">
+			            <input placeholder="Nome" class="form-control" type="text" id="nome" name="nome"/>
 		            </div>
-		        	<div class="form-group col-sm-3">
-			            <label for="descricao">Descrição</label>
-			            <input class="form-control" type="text" id="descricao" name="descricao"/>
+		        	<div class="form-group">
+			            <input placeholder="Descrição" class="form-control" type="text" id="descricao" name="descricao"/>
 		            </div>
-		        	<div class="form-group col-sm-1">
-			            <label for="recursoHumano">RH?</label><br/>
-			            <input class="form-control" type="checkbox" id="recursoHumano" name="recursoHumano"/>
+		        	<div class="checkbox">
+			            <label for="recursoHumano">
+			            	RH?
+			            	<input type="checkbox" id="recursoHumano" name="recursoHumano"/>
+		            	</label>
 		            </div>
-		        	<div class="form-group col-sm-3">
-			            <label for="qtdPropria">Qtd SiAR</label>
-			            <input class="form-control" type="text" id="qtdPropria" name="qtdPropria"/>
+		        	<div class="form-group">
+		        		<label>
+		        			Quantidade: 
+			        		<select class="form-control" type="text" id="qtdPropria" name="qtdPropria">
+				        		<c:forEach var="i" begin="0" end="20">
+				        			<option><c:out value="${i}"/></option>
+								</c:forEach>
+				            </select>
+			            </label>
 		            </div>
-	            	<div class="form-group col-sm-2">
+	            	<div class="form-group">
 	            		<button class="btn btn-success" type="submit">submit</button>
 	            	</div>
-	    		</div>
 	    	</form>
 	    	</div>
 		</div>
