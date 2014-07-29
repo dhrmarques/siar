@@ -35,6 +35,16 @@ public class AcidenteSiarController {
 		return "acidentesiar";
 	}
 	
+	@RequestMapping(value = "/acidentes", method = RequestMethod.GET)
+	public String getActiveAcidentesList(HttpServletRequest request, ModelMap model) {
+		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
+			return Const.REDIRECT_UNAUTHORIZED;
+		
+		model.addAttribute(Const.ATTR_TITLE, "Acidentes em aberto");
+		model.addAttribute("acidenteList", acidenteSiarService.listActiveAcidentes());
+		return "acidentemissao";
+	}
+	
 	@RequestMapping(value = "/acidentesiar/save", method = RequestMethod.POST)
 	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model) {
 		if (!autorizado(request, model))
@@ -65,13 +75,16 @@ public class AcidenteSiarController {
 	
 	private boolean autorizado(HttpServletRequest request, ModelMap model) {
 		
-		TipoUsuario tipo = TipoUsuario.COORDENADOR;
+		return autorizado(request, model, TipoUsuario.COORDENADOR);
+	}
+	
+	private boolean autorizado(HttpServletRequest request, ModelMap model, TipoUsuario tipoUser) {
 		
 		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
-		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
+		if (usuario != null && usuario.getTipoUsuario().equals(tipoUser)) {
 			
 			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
-			model.addAttribute(Const.ATTR_USER_TYPE, tipo.desc);
+			model.addAttribute(Const.ATTR_USER_TYPE, tipoUser.desc);
 			
 			return true;
 		}
