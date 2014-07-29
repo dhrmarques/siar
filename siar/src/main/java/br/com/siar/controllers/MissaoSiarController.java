@@ -116,7 +116,7 @@ public class MissaoSiarController implements ApplicationContextAware {
 				getTipoMissaoService().findTipoMissaoById(missao.getTipoMissaoId()),
 				"Status...");
 		
-		model.addAttribute("missaoUpdate", response);
+		model.addAttribute("missaoResponse", response);
 		return "updatemissao";
 	}
 	

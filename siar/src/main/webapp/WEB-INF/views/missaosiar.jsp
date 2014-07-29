@@ -30,7 +30,7 @@
 		        </tr>
 		        <c:forEach var="response" items="${responseList}">
 		            <tr>
-		                <td>${response.acidenteDesc}</td>
+		                <td>${response.acidente.descricao}</td>
 		                <td>${response.tipoMissao.titulo}</td>
 		                <td>${response.missao.detalhes}</td>
 		                <td>${response.statusAtual}</td>

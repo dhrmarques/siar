@@ -14,13 +14,13 @@ import br.com.siar.models.TipoMissaoSiar;
 public class MissaoResponse {
 
 	private MissaoSiar missao;
-	private String acidenteDesc;
+	private AcidenteSiar acidente;
 	private TipoMissaoSiar tipoMissao;
 	private Object statusAtual; // TODO
 	
 	public MissaoResponse(MissaoSiar missao, AcidenteSiar acidente, TipoMissaoSiar tipo, Object status) {
 		this.missao = missao;
-		this.acidenteDesc = acidente.getDescricao() + "\n" + acidente.getPrioridade();
+		this.acidente = acidente;
 		this.tipoMissao = tipo;
 		this.statusAtual = status;
 	}
@@ -33,12 +33,12 @@ public class MissaoResponse {
 		this.missao = missao;
 	}
 
-	public String getAcidenteDesc() {
-		return acidenteDesc;
+	public AcidenteSiar getAcidente() {
+		return acidente;
 	}
 
-	public void setAcidenteDesc(String acidenteDesc) {
-		this.acidenteDesc = acidenteDesc;
+	public void setAcidente(AcidenteSiar acidente) {
+		this.acidente = acidente;
 	}
 
 	public TipoMissaoSiar getTipoMissao() {
