@@ -50,7 +50,7 @@ public class AtualizacaoMissaoSiarController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar Atualização");
-		model.addAttribute("recursoUpdate", amsService.findAtualizacaoById(id));
+		model.addAttribute("amsUpdate", amsService.findAtualizacaoById(id));
 		return "updateams";
 	}
 	
