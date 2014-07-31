@@ -3,7 +3,6 @@
  */
 package br.com.siar.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
-import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.MissaoSiar;
-import br.com.siar.models.TipoMissaoSiar;
+import br.com.siar.models.StatusMissao;
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.models.response.MissaoResponse;
@@ -56,17 +54,7 @@ public class MissaoSiarController implements ApplicationContextAware {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute(Const.ATTR_TITLE, "Missões");
-		List<MissaoSiar> missoes = missaoService.listMissoes();
-		List<MissaoResponse> list = new ArrayList<MissaoResponse>();
-		
-		AcidenteSiarService acidenteService = getAcidenteService();
-		TipoMissaoSiarService tipoMissaoService = getTipoMissaoService();
-		
-		for (MissaoSiar missao : missoes) {
-			AcidenteSiar acidente = acidenteService.findAcidenteById(missao.getAcidenteId());
-			TipoMissaoSiar tipoMissao = tipoMissaoService.findTipoMissaoById(missao.getTipoMissaoId());
-			list.add(new MissaoResponse(missao, acidente, tipoMissao, "status?"));
-		}
+		List<MissaoResponse> list = missaoService.listMissoes();
 		
 		model.addAttribute("responseList", list);
 		return "missaosiar";
@@ -76,6 +64,8 @@ public class MissaoSiarController implements ApplicationContextAware {
 	public View saveMissao(HttpServletRequest request, @ModelAttribute MissaoSiar missao, ModelMap model) {
 		if (!autorizado(request, model))
 			return new RedirectView(Const.HOME_ADDRESS);
+		
+		if (missao.getStatus() == null) missao.setStatus(StatusMissao.PENDENTE);
 		
 		missaoService.saveMissao(missao);
 		return new RedirectView("/siar/missoes");
@@ -110,13 +100,9 @@ public class MissaoSiarController implements ApplicationContextAware {
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar missão");
 		
-		MissaoSiar missao = missaoService.findMissaoById(id);
-		MissaoResponse response = new MissaoResponse(missao,
-				getAcidenteService().findAcidenteById(missao.getAcidenteId()),
-				getTipoMissaoService().findTipoMissaoById(missao.getTipoMissaoId()),
-				"Status...");
-		
+		MissaoResponse response = missaoService.findMissaoById(id);
 		model.addAttribute("missaoResponse", response);
+		
 		return "updatemissao";
 	}
 	

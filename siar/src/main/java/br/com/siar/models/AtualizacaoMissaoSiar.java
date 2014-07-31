@@ -16,9 +16,9 @@ public class AtualizacaoMissaoSiar {
 	private ObjectId _id;
 	
 	private Date dataAtualizacao;
-	private String missaoId;
+	private ObjectId missaoId;
 	private String comentario;
-	private String usuarioId;
+	private ObjectId usuarioId;
 	
 	
 	public ObjectId getId() {
@@ -33,10 +33,10 @@ public class AtualizacaoMissaoSiar {
 	public void setDataAtualizacao(Date dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
-	public String getMissaoId() {
+	public ObjectId getMissaoId() {
 		return missaoId;
 	}
-	public void setMissaoId(String missaoId) {
+	public void setMissaoId(ObjectId missaoId) {
 		this.missaoId = missaoId;
 	}
 	public String getComentario() {
@@ -45,10 +45,10 @@ public class AtualizacaoMissaoSiar {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	public String getUsuarioId() {
+	public ObjectId getUsuarioId() {
 		return usuarioId;
 	}
-	public void setUsuarioId(String usuarioId) {
+	public void setUsuarioId(ObjectId usuarioId) {
 		this.usuarioId = usuarioId;
 	}
 	

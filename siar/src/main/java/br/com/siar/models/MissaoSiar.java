@@ -15,8 +15,9 @@ public class MissaoSiar {
 	@Id
 	private ObjectId _id;
 	
-	private String acidenteId;
-	private String tipoMissaoId;
+	private ObjectId acidenteId;
+	private ObjectId tipoMissaoId;
+	private StatusMissao status;
 
 	private String detalhes;
 	
@@ -28,19 +29,19 @@ public class MissaoSiar {
 		this._id = id;
 	}
 
-	public String getAcidenteId() {
+	public ObjectId getAcidenteId() {
 		return acidenteId;
 	}
 
-	public void setAcidenteId(String acidenteId) {
+	public void setAcidenteId(ObjectId acidenteId) {
 		this.acidenteId = acidenteId;
 	}
 
-	public String getTipoMissaoId() {
+	public ObjectId getTipoMissaoId() {
 		return tipoMissaoId;
 	}
 
-	public void setTipoMissaoId(String tipoMissaoId) {
+	public void setTipoMissaoId(ObjectId tipoMissaoId) {
 		this.tipoMissaoId = tipoMissaoId;
 	}
 
@@ -50,5 +51,13 @@ public class MissaoSiar {
 
 	public void setDetalhes(String detalhes) {
 		this.detalhes = detalhes;
+	}
+
+	public StatusMissao getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusMissao status) {
+		this.status = status;
 	}
 }
