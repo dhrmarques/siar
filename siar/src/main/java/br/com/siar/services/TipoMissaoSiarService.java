@@ -18,7 +18,7 @@ import br.com.siar.models.TipoMissaoSiar;
  */
 public class TipoMissaoSiarService {
 	
-	private static final String COLLECTION_NAME = "tipoMissaoSiar";
+	private static final String COLLECTION_NAME = TipoMissaoSiar.COLLECTION_NAME;
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;

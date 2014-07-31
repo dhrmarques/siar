@@ -23,7 +23,7 @@ import br.com.siar.models.response.MissaoResponse;
  */
 public class MissaoSiarService {
 	
-	private static final String COLLECTION_NAME = "missaoSiar";
+	private static final String COLLECTION_NAME = MissaoSiar.COLLECTION_NAME;
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
@@ -54,9 +54,9 @@ public class MissaoSiarService {
 		
 		MissaoSiar missao = siarmongoTemplate.findById(new ObjectId(id), MissaoSiar.class, COLLECTION_NAME);
 		MissaoResponse response = new MissaoResponse(missao,
-				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
-				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class),
-				siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class));
+				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME),
+				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class, TipoMissaoSiar.COLLECTION_NAME),
+				siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME));
 		
 		return response;
 	}

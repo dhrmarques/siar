@@ -20,7 +20,7 @@ public class FornecedorSiarService {
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
 	
-	private static final String COLLECTION_NAME = "fornecedorSiar";
+	private static final String COLLECTION_NAME = FornecedorSiar.COLLECTION_NAME;
 	private static final Logger logger = LoggerFactory.getLogger(FornecedorSiarService.class);
 	
 	//Getter and setter for the MongoTemplate - Required

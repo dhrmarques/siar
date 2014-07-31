@@ -1,27 +1,15 @@
 package br.com.siar.models;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
-
-public class AcidenteSiar {
+public class AcidenteSiar extends BasicModel {
 	
-	@Id
-	private ObjectId _id;
+	public static final String COLLECTION_NAME = "acidenteSiar";
 
 	public String descricao;
 	public String prioridade;
 	
 	public AcidenteSiar() {
 		
-	}
-	
-	public ObjectId getId() {
-		return _id;
-	}
-
-	public void setId(ObjectId _id) {
-		this._id = _id;
 	}
 	
 	public String getPrioridade() {
@@ -39,5 +27,4 @@ public class AcidenteSiar {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
 }

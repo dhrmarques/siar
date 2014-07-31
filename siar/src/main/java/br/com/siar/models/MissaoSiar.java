@@ -4,16 +4,14 @@
 package br.com.siar.models;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * @author Leo
  *
  */
-public class MissaoSiar {
+public class MissaoSiar extends BasicModel {
 
-	@Id
-	private ObjectId _id;
+	public static final String COLLECTION_NAME = "missaoSiar";
 	
 	private ObjectId acidenteId;
 	private ObjectId tipoMissaoId;
@@ -22,14 +20,6 @@ public class MissaoSiar {
 
 	private String detalhes;
 	
-	public ObjectId getId() {
-		return _id;
-	}
-
-	public void setId(ObjectId id) {
-		this._id = id;
-	}
-
 	public ObjectId getAcidenteId() {
 		return acidenteId;
 	}

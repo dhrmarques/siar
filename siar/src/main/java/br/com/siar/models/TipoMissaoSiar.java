@@ -3,27 +3,18 @@
  */
 package br.com.siar.models;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * @author Leo
  *
  */
-public class TipoMissaoSiar {
-	
-	@Id
-	private ObjectId _id;
+public class TipoMissaoSiar extends BasicModel {
+
+	public static final String COLLECTION_NAME = "tipoMissaoSiar";
 	
 	private String titulo;
 	private String descricao;
 
-	public ObjectId getId() {
-		return _id;
-	}
-	public void setId(ObjectId id) {
-		this._id = id;
-	}
 	public String getTitulo() {
 		return titulo;
 	}
