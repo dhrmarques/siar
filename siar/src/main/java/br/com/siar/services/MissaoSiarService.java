@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.MissaoSiar;
 import br.com.siar.models.TipoMissaoSiar;
+import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.response.MissaoResponse;
 
 /**
@@ -54,7 +55,8 @@ public class MissaoSiarService {
 		MissaoSiar missao = siarmongoTemplate.findById(new ObjectId(id), MissaoSiar.class, COLLECTION_NAME);
 		MissaoResponse response = new MissaoResponse(missao,
 				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
-				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class));
+				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class),
+				siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class));
 		
 		return response;
 	}
@@ -66,8 +68,9 @@ public class MissaoSiarService {
 		for (MissaoSiar missao : missoes) {
 			lista.add(new MissaoResponse(missao,
 					siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
-					siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class)));
-		}		
+					siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class),
+					siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class)));
+		}
 		
 		return lista; 
 	}

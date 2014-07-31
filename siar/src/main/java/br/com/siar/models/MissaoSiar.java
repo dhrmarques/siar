@@ -18,6 +18,7 @@ public class MissaoSiar {
 	private ObjectId acidenteId;
 	private ObjectId tipoMissaoId;
 	private StatusMissao status;
+	private ObjectId chefeId;
 
 	private String detalhes;
 	
@@ -59,5 +60,13 @@ public class MissaoSiar {
 
 	public void setStatus(StatusMissao status) {
 		this.status = status;
+	}
+
+	public ObjectId getChefeId() {
+		return chefeId;
+	}
+
+	public void setChefeId(ObjectId chefeId) {
+		this.chefeId = chefeId;
 	}
 }
