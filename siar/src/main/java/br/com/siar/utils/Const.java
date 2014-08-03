@@ -20,12 +20,18 @@ public class Const {
 	/** 
 	 * Paths and stuff
 	 */
-	public static final String SIAR_DOMAIN = "/siar/";
+	public static final String SIAR = "/siar/";
 	public static final String ROOT_ADDRESS = "/";
 	public static final String HOME_ADDRESS = ROOT_ADDRESS + "home";
 	public static final String REDIRECT_NOT_LOGGED = "redirect:" + ROOT_ADDRESS;
 	public static final String REDIRECT_HOME = "redirect:" + HOME_ADDRESS;
 	public static final String REDIRECT_UNAUTHORIZED = REDIRECT_HOME;
+	
+	public static final String LIST = "";
+	public static final String NEW = "/new";
+	public static final String SAVE = "/save";
+	public static final String UPDATE = "/update/{id}";
+	public static final String DELETE = "/delete/{id}";
 	
 	/**
 	 * ModelMap attributes frequently used for JSP 
@@ -34,4 +40,6 @@ public class Const {
 	public static final String ATTR_NAME = "nome";
 	public static final String ATTR_USER_TYPE = "tipo_usuario";
 	public static final String ATTR_HIDE_HR = "hide_header_right";
+	public static final String ATTR_LINKS = "linklist";
+	public static final String ATTR_LINK_ACTIVE = "active_path";
 }

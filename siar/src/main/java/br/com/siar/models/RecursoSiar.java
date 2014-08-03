@@ -10,7 +10,7 @@ package br.com.siar.models;
  */
 public class RecursoSiar extends BasicModel {
 
-	public static final String COLLECTION_NAME = "missaoSiar";
+	public static final String COLLECTION_NAME = "recursoSiar";
 	
 	private boolean recursoHumano;
 	private String nome;

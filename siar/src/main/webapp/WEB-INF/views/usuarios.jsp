@@ -9,17 +9,10 @@
 	</head>
 	<body>
 	    <%@ include file="/WEB-INF/views/layout_header.jsp" %>
-	    
-	     <div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li class="active"><a href="#">Usuários</a></li>
-	    		<li><a href="recursos">Recursos</a></li>
-	    	</ul>
-	    </div>
 
 		<div class="col-sm-12">
 			<div class="one-liner-form">
-		        <form class="form-inline" action="/siar/usuariosiar/save" method="post">
+		        <form class="form-inline" action="/siar/usuarios/save" method="post">
 		        	<div class="form-group">
 			            <input placeholder="Nome" class="form-control" type="text" id="nome" name="nome"/>
 		            </div>
@@ -61,8 +54,8 @@
 	                <td>${usuario.email}</td>
 	                <td>${usuario.cpf}</td>
 	                <td>${usuario.tipoUsuario}</td>
-	                <td><a href="/siar/usuariosiar/updateusuario/${usuario.id}"><button class="btn btn-warning">Update</button></a></td>
-	                <td><a href="/siar/usuariosiar/delete/${usuario.id}"><button class="btn">Remove</button></a></td>
+	                <td><a href="/siar/usuarios/update/${usuario.id}"><button class="btn btn-warning">Update</button></a></td>
+	                <td><a href="/siar/usuarios/delete/${usuario.id}"><button class="btn">Remove</button></a></td>
 	            </tr>
 	        </c:forEach>
 	    </table>  

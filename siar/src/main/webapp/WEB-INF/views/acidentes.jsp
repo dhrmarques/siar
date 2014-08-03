@@ -11,17 +11,10 @@
 	
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
-	    
-	    <div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li class="active"><a href="#">Acidentes</a></li>
-	    		<li><a href="recursosiar">Recursos</a></li>
-	    	</ul>
-	    </div>
 
  		<div class="col-sm-12">
  			<div class="new-acidente-form">
-	        <form class="form-inline" action="/siar/acidentesiar/save" method="post" role="form">
+	        <form class="form-inline" action="/siar/acidentes/save" method="post" role="form">
 	        	<div class="container">
 		        	<div class="form-group col-sm-4">
 			            <label for="descricao">Descrição</label>
@@ -29,7 +22,7 @@
 		            </div>
 		            <div class="form-group col-sm-4">
 			            <label for="prioridade">Prioridade</label>
-			            <select class="form-control" type="text" id="prioridade" name="prioridade">
+			            <select class="form-control" id="prioridade" name="prioridade">
 			            	<option>Muito Grave</option>
 			            	<option>Grave</option>
 			            	<option>Média</option>
@@ -56,8 +49,8 @@
 		            <tr>
 		                <td><span>${acidente.descricao}</span></td>
 		                <td><span>${acidente.prioridade}</span></td>
-		                <td><a href="/siar/acidentesiar/updateacidente/${acidente.id}"><button class="btn btn-warning">Update</button></a></td>
-		                <td><a href="/siar/acidentesiar/delete/${acidente.id}"><button class="btn">Remove</button></a></td>
+		                <td><a href="/siar/acidentes/update/${acidente.id}"><button class="btn btn-warning">Update</button></a></td>
+		                <td><a href="/siar/acidentes/delete/${acidente.id}"><button class="btn">Remove</button></a></td>
 		            </tr>
 		        </c:forEach>
 		    </table> 
@@ -65,6 +58,5 @@
     	<div class="footer col-sm-12">
     		
     	</div>
-    </div>
-</body>
+	</body>
 </html>

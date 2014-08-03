@@ -3,8 +3,6 @@
  */
 package br.com.siar.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.BeansException;
@@ -22,21 +20,18 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.MissaoSiar;
 import br.com.siar.models.StatusMissao;
-import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
-import br.com.siar.models.response.MissaoResponse;
 import br.com.siar.services.AcidenteSiarService;
 import br.com.siar.services.MissaoSiarService;
 import br.com.siar.services.TipoMissaoSiarService;
 import br.com.siar.utils.Const;
-import br.com.siar.utils.SessionHelper;
 
 /**
  * @author Leo
  *
  */
 @Controller
-public class MissaoSiarController implements ApplicationContextAware {
+public class MissaoSiarController extends BasicController implements ApplicationContextAware {
 
 	@Autowired
 	private MissaoSiarService missaoService;
@@ -48,77 +43,63 @@ public class MissaoSiarController implements ApplicationContextAware {
 		return appContext.getBean(TipoMissaoSiarService.class);
 	}
 	
-	@RequestMapping(value = "/missoes", method = RequestMethod.GET)
+	@RequestMapping(value = MISSOES, method = RequestMethod.GET)
 	public String getMissoesList(HttpServletRequest request, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Missões");
-		List<MissaoResponse> list = missaoService.listMissoes();
+		model.addAttribute("responseList", missaoService.listMissoes());
 		
-		model.addAttribute("responseList", list);
+		model.addAttribute(Const.ATTR_TITLE, "Missões");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_MISSOES.getPath());
 		return "missaosiar";
 	}
 	
-	@RequestMapping(value = "/missoes/save", method = RequestMethod.POST)
+	@RequestMapping(value = MISSOES + Const.SAVE, method = RequestMethod.POST)
 	public View saveMissao(HttpServletRequest request, @ModelAttribute MissaoSiar missao, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
 		if (missao.getStatus() == null) missao.setStatus(StatusMissao.PENDENTE);
 		
 		missaoService.saveMissao(missao);
-		return new RedirectView("/siar/missoes");
+		return new RedirectView(Const.SIAR + MISSOES);
 	}
 	
-	@RequestMapping(value = "/missoes/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = MISSOES + Const.DELETE, method = RequestMethod.GET)
 	public View removeMissao(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
 		missaoService.removeMissao(id);
-		return new RedirectView("/siar/missoes");
+		return new RedirectView(Const.SIAR + MISSOES);
 	}
 	
-	@RequestMapping(value = "/missoes/new", method = RequestMethod.POST)
+	@RequestMapping(value = MISSOES + Const.NEW, method = RequestMethod.POST)
 	public String createMissao(HttpServletRequest request, ModelMap model){
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		String acidenteId = request.getParameter("acidenteId").toString();
 		
-		model.addAttribute(Const.ATTR_TITLE, "Criar missão");
 		model.addAttribute("acidente", getAcidenteService().findAcidenteById(acidenteId));
 		model.addAttribute("tiposMissao", getTipoMissaoService().listTiposMissao());
+
+		model.addAttribute(Const.ATTR_TITLE, "Criar missão");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_MISSOES.getPath());
 		return "createmissao";
 	}
 	
-	@RequestMapping(value = "/missoes/update/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = MISSOES + Const.UPDATE, method = RequestMethod.GET)
 	public String updateMissao(HttpServletRequest request, @PathVariable String id, ModelMap model){
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
+		model.addAttribute("missaoResponse", missaoService.findMissaoById(id));
+
 		model.addAttribute(Const.ATTR_TITLE, "Editar missão");
-		
-		MissaoResponse response = missaoService.findMissaoById(id);
-		model.addAttribute("missaoResponse", response);
-		
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_MISSOES.getPath());
 		return "updatemissao";
-	}
-	
-	private boolean autorizado(HttpServletRequest request, ModelMap model) {
-		
-		TipoUsuario tipo = TipoUsuario.ESPECIALISTA;
-		
-		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
-		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
-			
-			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
-			model.addAttribute(Const.ATTR_USER_TYPE, tipo.desc);
-			
-			return true;
-		}
-		return false;
 	}
 
 	protected ApplicationContext appContext;

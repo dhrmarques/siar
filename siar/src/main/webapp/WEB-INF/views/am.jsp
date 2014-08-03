@@ -18,7 +18,7 @@
 			
 			<div class="row">
 				<div class="col-xs-12">
-					<form method="post" action="ams/save">
+					<form method="post" action="am/save">
 						<div class="form-group">
 							<select name="status" id="status">
 							<c:forEach var="status" items="${statusPossiveis}">

@@ -13,81 +13,67 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.AcidenteSiar;
-import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.AcidenteSiarService;
 import br.com.siar.utils.Const;
-import br.com.siar.utils.SessionHelper;
 
 @Controller
-public class AcidenteSiarController {
+public class AcidenteSiarController extends BasicController {
 
 	@Autowired
 	private AcidenteSiarService acidenteSiarService;
 	
-	@RequestMapping(value = "/acidentesiar", method = RequestMethod.GET)
+	@RequestMapping(value = ACIDENTES, method = RequestMethod.GET)
 	public String getAcidentesList(HttpServletRequest request, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Acidentes");
 		model.addAttribute("acidenteSiarList", acidenteSiarService.listAcidentes());
-		return "acidentesiar";
+
+		model.addAttribute(Const.ATTR_TITLE, "Acidentes");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_ACIDENTES.getPath());
+		return "acidentes";
 	}
 	
-	@RequestMapping(value = "/acidentes", method = RequestMethod.GET)
+	@RequestMapping(value = EMERGENCIAS, method = RequestMethod.GET)
 	public String getActiveAcidentesList(HttpServletRequest request, ModelMap model) {
 		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Acidentes em aberto");
 		model.addAttribute("acidenteList", acidenteSiarService.listActiveAcidentes());
+		
+		model.addAttribute(Const.ATTR_TITLE, "Acidentes em aberto");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_EMERGENCIAS.getPath());
 		return "acidentemissao";
 	}
 	
-	@RequestMapping(value = "/acidentesiar/save", method = RequestMethod.POST)
+	@RequestMapping(value = ACIDENTES + Const.SAVE, method = RequestMethod.POST)
 	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
 		acidenteSiarService.saveAcidente(acidenteSiar);
-		return new RedirectView("/siar/acidentesiar");
+		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
 	
-	@RequestMapping(value = "/acidentesiar/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = ACIDENTES + Const.DELETE, method = RequestMethod.GET)
 	public View removeAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
 		acidenteSiarService.removeAcidente(id);
-		return new RedirectView("/siar/acidentesiar");
+		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
 	
-	@RequestMapping(value = "/acidentesiar/updateacidente/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = ACIDENTES + Const.UPDATE, method = RequestMethod.GET)
 	public String updateAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model){
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
+
+		model.addAttribute("acidenteUpdate", acidenteSiarService.findAcidenteById(id));
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar acidente");
-		model.addAttribute("acidenteUpdate", acidenteSiarService.findAcidenteById(id));
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_ACIDENTES.getPath());
 		return "updateacidente";
-	}
-	
-	private boolean autorizado(HttpServletRequest request, ModelMap model) {
-		
-		return autorizado(request, model, TipoUsuario.COORDENADOR);
-	}
-	
-	private boolean autorizado(HttpServletRequest request, ModelMap model, TipoUsuario tipoUser) {
-		
-		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
-		if (usuario != null && usuario.getTipoUsuario().equals(tipoUser)) {
-			
-			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
-			model.addAttribute(Const.ATTR_USER_TYPE, tipoUser.desc);
-			
-			return true;
-		}
-		return false;
 	}
 }

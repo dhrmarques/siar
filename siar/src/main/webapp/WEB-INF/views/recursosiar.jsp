@@ -9,13 +9,6 @@
 	
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
-	    
-	    <div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li><a href="usuariosiar">Usuários</a></li>
-	    		<li class="active"><a href="#">Recursos</a></li>
-	    	</ul>
-	    </div>
 
  		<div class="col-sm-12">
  			<div class="new-recurso-form">
@@ -35,7 +28,7 @@
 		        	<div class="form-group">
 		        		<label>
 		        			Quantidade: 
-			        		<select class="form-control" type="text" id="qtdPropria" name="qtdPropria">
+			        		<select class="form-control" id="qtdPropria" name="qtdPropria">
 				        		<c:forEach var="i" begin="0" end="20">
 				        			<option><c:out value="${i}"/></option>
 								</c:forEach>

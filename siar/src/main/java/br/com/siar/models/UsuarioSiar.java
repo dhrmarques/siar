@@ -52,15 +52,21 @@ public class UsuarioSiar extends BasicModel {
 	}
 
 	public enum TipoUsuario {
-		ADMINISTRADOR("Administrador"),
-		COORDENADOR("Coordenador"),
-		ESPECIALISTA("Especialista"),
-		CHEFE_MISSAO("Chefe de missão");
+		ADMINISTRADOR("Administrador", "admin"),
+		COORDENADOR("Coordenador", "coordenador"),
+		ESPECIALISTA("Especialista", "especialista"),
+		CHEFE_MISSAO("Chefe de missão", "chefemissao");
 		
-		TipoUsuario(String str) {
+		TipoUsuario(String str, String str2) {
 			desc = str;
+			homefile = str2;
 		}
 		
-		public String desc;
+		private String desc;
+		public String homefile;
+		
+		public String getDesc() {
+			return desc;
+		}
 	}
 }
