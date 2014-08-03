@@ -12,7 +12,7 @@ div#header_logo {
 }
 div#header_logo img {
 	height:100px;
-	border:3px groove #888;
+	border:0;
 }
 div#header_title {
 	float:right;
