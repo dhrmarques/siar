@@ -10,13 +10,12 @@ import org.springframework.data.annotation.Id;
  * @author Leo
  *
  */
-public class AlocacaoSiar extends BasicModel {
+public class SolicitacaoRecursoSiar extends BasicModel {
 
 	@Id
 	private ObjectId _id;
 	
-	private ObjectId recursoId;
-	private ObjectId missaoId;
+	private ObjectId necessidadeId;
 	private ObjectId fornecedorId;
 	private int quantidade;
 	
@@ -26,17 +25,11 @@ public class AlocacaoSiar extends BasicModel {
 	public void setId(ObjectId id) {
 		this._id = id;
 	}
-	public ObjectId getRecursoId() {
-		return recursoId;
+	public ObjectId getNecessidadeId() {
+		return necessidadeId;
 	}
-	public void setRecursoId(ObjectId recursoId) {
-		this.recursoId = recursoId;
-	}
-	public ObjectId getMissaoId() {
-		return missaoId;
-	}
-	public void setMissaoId(ObjectId missaoId) {
-		this.missaoId = missaoId;
+	public void setNecessidadeId(ObjectId necessidadeId) {
+		this.necessidadeId = necessidadeId;
 	}
 	public ObjectId getFornecedorId() {
 		return fornecedorId;
