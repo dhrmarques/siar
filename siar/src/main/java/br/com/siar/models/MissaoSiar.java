@@ -19,7 +19,11 @@ public class MissaoSiar {
 	private String tipoMissaoId;
 
 	private String detalhes;
+	private boolean status;
 	
+	public boolean getStatus(){
+		return status;
+	}
 	public ObjectId getId() {
 		return _id;
 	}
@@ -50,5 +54,8 @@ public class MissaoSiar {
 
 	public void setDetalhes(String detalhes) {
 		this.detalhes = detalhes;
+	}
+	public void setStatus(boolean status){
+		this.status = status;
 	}
 }
