@@ -28,6 +28,11 @@ public class MissaoSiarService extends BasicService {
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
 	
+	public List<MissaoResponse> listMissoesPendentes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	public MissaoResponse findMissaoById(String id){
 		
 		MissaoSiar missao = findModelById(MissaoSiar.class, id);

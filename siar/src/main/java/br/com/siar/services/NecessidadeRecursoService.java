@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import br.com.siar.models.NecessidadeRecursoSiar;
+import br.com.siar.models.response.NecessidadeRecursoResponse;
 
 /**
  * @author Leo
@@ -21,7 +22,7 @@ public class NecessidadeRecursoService extends BasicService {
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
 	
-	public List<NecessidadeRecursoSiar> listNecessidadesForMissao(String missaoId) {
+	public List<NecessidadeRecursoResponse> listNecessidadesForMissao(String missaoId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
