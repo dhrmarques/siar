@@ -12,6 +12,12 @@ import org.springframework.data.annotation.Id;
  */
 public class NecessidadeRecursoSiar extends BasicModel {
 	
+	public NecessidadeRecursoSiar(String recursoId, String missaoId, int qtdTotal) {
+		this.recursoId = new ObjectId(recursoId);
+		this.missaoId = new ObjectId(missaoId);
+		this.quantidadeTotal = qtdTotal;
+	}
+	
 	public static final String COLLECTION_NAME = "necessidadeRecursoSiar";
 
 	@Id

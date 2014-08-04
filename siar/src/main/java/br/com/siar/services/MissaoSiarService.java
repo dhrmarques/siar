@@ -6,13 +6,19 @@ package br.com.siar.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.MissaoSiar;
+import br.com.siar.models.StatusMissao;
 import br.com.siar.models.TipoMissaoSiar;
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.response.MissaoResponse;
@@ -29,19 +35,22 @@ public class MissaoSiarService extends BasicService {
 	private MongoTemplate siarmongoTemplate;
 	
 	public List<MissaoResponse> listMissoesPendentes() {
-		// TODO Auto-generated method stub
-		return null;
+
+		Query q = new Query(Criteria.where("status").is(StatusMissao.PENDENTE));
+		List<MissaoSiar> missoes = siarmongoTemplate.find(q, MissaoSiar.class, getCollectionName());
+		
+		List<MissaoResponse> responseList = new ArrayList<MissaoResponse>();
+		for (MissaoSiar missao : missoes) {
+			responseList.add(responseFromModel(missao));
+		}
+		
+		return responseList;
 	}
 	
 	public MissaoResponse findMissaoById(String id){
 		
 		MissaoSiar missao = findModelById(MissaoSiar.class, id);
-		MissaoResponse response = new MissaoResponse(missao,
-				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME),
-				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class, TipoMissaoSiar.COLLECTION_NAME),
-				siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME));
-		
-		return response;
+		return responseFromModel(missao);
 	}
 	
 	public List<MissaoResponse> listMissoes() {
@@ -50,17 +59,28 @@ public class MissaoSiarService extends BasicService {
 		List<MissaoSiar> missoes = listModels(MissaoSiar.class);
 		
 		for (MissaoSiar missao : missoes) {
-			lista.add(new MissaoResponse(missao,
-					siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
-					siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class),
-					siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class)));
+			lista.add(responseFromModel(missao));
 		}
 		
 		return lista; 
 	}
 	
-	public void saveMissao(MissaoSiar missao) {
+	public ObjectId saveMissao(MissaoSiar missao) {
 		saveModel(MissaoSiar.class, missao);
+		
+		Query q = new Query();
+		q.addCriteria(Criteria.where("acidenteId").is(missao.getAcidenteId()));
+		q.with(new Sort(Direction.DESC, "_id")); // Mais recente
+		
+		return siarmongoTemplate.findOne(q, MissaoSiar.class, getCollectionName()).getId();
+	}
+	
+	private MissaoResponse responseFromModel(MissaoSiar missao) {
+		
+		return new MissaoResponse(missao,
+				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
+				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class),
+				siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class));
 	}
 	
 	public void removeMissao(String id) {

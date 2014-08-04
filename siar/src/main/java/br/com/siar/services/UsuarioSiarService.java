@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.UsuarioSiar;
+import br.com.siar.models.UsuarioSiar.TipoUsuario;
 
 /**
  * Service created for the CRUD manipulation operations.
@@ -38,6 +39,14 @@ public class UsuarioSiarService extends BasicService {
 	//Listing the existing users from repository.
 	public List<UsuarioSiar> listUsuarios() {
 		return listModels(UsuarioSiar.class);
+	}
+	
+	public List<UsuarioSiar> listChefesDeMissao() {
+		
+		Query q = new Query(Criteria.where("tipoUsuario").is(TipoUsuario.CHEFE_MISSAO));
+		List<UsuarioSiar> chefes = siarmongoTemplate.find(q, UsuarioSiar.class, getCollectionName());
+		
+		return chefes;
 	}
 	
 	//Creating an user in the repository.
