@@ -43,11 +43,6 @@ public class MissaoSiar extends BasicModel {
 	public void setDetalhes(String detalhes) {
 		this.detalhes = detalhes;
 	}
-<<<<<<< HEAD
-	public void setStatus(boolean status){
-		this.status = status;
-	}
-=======
 
 	public StatusMissao getStatus() {
 		return status;
@@ -64,5 +59,4 @@ public class MissaoSiar extends BasicModel {
 	public void setChefeId(ObjectId chefeId) {
 		this.chefeId = chefeId;
 	}
->>>>>>> 72378476597035016ac8e7a119eb79a678d1e934
 }

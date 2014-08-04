@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 
 @Service
 public class SchedulerService{
-	private yayt = new UsuarioSiarService();
 	private BasicQuery query1 = new BasicQuery("{ age : { $lt : 40 }, name : 'cat' }");
 	 
 	@Scheduled(fixedRate=1000)
