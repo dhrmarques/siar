@@ -79,8 +79,8 @@
 		            <tr>
 		                <td><span>${acidente.descricao}</span></td>
 		                <td><span>${acidente.prioridade}</span></td>
-		                <td><a href="/siar/acidentesiar/updateacidente/${acidente.id}"><button class="btn btn-warning">Update</button></a></td>
-		                <td><a href="/siar/acidentesiar/delete/${acidente.id}"><button class="btn">Remove</button></a></td>
+		                <td><a href="/siar/acidentes/update/${acidente.id}"><button class="btn btn-warning">Update</button></a></td>
+		                <td><a href="/siar/acidentes/delete/${acidente.id}"><button class="btn">Remove</button></a></td>
 		            </tr>
 		        </c:forEach>
 		    </table> 
@@ -88,6 +88,5 @@
     	<div class="footer col-sm-12">
     		
     	</div>
-    </div>
-</body>
+	</body>
 </html>

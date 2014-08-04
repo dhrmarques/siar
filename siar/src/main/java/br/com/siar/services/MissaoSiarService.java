@@ -3,6 +3,7 @@
  */
 package br.com.siar.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -10,7 +11,11 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.MissaoSiar;
+import br.com.siar.models.TipoMissaoSiar;
+import br.com.siar.models.UsuarioSiar;
+import br.com.siar.models.response.MissaoResponse;
 
 /**
  * @author Leo
@@ -18,7 +23,7 @@ import br.com.siar.models.MissaoSiar;
  */
 public class MissaoSiarService {
 	
-	private static final String COLLECTION_NAME = "missaoSiar";
+	private static final String COLLECTION_NAME = MissaoSiar.COLLECTION_NAME;
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
@@ -45,13 +50,29 @@ public class MissaoSiarService {
 		siarmongoTemplate.insert(missao, COLLECTION_NAME);
 	}
 	
-	public MissaoSiar findMissaoById(String id){
-		return siarmongoTemplate.findById(new ObjectId(id), MissaoSiar.class, COLLECTION_NAME);
+	public MissaoResponse findMissaoById(String id){
+		
+		MissaoSiar missao = siarmongoTemplate.findById(new ObjectId(id), MissaoSiar.class, COLLECTION_NAME);
+		MissaoResponse response = new MissaoResponse(missao,
+				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME),
+				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class, TipoMissaoSiar.COLLECTION_NAME),
+				siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME));
+		
+		return response;
 	}
 	
-	public List<MissaoSiar> listMissoes() {
+	public List<MissaoResponse> listMissoes() {
 		
-		return siarmongoTemplate.findAll(MissaoSiar.class, COLLECTION_NAME);
+		List<MissaoResponse> lista = new ArrayList<MissaoResponse>();
+		List<MissaoSiar> missoes = siarmongoTemplate.findAll(MissaoSiar.class, COLLECTION_NAME);
+		for (MissaoSiar missao : missoes) {
+			lista.add(new MissaoResponse(missao,
+					siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
+					siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class),
+					siarmongoTemplate.findById(missao.getChefeId(), UsuarioSiar.class)));
+		}
+		
+		return lista; 
 	}
 	
 	public void removeMissao(String id) {

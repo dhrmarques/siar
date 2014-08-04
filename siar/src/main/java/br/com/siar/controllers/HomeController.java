@@ -7,12 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import br.com.siar.models.UsuarioSiar;
+import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
@@ -21,11 +23,11 @@ import br.com.siar.utils.SessionHelper;
  */
 @Controller
 @SessionAttributes({"erro", "email"})
-public class HomeController {
+public class HomeController extends BasicController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = Const.ROOT_ADDRESS, method = RequestMethod.GET)
 	public String root(HttpServletRequest request, Model model, SessionStatus status) {
 		logger.info("Homepage");
 
@@ -74,37 +76,18 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home(HttpServletRequest request, Model model) {
+	public String home(HttpServletRequest request, ModelMap model) {
 	
-		UsuarioSiar user = SessionHelper.getUsuarioLogado(request);
-		if (user == null)
-			return "redirect:/";
-		
-		model.addAttribute("nome", user.getNome());
-		model.addAttribute("title", "Homepage");
-		
-		switch (user.getTipoUsuario()) {
-		case ADMINISTRADOR:
-			model.addAttribute("tipo_usuario", "Administrador");
-			return "admin";
-			
-		case CHEFE_MISSAO:
-			model.addAttribute("tipo_usuario", "Chefe de missão");
-			return "chefemissao";
-			
-		case COORDENADOR:
-			model.addAttribute("tipo_usuario", "Coordenador");
-			return "coordenador";
-			
-		case ESPECIALISTA:
-			model.addAttribute("tipo_usuario", "Especialista");
-			return "especialista";
-			
-		default:
+		if (!autorizado(request, model))
 			return Const.REDIRECT_NOT_LOGGED;
 		
-		}
-
+		model.addAttribute(Const.ATTR_TITLE, "Homepage");
+		TipoUsuario tipoUser = (TipoUsuario) model.get(Const.ATTR_USER_TYPE);
+		
+		if (tipoUser == null)
+			return Const.REDIRECT_NOT_LOGGED;
+		
+		return tipoUser.homefile;
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

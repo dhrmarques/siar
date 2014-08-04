@@ -35,7 +35,7 @@ public class UsuarioSiarService {
 		}
 		
 		if(usuarioSiar.getId() == null) {
-			siarmongoTemplate.insert(usuarioSiar, "usuarioSiar");
+			siarmongoTemplate.insert(usuarioSiar, UsuarioSiar.COLLECTION_NAME);
 		} else {
 			try {
 				updateUsuario(usuarioSiar);
@@ -47,30 +47,30 @@ public class UsuarioSiarService {
 	
 	//Updating the info from an existing user.
 	public void updateUsuario(UsuarioSiar usuarioSiar) throws Exception {
-		UsuarioSiar existingUser = siarmongoTemplate.findById(usuarioSiar.getId(), UsuarioSiar.class, "usuarioSiar");
+		UsuarioSiar existingUser = siarmongoTemplate.findById(usuarioSiar.getId(), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
 		if(existingUser == null) {
 			throw new Exception("User not found");
 		}
-		siarmongoTemplate.save(usuarioSiar, "usuarioSiar");
+		siarmongoTemplate.save(usuarioSiar, UsuarioSiar.COLLECTION_NAME);
 	}
 	
 	//Listing the existing users from repository.
 	public List<UsuarioSiar> listUsuarios() {
-		return siarmongoTemplate.findAll(UsuarioSiar.class, "usuarioSiar");
+		return siarmongoTemplate.findAll(UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
 	}
 	
 	//Removes an user from the repository.
 	public void removeUsuario(String id) throws Exception {
-		UsuarioSiar existingUser = siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, "usuarioSiar");
+		UsuarioSiar existingUser = siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
 		if(existingUser == null) {
 			throw new Exception("User not found");
 		}
-		siarmongoTemplate.remove(existingUser, "usuarioSiar");
+		siarmongoTemplate.remove(existingUser, UsuarioSiar.COLLECTION_NAME);
 	}
 	
 	//Finds an user by its id in the repository.
 	public UsuarioSiar findUsuarioById(String id){
-		return siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, "usuarioSiar");
+		return siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
 	}
 	
 	public UsuarioSiar verify(String email, String senha) {
@@ -79,7 +79,7 @@ public class UsuarioSiarService {
 		q.addCriteria(Criteria.where("email").is(email).and("senha").is(senha));
 
 		System.out.print("Query: " + q + "\nSMT: " + siarmongoTemplate);
-		UsuarioSiar user = siarmongoTemplate.findOne(q, UsuarioSiar.class, "usuarioSiar");
+		UsuarioSiar user = siarmongoTemplate.findOne(q, UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
 		System.out.println("resultado: " + user);
 		if (user != null) 
 			return user;

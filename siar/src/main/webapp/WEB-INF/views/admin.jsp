@@ -7,11 +7,5 @@
 	</head>
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
-		<div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li><a href="usuariosiar">Usuários</a></li>
-	    		<li><a href="recursos">Recursos</a></li>
-	    	</ul>
-	    </div>
 	</body>
 </html>

@@ -6,6 +6,7 @@ package br.com.siar.models.response;
 import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.MissaoSiar;
 import br.com.siar.models.TipoMissaoSiar;
+import br.com.siar.models.UsuarioSiar;
 
 /**
  * @author Leo
@@ -16,13 +17,13 @@ public class MissaoResponse {
 	private MissaoSiar missao;
 	private AcidenteSiar acidente;
 	private TipoMissaoSiar tipoMissao;
-	private Object statusAtual; // TODO
+	private UsuarioSiar chefe;
 	
-	public MissaoResponse(MissaoSiar missao, AcidenteSiar acidente, TipoMissaoSiar tipo, Object status) {
+	public MissaoResponse(MissaoSiar missao, AcidenteSiar acidente, TipoMissaoSiar tipo, UsuarioSiar chefe) {
 		this.missao = missao;
 		this.acidente = acidente;
 		this.tipoMissao = tipo;
-		this.statusAtual = status;
+		this.chefe = chefe;
 	}
 
 	public MissaoSiar getMissao() {
@@ -49,11 +50,11 @@ public class MissaoResponse {
 		this.tipoMissao = tipoMissao;
 	}
 
-	public Object getStatusAtual() {
-		return statusAtual;
+	public UsuarioSiar getChefe() {
+		return chefe;
 	}
 
-	public void setStatusAtual(Object statusAtual) {
-		this.statusAtual = statusAtual;
+	public void setChefe(UsuarioSiar chefe) {
+		this.chefe = chefe;
 	}
 }

@@ -16,73 +16,59 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.RecursoSiar;
-import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.RecursoSiarService;
 import br.com.siar.utils.Const;
-import br.com.siar.utils.SessionHelper;
 
 /**
  * @author Leo
  *
  */
 @Controller
-public class RecursoSiarController {
+public class RecursoSiarController extends BasicController {
 	
 	@Autowired
 	private RecursoSiarService recursoService;
 	
-	@RequestMapping(value = "/recursos", method = RequestMethod.GET)
+	@RequestMapping(value = RECURSOS, method = RequestMethod.GET)
 	public String getRecursosList(HttpServletRequest request, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Recursos");
 		model.addAttribute("recursoSiarList", recursoService.listRecursos());
+
+		model.addAttribute(Const.ATTR_TITLE, "Recursos");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_RECURSOS.getPath());
 		return "recursosiar";
 	}
 	
-	@RequestMapping(value = "/recursos/save", method = RequestMethod.POST)
+	@RequestMapping(value = RECURSOS + Const.SAVE, method = RequestMethod.POST)
 	public View saveRecurso(HttpServletRequest request, @ModelAttribute RecursoSiar recurso, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
 		recursoService.saveRecurso(recurso);
 		return new RedirectView("/siar/recursos");
 	}
 	
-	@RequestMapping(value = "/recursos/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = RECURSOS + Const.DELETE, method = RequestMethod.GET)
 	public View removeRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
 		recursoService.removeRecurso(id);
 		return new RedirectView("/siar/recursos");
 	}
 	
-	@RequestMapping(value = "/recursos/update/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = RECURSOS + Const.UPDATE, method = RequestMethod.GET)
 	public String updateRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model){
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
 		
-		model.addAttribute(Const.ATTR_TITLE, "Editar recurso");
 		model.addAttribute("recursoUpdate", recursoService.findRecursoById(id));
+
+		model.addAttribute(Const.ATTR_TITLE, "Editar recurso");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_RECURSOS.getPath());
 		return "updaterecurso";
 	}
-	
-	private boolean autorizado(HttpServletRequest request, ModelMap model) {
-		
-		TipoUsuario tipo = TipoUsuario.ADMINISTRADOR;
-		
-		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
-		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
-			
-			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
-			model.addAttribute(Const.ATTR_USER_TYPE, tipo.desc);
-			
-			return true;
-		}
-		return false;
-	}
-
 }
