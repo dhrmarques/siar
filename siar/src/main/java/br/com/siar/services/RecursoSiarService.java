@@ -5,8 +5,8 @@ package br.com.siar.services;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -16,51 +16,48 @@ import br.com.siar.models.RecursoSiar;
  * @author Leo
  *
  */
-public class RecursoSiarService {
+public class RecursoSiarService extends BasicService {
 	
 	private static final String COLLECTION_NAME = RecursoSiar.COLLECTION_NAME;
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
-	private static Logger logger;
 	
-	//Getter and setter for template.
+	public RecursoSiar findRecursoById(String id){
+		return findModelById(RecursoSiar.class, id);
+	}
+	
+	public List<RecursoSiar> listRecursos() {
+		return listModels(RecursoSiar.class);
+	}
+	
+	public void saveRecurso(RecursoSiar recurso) {
+		saveModel(RecursoSiar.class, recurso);
+	}
+	
+	public void removeRecurso(String id) {
+		// TODO check if it CAN be removed
+		removeModelById(RecursoSiar.class, id);
+	}
+
+	@Override
 	public MongoTemplate getSiarmongoTemplate() {
 		return siarmongoTemplate;
 	}
 
+	@Override
 	public void setSiarmongoTemplate(MongoTemplate siarmongoTemplate) {
 		this.siarmongoTemplate = siarmongoTemplate;
 	}
-	
-	//Service methods.
-	public void saveRecurso(RecursoSiar recurso) {
-		if (!siarmongoTemplate.collectionExists(RecursoSiar.class)) {
-			siarmongoTemplate.createCollection(RecursoSiar.class);
-		}
-		//Checking if the object already exists
-		if ((siarmongoTemplate.findById(recurso.getId(), RecursoSiar.class, COLLECTION_NAME)) != null) {
-			siarmongoTemplate.save(recurso, COLLECTION_NAME);
-		}
-		siarmongoTemplate.insert(recurso, COLLECTION_NAME);
+
+	@Override
+	public String getCollectionName() {
+		return COLLECTION_NAME;
 	}
-	
-	public RecursoSiar findRecursoById(String id){
-		return siarmongoTemplate.findById(new ObjectId(id), RecursoSiar.class, COLLECTION_NAME);
-	}
-	
-	public List<RecursoSiar> listRecursos() {
-		return siarmongoTemplate.findAll(RecursoSiar.class, COLLECTION_NAME);
-	}
-	
-	public void removeRecurso(String id) {
-		try {
-			ObjectId _id = new ObjectId(id);
-			RecursoSiar recurso = siarmongoTemplate.findById(_id, RecursoSiar.class, COLLECTION_NAME);
-			siarmongoTemplate.remove(recurso, COLLECTION_NAME);
-		} catch(Exception e) {
-			logger.warn("Houve um erro ao remover o recurso indicado", e);
-		}
+
+	@Override
+	public Logger getLogger() {
+		return LoggerFactory.getLogger(this.getClass());
 	}
 
 }

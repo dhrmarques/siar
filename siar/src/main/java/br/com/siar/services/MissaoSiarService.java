@@ -6,8 +6,8 @@ package br.com.siar.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -21,38 +21,16 @@ import br.com.siar.models.response.MissaoResponse;
  * @author Leo
  *
  */
-public class MissaoSiarService {
+public class MissaoSiarService extends BasicService {
 	
 	private static final String COLLECTION_NAME = MissaoSiar.COLLECTION_NAME;
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
-	private static Logger logger;
-	
-	//Getter and setter for template.
-	public MongoTemplate getSiarmongoTemplate() {
-		return siarmongoTemplate;
-	}
-
-	public void setSiarmongoTemplate(MongoTemplate siarmongoTemplate) {
-		this.siarmongoTemplate = siarmongoTemplate;
-	}
-	
-	// Service methods
-	public void saveMissao(MissaoSiar missao) {
-		if (!siarmongoTemplate.collectionExists(MissaoSiar.class)) {
-			siarmongoTemplate.createCollection(MissaoSiar.class);
-		}
-		//Checking if the object already exists
-		if ((siarmongoTemplate.findById(missao.getId(), MissaoSiar.class, COLLECTION_NAME)) != null) {
-			siarmongoTemplate.save(missao, COLLECTION_NAME);
-		}
-		siarmongoTemplate.insert(missao, COLLECTION_NAME);
-	}
 	
 	public MissaoResponse findMissaoById(String id){
 		
-		MissaoSiar missao = siarmongoTemplate.findById(new ObjectId(id), MissaoSiar.class, COLLECTION_NAME);
+		MissaoSiar missao = findModelById(MissaoSiar.class, id);
 		MissaoResponse response = new MissaoResponse(missao,
 				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME),
 				siarmongoTemplate.findById(missao.getTipoMissaoId(), TipoMissaoSiar.class, TipoMissaoSiar.COLLECTION_NAME),
@@ -64,7 +42,8 @@ public class MissaoSiarService {
 	public List<MissaoResponse> listMissoes() {
 		
 		List<MissaoResponse> lista = new ArrayList<MissaoResponse>();
-		List<MissaoSiar> missoes = siarmongoTemplate.findAll(MissaoSiar.class, COLLECTION_NAME);
+		List<MissaoSiar> missoes = listModels(MissaoSiar.class);
+		
 		for (MissaoSiar missao : missoes) {
 			lista.add(new MissaoResponse(missao,
 					siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
@@ -75,13 +54,32 @@ public class MissaoSiarService {
 		return lista; 
 	}
 	
+	public void saveMissao(MissaoSiar missao) {
+		saveModel(MissaoSiar.class, missao);
+	}
+	
 	public void removeMissao(String id) {
-		try {
-			ObjectId _id = new ObjectId(id);
-			MissaoSiar missao = siarmongoTemplate.findById(_id, MissaoSiar.class, COLLECTION_NAME);
-			siarmongoTemplate.remove(missao, COLLECTION_NAME);
-		} catch(Exception e) {
-			logger.warn("Houve um erro ao remover a missão indicada", e);
-		}
+		// TODO check if it CAN be removed
+		removeModelById(MissaoSiar.class, id);
+	}
+
+	@Override
+	public MongoTemplate getSiarmongoTemplate() {
+		return siarmongoTemplate;
+	}
+
+	@Override
+	public void setSiarmongoTemplate(MongoTemplate siarmongoTemplate) {
+		this.siarmongoTemplate = siarmongoTemplate;
+	}
+
+	@Override
+	public String getCollectionName() {
+		return COLLECTION_NAME;
+	}
+
+	@Override
+	public Logger getLogger() {
+		return LoggerFactory.getLogger(this.getClass());
 	}
 }
