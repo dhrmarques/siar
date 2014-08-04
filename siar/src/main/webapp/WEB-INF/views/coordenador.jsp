@@ -7,10 +7,5 @@
 	</head>
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
-		<ul>
-			<li><a href="acidentesiar/">Gerenciar acidentes</a></li>
-			<li>Alocar recursos</li>
-			<li><a href="acessosvc">Acessar SVC</a></li>
-		</ul>
 	</body>
 </html>

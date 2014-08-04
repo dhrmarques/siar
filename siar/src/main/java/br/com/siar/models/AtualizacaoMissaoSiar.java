@@ -3,40 +3,32 @@ package br.com.siar.models;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * Class created to keep records of the mission status changes.
  * @author dmarques
  *
  */
-public class AtualizacaoMissaoSiar {
-
-	@Id
-	private ObjectId _id;
+public class AtualizacaoMissaoSiar extends BasicModel {
+	
+	public static final String COLLECTION_NAME = "atualizacaoMissaoSiar";
 	
 	private Date dataAtualizacao;
-	private String missaoId;
+	private ObjectId missaoId;
 	private String comentario;
-	private String usuarioId;
+	private ObjectId usuarioId;
+	private StatusMissao status;
 	
-	
-	public ObjectId getId() {
-		return _id;
-	}
-	public void setId(ObjectId _id) {
-		this._id = _id;
-	}
 	public Date getDataAtualizacao() {
 		return dataAtualizacao;
 	}
 	public void setDataAtualizacao(Date dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
-	public String getMissaoId() {
+	public ObjectId getMissaoId() {
 		return missaoId;
 	}
-	public void setMissaoId(String missaoId) {
+	public void setMissaoId(ObjectId missaoId) {
 		this.missaoId = missaoId;
 	}
 	public String getComentario() {
@@ -45,11 +37,17 @@ public class AtualizacaoMissaoSiar {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	public String getUsuarioId() {
+	public ObjectId getUsuarioId() {
 		return usuarioId;
 	}
-	public void setUsuarioId(String usuarioId) {
+	public void setUsuarioId(ObjectId usuarioId) {
 		this.usuarioId = usuarioId;
+	}
+	public StatusMissao getStatus() {
+		return status;
+	}
+	public void setStatus(StatusMissao status) {
+		this.status = status;
 	}
 	
 }

@@ -9,14 +9,6 @@
 	
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
-	    
-	    <div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li><a href="acidentes">Acidentes</a></li>
-	    		<li class="active"><a href="#">Missões</a></li>
-	    		<li><a href="tiposmissao">Tipos de missão</a></li>
-	    	</ul>
-	    </div>
 		
 		<div class="col-sm-12">
 		    <table class="table table-condensed">
@@ -33,7 +25,7 @@
 		                <td>${response.acidente.descricao}</td>
 		                <td>${response.tipoMissao.titulo}</td>
 		                <td>${response.missao.detalhes}</td>
-		                <td>${response.statusAtual}</td>
+		                <td>${response.missao.status.legivel}</td>
 		                <td><a href="/siar/missoes/update/${response.missao.id}"><button class="btn btn-warning">Update</button></a></td>
 		                <td><a href="/siar/missoes/delete/${response.missao.id}"><button class="btn">Remove</button></a></td>
 		            </tr>

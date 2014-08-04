@@ -18,7 +18,21 @@
 			
 			<div class="row">
 				<div class="col-xs-12">
-					Não há nenhuma missão atribuída a você no momento. Que tédio...
+					<form method="post" action="am/save">
+						<div class="form-group">
+							<select name="status" id="status">
+							<c:forEach var="status" items="${statusPossiveis}">
+								<option value="${status}">${status.legivel}</option>
+							</c:forEach>
+							</select>
+						</div>
+						<div class="form-group">
+							<input class="btn btn-default btn-primary" value="Atualizar Missão">
+						</div>
+						<div class="form-group">
+							<textarea class="form-control" name="comentario" id="comentario"></textarea>
+						</div>
+					</form>
 				</div>
 			</div>
 			

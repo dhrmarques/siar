@@ -18,7 +18,7 @@ import br.com.siar.models.RecursoSiar;
  */
 public class RecursoSiarService {
 	
-	private static final String COLLECTION_NAME = "recursoSiar";
+	private static final String COLLECTION_NAME = RecursoSiar.COLLECTION_NAME;
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;

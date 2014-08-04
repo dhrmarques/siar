@@ -6,10 +6,6 @@
 		<title>Home</title>
 	</head>
 	<body>
-		<%@ include file="/WEB-INF/views/layout_header.jsp" %>	
-		<ul>
-			<li><a href="missoes">Gerenciar missões</a></li>
-			<li><a href="tiposmissao">Gerenciar tipos de missão</a></li>
-		</ul>
+		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 	</body>
 </html>

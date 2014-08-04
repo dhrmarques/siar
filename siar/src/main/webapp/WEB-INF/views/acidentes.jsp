@@ -13,6 +13,7 @@
 	
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
+<<<<<<< HEAD:siar/src/main/webapp/WEB-INF/views/acidentesiar.jsp
 	    
 	    <div class="col-sm-12">
 	    	<ul class="menu nav nav-tabs">
@@ -63,6 +64,29 @@
 	    			</div>
 	    			<div class="modal-footer">
 	    			</div>
+=======
+
+ 		<div class="col-sm-12">
+ 			<div class="new-acidente-form">
+	        <form class="form-inline" action="/siar/acidentes/save" method="post" role="form">
+	        	<div class="container">
+		        	<div class="form-group col-sm-4">
+			            <label for="descricao">Descrição</label>
+			            <input class="form-control" type="text" id="descricao" name="descricao"/>
+		            </div>
+		            <div class="form-group col-sm-4">
+			            <label for="prioridade">Prioridade</label>
+			            <select class="form-control" id="prioridade" name="prioridade">
+			            	<option>Muito Grave</option>
+			            	<option>Grave</option>
+			            	<option>Média</option>
+			            	<option>Baixa</option>
+			           </select>
+	            	</div>
+	            	<div class="form-group col-sm-4">
+	            		<button class="btn btn-success" type="submit">submit</button>
+	            	</div>
+>>>>>>> 2df414a8178dea3ee3160b9c0458b3228bcf4597:siar/src/main/webapp/WEB-INF/views/acidentes.jsp
 	    		</div>
 	    	</div>
 		</div>
@@ -79,8 +103,8 @@
 		            <tr>
 		                <td><span>${acidente.descricao}</span></td>
 		                <td><span>${acidente.prioridade}</span></td>
-		                <td><a href="/siar/acidentesiar/updateacidente/${acidente.id}"><button class="btn btn-warning">Update</button></a></td>
-		                <td><a href="/siar/acidentesiar/delete/${acidente.id}"><button class="btn">Remove</button></a></td>
+		                <td><a href="/siar/acidentes/update/${acidente.id}"><button class="btn btn-warning">Update</button></a></td>
+		                <td><a href="/siar/acidentes/delete/${acidente.id}"><button class="btn">Remove</button></a></td>
 		            </tr>
 		        </c:forEach>
 		    </table> 
@@ -88,6 +112,5 @@
     	<div class="footer col-sm-12">
     		
     	</div>
-    </div>
-</body>
+	</body>
 </html>

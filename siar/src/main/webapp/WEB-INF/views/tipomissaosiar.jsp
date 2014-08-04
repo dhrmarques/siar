@@ -11,14 +11,6 @@
 	
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
-	    
-	    <div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li><a href="acidentes">Acidentes</a></li>
-	    		<li><a href="missoes">Missões</a></li>
-	    		<li class="active"><a href="#">Tipos de missão</a></li>
-	    	</ul>
-	    </div>
 
  		<div class="col-sm-12">
  			<div class="new-tipomissao-form">

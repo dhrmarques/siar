@@ -17,7 +17,7 @@ import br.com.siar.models.AtualizacaoMissaoSiar;
  */
 public class AtualizacaoMissaoSiarService {
 
-	private static final String COLLECTION_NAME = "atualizacaoMissaoSiar";
+	private static final String COLLECTION_NAME = AtualizacaoMissaoSiar.COLLECTION_NAME;
 	private static final Logger logger = LoggerFactory.getLogger(AtualizacaoMissaoSiarService.class);
 	
 	@Autowired

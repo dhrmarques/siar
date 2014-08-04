@@ -21,51 +21,57 @@ import br.com.siar.utils.SessionHelper;
 
 @Controller
 @SessionAttributes({"erro", "email"})
-public class UsuarioSiarController {
+public class UsuarioSiarController extends BasicController {
 	
 	@Autowired
 	private UsuarioSiarService usuarioSiarService;
 
-	@RequestMapping(value = "/usuariosiar", method = RequestMethod.GET)
+	@RequestMapping(value = USUARIOS, method = RequestMethod.GET)
 	public String getUsuariosList(HttpServletRequest request, ModelMap model) {
-		model.addAttribute(Const.ATTR_TITLE, "Usuários");
 		
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
+		
 		model.addAttribute("usuarioSiarList", usuarioSiarService.listUsuarios());
-		return "usuariosiar";
+		
+		model.addAttribute(Const.ATTR_TITLE, "Usuários");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_USUARIOS.getPath());
+		return "usuarios";
 	}
 	
-	@RequestMapping(value = "/usuariosiar/save", method = RequestMethod.POST)
+	@RequestMapping(value = USUARIOS + Const.SAVE, method = RequestMethod.POST)
 	public View saveUsuario(HttpServletRequest request, @ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
 		
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.ROOT_ADDRESS);
 		usuarioSiarService.saveUsuario(usuarioSiar);
-		return new RedirectView("/siar/usuariosiar");
+		return new RedirectView(Const.SIAR + USUARIOS);
 	}
 	
-	@RequestMapping(value = "/usuariosiar/delete/{id}")
+	@RequestMapping(value = USUARIOS + Const.UPDATE)
 	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.ROOT_ADDRESS);
 		try {
 			usuarioSiarService.removeUsuario(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			//TODO Criar página de redirecionamento de erro
-			return new RedirectView("/siar/usuariosiar/error");
+			return new RedirectView(Const.SIAR + USUARIOS + "/error");
 		}
-		return new RedirectView("/siar/usuariosiar");
+		return new RedirectView(Const.SIAR + USUARIOS);
 	}
 	
-	@RequestMapping(value = "/usuariosiar/updateusuario/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = USUARIOS + Const.UPDATE, method = RequestMethod.GET)
 	public String updateUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model){
-		model.addAttribute(Const.ATTR_TITLE, "Editar usuário");
 		
-		if (!autorizado(request, model))
+		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
+		
 		model.addAttribute("usuarioUpdate", usuarioSiarService.findUsuarioById(id));
+		
+		model.addAttribute(Const.ATTR_TITLE, "Editar usuário");
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_USUARIOS.getPath());
 		return "updateusuario";
 	}
 	
@@ -93,21 +99,6 @@ public class UsuarioSiarController {
 		if (email != null)
 			request.getSession().setAttribute(Const.SESSION_EMAIL, email);
 		return Const.REDIRECT_NOT_LOGGED;
-	}
-	
-	private boolean autorizado(HttpServletRequest request, ModelMap model) {
-		
-		TipoUsuario tipo = TipoUsuario.ADMINISTRADOR;
-		
-		UsuarioSiar usuario = SessionHelper.getUsuarioLogado(request);
-		if (usuario != null && usuario.getTipoUsuario().equals(tipo)) {
-			
-			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
-			model.addAttribute(Const.ATTR_USER_TYPE, tipo.desc);
-			
-			return true;
-		}
-		return false;
 	}
 	
 }

@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
 	            <label>Status da Missão:</label>
-	            <span>${missaoResponse.statusAtual}</span>
+	            <span>${missaoResponse.missao.status.legivel}</span>
             </div>
             <div class="form-group">
 	            <label>Acidente:</label>

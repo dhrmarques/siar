@@ -32,32 +32,32 @@ public class AcidenteSiarService {
 			siarmongoTemplate.createCollection(AcidenteSiar.class);
 		}
 		//Checking if the acidenteSiar object already exists
-		if ((siarmongoTemplate.findById(acidenteSiar.getId(), AcidenteSiar.class, "acidenteSiar")) != null) {
-			siarmongoTemplate.save(acidenteSiar, "acidenteSiar");
+		if ((siarmongoTemplate.findById(acidenteSiar.getId(), AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME)) != null) {
+			siarmongoTemplate.save(acidenteSiar, AcidenteSiar.COLLECTION_NAME);
 		}
-		siarmongoTemplate.insert(acidenteSiar, "acidenteSiar");
+		siarmongoTemplate.insert(acidenteSiar, AcidenteSiar.COLLECTION_NAME);
 	}
 	
 	public AcidenteSiar findAcidenteById(String id){
-		return siarmongoTemplate.findById(new ObjectId(id), AcidenteSiar.class, "acidenteSiar");
+		return siarmongoTemplate.findById(new ObjectId(id), AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME);
 	}
 	
 	public List<AcidenteSiar> listAcidentes() {
-		return siarmongoTemplate.findAll(AcidenteSiar.class, "acidenteSiar");
+		return siarmongoTemplate.findAll(AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME);
 	}
 	
 	public List<AcidenteSiar> listActiveAcidentes() {
 		Query q = new Query(); // TODO
 		q.addCriteria(Criteria.where("prioridade").is("Baixa"));
 
-		return siarmongoTemplate.find(q, AcidenteSiar.class, "acidenteSiar");
+		return siarmongoTemplate.find(q, AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME);
 	}
 	
 	public void removeAcidente(String id) {
 		try {
 			ObjectId _id = new ObjectId(id);
-			AcidenteSiar acidente = siarmongoTemplate.findById(_id, AcidenteSiar.class, "acidenteSiar");
-			siarmongoTemplate.remove(acidente, "acidenteSiar");
+			AcidenteSiar acidente = siarmongoTemplate.findById(_id, AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME);
+			siarmongoTemplate.remove(acidente, AcidenteSiar.COLLECTION_NAME);
 		} catch(Exception e) {
 			logger.warn("Houve um erro ao remover o acidente indicado", e);
 		}

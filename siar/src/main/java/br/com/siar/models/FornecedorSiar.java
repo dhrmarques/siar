@@ -1,27 +1,18 @@
 package br.com.siar.models;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * Class created to save info about the external suppliers.
  * @author dmarques
  *
  */
-public class FornecedorSiar {
-
-	@Id
-	private ObjectId _id;
+public class FornecedorSiar extends BasicModel {
 	
+	public static final String COLLECTION_NAME = "fornecedorSiar";
+
 	private String nome;
 	private String urlSolicitacao;
 	
-	public ObjectId getId() {
-		return _id;
-	}
-	public void setId(ObjectId _id) {
-		this._id = _id;
-	}
 	public String getNome() {
 		return nome;
 	}

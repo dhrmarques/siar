@@ -4,43 +4,35 @@
 package br.com.siar.models;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * @author Leo
  *
  */
-public class MissaoSiar {
+public class MissaoSiar extends BasicModel {
 
-	@Id
-	private ObjectId _id;
+	public static final String COLLECTION_NAME = "missaoSiar";
 	
-	private String acidenteId;
-	private String tipoMissaoId;
+	private ObjectId acidenteId;
+	private ObjectId tipoMissaoId;
+	private StatusMissao status;
+	private ObjectId chefeId;
 
 	private String detalhes;
 	
-	public ObjectId getId() {
-		return _id;
-	}
-
-	public void setId(ObjectId id) {
-		this._id = id;
-	}
-
-	public String getAcidenteId() {
+	public ObjectId getAcidenteId() {
 		return acidenteId;
 	}
 
-	public void setAcidenteId(String acidenteId) {
+	public void setAcidenteId(ObjectId acidenteId) {
 		this.acidenteId = acidenteId;
 	}
 
-	public String getTipoMissaoId() {
+	public ObjectId getTipoMissaoId() {
 		return tipoMissaoId;
 	}
 
-	public void setTipoMissaoId(String tipoMissaoId) {
+	public void setTipoMissaoId(ObjectId tipoMissaoId) {
 		this.tipoMissaoId = tipoMissaoId;
 	}
 
@@ -50,5 +42,21 @@ public class MissaoSiar {
 
 	public void setDetalhes(String detalhes) {
 		this.detalhes = detalhes;
+	}
+
+	public StatusMissao getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusMissao status) {
+		this.status = status;
+	}
+
+	public ObjectId getChefeId() {
+		return chefeId;
+	}
+
+	public void setChefeId(ObjectId chefeId) {
+		this.chefeId = chefeId;
 	}
 }

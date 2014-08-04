@@ -3,17 +3,14 @@
  */
 package br.com.siar.models;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * @author Leo
  *
  */
-public class RecursoSiar {
+public class RecursoSiar extends BasicModel {
 
-	@Id
-	private ObjectId _id;
+	public static final String COLLECTION_NAME = "recursoSiar";
 	
 	private boolean recursoHumano;
 	private String nome;
@@ -22,14 +19,6 @@ public class RecursoSiar {
 	
 	public RecursoSiar() {
 		
-	}
-	
-	public ObjectId getId() {
-		return _id;
-	}
-
-	public void setId(ObjectId _id) {
-		this._id = _id;
 	}
 
 	public boolean isRecursoHumano() {
