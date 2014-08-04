@@ -11,6 +11,8 @@ import org.springframework.data.annotation.Id;
  *
  */
 public class SolicitacaoRecursoSiar extends BasicModel {
+	
+	public static final String COLLECTION_NAME = "solicitacaoRecursoSiar";
 
 	@Id
 	private ObjectId _id;
