@@ -33,32 +33,32 @@ public class FornecedorSiarService {
 	}
 	
 	//Class methods
-		public void saveFornecedor(FornecedorSiar fornecedor) {
-			//If the collection needs to be created
-			if(!siarmongoTemplate.collectionExists(FornecedorSiar.class))
-				siarmongoTemplate.createCollection(FornecedorSiar.class);
-			//If the object already exists in the database - Update
-			if(siarmongoTemplate.findById(fornecedor.getId(), FornecedorSiar.class, COLLECTION_NAME) != null)
-				siarmongoTemplate.save(fornecedor, COLLECTION_NAME);
-			else
-				siarmongoTemplate.insert(fornecedor, COLLECTION_NAME);
+	public void saveFornecedor(FornecedorSiar fornecedor) {
+		//If the collection needs to be created
+		if(!siarmongoTemplate.collectionExists(FornecedorSiar.class))
+			siarmongoTemplate.createCollection(FornecedorSiar.class);
+		//If the object already exists in the database - Update
+		if(siarmongoTemplate.findById(fornecedor.getId(), FornecedorSiar.class, COLLECTION_NAME) != null)
+			siarmongoTemplate.save(fornecedor, COLLECTION_NAME);
+		else
+			siarmongoTemplate.insert(fornecedor, COLLECTION_NAME);
+	}
+	
+	public FornecedorSiar findFornecedorById(String id) {
+		return siarmongoTemplate.findById(new ObjectId(id), FornecedorSiar.class, COLLECTION_NAME);
+	}
+	
+	public List<FornecedorSiar> listarFornecedores() {
+		return siarmongoTemplate.findAll(FornecedorSiar.class, COLLECTION_NAME);
+	}
+	
+	public void removeFornecedor(String id) {
+		try {
+			ObjectId _id = new ObjectId(id);
+			FornecedorSiar fornecedor = siarmongoTemplate.findById(_id, FornecedorSiar.class, COLLECTION_NAME);
+			siarmongoTemplate.remove(fornecedor, COLLECTION_NAME);
+		} catch(Exception e) {
+			logger.warn("Houve um erro ao remover o recurso indicado", e);
 		}
-		
-		public FornecedorSiar findFornecedorById(String id) {
-			return siarmongoTemplate.findById(new ObjectId(id), FornecedorSiar.class, COLLECTION_NAME);
-		}
-		
-		public List<FornecedorSiar> listarFornecedores() {
-			return siarmongoTemplate.findAll(FornecedorSiar.class, COLLECTION_NAME);
-		}
-		
-		public void removeFornecedor(String id) {
-			try {
-				ObjectId _id = new ObjectId(id);
-				FornecedorSiar fornecedor = siarmongoTemplate.findById(_id, FornecedorSiar.class, COLLECTION_NAME);
-				siarmongoTemplate.remove(fornecedor, COLLECTION_NAME);
-			} catch(Exception e) {
-				logger.warn("Houve um erro ao remover o recurso indicado", e);
-			}
-		}
+	}
 }
