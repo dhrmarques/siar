@@ -4,6 +4,8 @@
 		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/lista.css" />" rel="stylesheet">
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="<c:url value="/resources/js/bootstrap.js" />"></script>
 		<style type="text/css">
 		</style>
 		<title>${title}</title>
@@ -11,29 +13,57 @@
 	
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
+	    
+	    <div class="col-sm-12">
+	    	<ul class="menu nav nav-tabs">
+	    		<li class="active"><a href="#">Acidentes</a></li>
+	    		<li><a href="recursosiar">Recursos</a></li>
+	    	</ul>
+	    </div>
+	    
+	    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+			new
+		</button>
 
- 		<div class="col-sm-12">
- 			<div class="new-acidente-form">
-	        <form class="form-inline" action="/siar/acidentes/save" method="post" role="form">
-	        	<div class="container">
-		        	<div class="form-group col-sm-4">
-			            <label for="descricao">Descrição</label>
-			            <input class="form-control" type="text" id="descricao" name="descricao"/>
-		            </div>
-		            <div class="form-group col-sm-4">
-			            <label for="prioridade">Prioridade</label>
-			            <select class="form-control" id="prioridade" name="prioridade">
-			            	<option>Muito Grave</option>
-			            	<option>Grave</option>
-			            	<option>Média</option>
-			            	<option>Baixa</option>
-			           </select>
-	            	</div>
-	            	<div class="form-group col-sm-4">
-	            		<button class="btn btn-success" type="submit">submit</button>
-	            	</div>
+ 		<div class="col-sm-12 modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 			<div class="modal-dialog new-acidente-form">
+ 				<div class="modal-content">
+ 					<div class="modal-header">
+ 					</div>
+ 					<div class="modal-body">
+				        <form action="/siar/acidentesiar/save" method="post" role="form">
+							<div>
+								<div class="row">
+									<div col-sm-12>
+							        	<div class="form-group">
+								            <label for="descricao">Descrição</label>
+								            <input class="form-control" type="text" id="descricao" name="descricao"/>
+							            </div>
+							         
+							            <div class="form-group">
+								            <label for="prioridade">Prioridade</label>
+								            <select class="form-control" type="text" id="prioridade" name="prioridade">
+								            	<option>Muito Grave</option>
+								            	<option>Grave</option>
+								            	<option>Média</option>
+								            	<option>Baixa</option>
+								           </select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-offset-4 col-sm-4">
+						            	<div class="form-group">
+						            		<button class="btn btn-success" type="submit">submit</button>
+						            	</div>
+					            	</div>
+					    		</div>
+				    		</div>
+				    	</form>
+	    			</div>
+	    			<div class="modal-footer">
+	    			</div>
 	    		</div>
-	    	</form>
 	    	</div>
 		</div>
 		
