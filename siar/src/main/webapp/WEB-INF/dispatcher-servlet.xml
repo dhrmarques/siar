@@ -64,4 +64,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean id="solicitacaoRecursoService" class="br.com.siar.services.SolicitacaoRecursoService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
+	<bean id="startupService" class="br.com.siar.services.StartupService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
 </beans> 
