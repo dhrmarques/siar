@@ -8,7 +8,7 @@
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 		
-		<form action="/siar/acidentesiar/save" method="post">
+		<form action="/siar/acidentes/save" method="post">
             <input type="hidden" id="id" name="id" value="${acidenteUpdate.id}">
             <label for="descricao">Descrição</label>
             <input type="text" id="descricao" name="descricao" value="${acidenteUpdate.descricao}"/>

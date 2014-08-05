@@ -117,7 +117,7 @@ public class MissaoSiarController extends BasicController implements Application
 		model.addAttribute("recursos", getRecursoService().listRecursos());
 
 		model.addAttribute(Const.ATTR_TITLE, "Criar missão");
-		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_MISSOES.getPath());
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_EMERGENCIAS.getPath());
 		return "createmissao";
 	}
 	
