@@ -92,6 +92,8 @@ public class HomeController extends BasicController implements ApplicationContex
 		
 		if (tipoUser == null)
 			return Const.REDIRECT_NOT_LOGGED;
+		else if (tipoUser.equals(TipoUsuario.CHEFE_MISSAO))
+			return Const.REDIRECT_CHEFEMISSAO;
 		
 		return tipoUser.homefile;
 	}

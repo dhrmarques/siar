@@ -1,7 +1,5 @@
 package br.com.siar.models;
 
-import java.util.Date;
-
 import org.bson.types.ObjectId;
 
 /**
@@ -13,18 +11,11 @@ public class AtualizacaoMissaoSiar extends BasicModel {
 	
 	public static final String COLLECTION_NAME = "atualizacaoMissaoSiar";
 	
-	private Date dataAtualizacao;
 	private ObjectId missaoId;
 	private String comentario;
 	private ObjectId usuarioId;
 	private StatusMissao status;
-	
-	public Date getDataAtualizacao() {
-		return dataAtualizacao;
-	}
-	public void setDataAtualizacao(Date dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
-	}
+
 	public ObjectId getMissaoId() {
 		return missaoId;
 	}

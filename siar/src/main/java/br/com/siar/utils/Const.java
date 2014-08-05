@@ -23,9 +23,11 @@ public class Const {
 	public static final String SIAR = "/siar/";
 	public static final String ROOT_ADDRESS = "/";
 	public static final String HOME_ADDRESS = ROOT_ADDRESS + "home";
+	public static final String CHEFEMISSAO_ADDRESS = "/chefe";
 	public static final String REDIRECT_NOT_LOGGED = "redirect:" + ROOT_ADDRESS;
 	public static final String REDIRECT_HOME = "redirect:" + HOME_ADDRESS;
 	public static final String REDIRECT_UNAUTHORIZED = REDIRECT_HOME;
+	public static final String REDIRECT_CHEFEMISSAO = "redirect:" + CHEFEMISSAO_ADDRESS;
 	
 	public static final String LIST = "";
 	public static final String NEW = "/new";
@@ -39,6 +41,7 @@ public class Const {
 	public static final String ATTR_TITLE = "title";
 	public static final String ATTR_NAME = "nome";
 	public static final String ATTR_USER_TYPE = "tipo_usuario";
+	public static final String ATTR_USER_ID = "id_usuario";
 	public static final String ATTR_HIDE_HR = "hide_header_right";
 	public static final String ATTR_LINKS = "linklist";
 	public static final String ATTR_LINK_ACTIVE = "active_path";

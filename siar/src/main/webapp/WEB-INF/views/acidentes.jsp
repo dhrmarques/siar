@@ -14,13 +14,6 @@
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 	    
-	    <div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li class="active"><a href="#">Acidentes</a></li>
-	    		<li><a href="recursosiar">Recursos</a></li>
-	    	</ul>
-	    </div>
-	    
 	    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 			new
 		</button>
@@ -31,7 +24,7 @@
  					<div class="modal-header">
  					</div>
  					<div class="modal-body">
-				        <form action="/siar/acidentesiar/save" method="post" role="form">
+				        <form action="/siar/acidentes/save" method="post" role="form">
 							<div>
 								<div class="row">
 									<div col-sm-12>
