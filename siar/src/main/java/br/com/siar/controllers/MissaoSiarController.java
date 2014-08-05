@@ -81,17 +81,14 @@ public class MissaoSiarController extends BasicController implements Application
 		ObjectId missaoId = missaoService.saveMissao(missao);
 		
 		List<NecessidadeRecursoSiar> necessidades = new ArrayList<NecessidadeRecursoSiar>();
-		String[] idNecessidades = request.getParameterValues("necessidadeId");
 		String[] idRecursos = request.getParameterValues("recursoId");
 		String[] quantidades = request.getParameterValues("quantidade");
 		for (int i = 0 ; i < idRecursos.length ; i++) {
-			NecessidadeRecursoSiar nrs = new NecessidadeRecursoSiar(
-					idRecursos[i],
-					missaoId.toString(),
-					Integer.parseInt(quantidades[i])
-			);
-			if (!idNecessidades[i].isEmpty())
-				nrs.setId(new ObjectId(idNecessidades[i]));
+			NecessidadeRecursoSiar nrs = new NecessidadeRecursoSiar();
+			nrs.setRecursoId(new ObjectId(idRecursos[i]));
+			nrs.setMissaoId(missaoId);
+			nrs.setQuantidadeTotal(Integer.parseInt(quantidades[i]));
+			nrs.setId(new ObjectId());
 			necessidades.add(nrs);
 		}
 		

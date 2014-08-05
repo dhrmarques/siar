@@ -11,6 +11,11 @@ import br.com.siar.models.RecursoSiar;
  *
  */
 public class NecessidadeRecursoResponse {
+	
+	public NecessidadeRecursoResponse(NecessidadeRecursoSiar nrs, RecursoSiar r) {
+		necessidade = nrs;
+		recurso = r;
+	}
 
 	private NecessidadeRecursoSiar necessidade;
 	private RecursoSiar recurso;

@@ -4,7 +4,6 @@
 package br.com.siar.models;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * @author Leo
@@ -12,27 +11,12 @@ import org.springframework.data.annotation.Id;
  */
 public class NecessidadeRecursoSiar extends BasicModel {
 	
-	public NecessidadeRecursoSiar(String recursoId, String missaoId, int qtdTotal) {
-		this.recursoId = new ObjectId(recursoId);
-		this.missaoId = new ObjectId(missaoId);
-		this.quantidadeTotal = qtdTotal;
-	}
-	
 	public static final String COLLECTION_NAME = "necessidadeRecursoSiar";
 
-	@Id
-	private ObjectId _id;
-	
 	private ObjectId recursoId;
 	private ObjectId missaoId;
 	private int quantidadeTotal;
 	
-	public ObjectId getId() {
-		return _id;
-	}
-	public void setId(ObjectId id) {
-		this._id = id;
-	}
 	public ObjectId getRecursoId() {
 		return recursoId;
 	}

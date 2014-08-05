@@ -26,11 +26,11 @@
 		            </c:forEach>
 		        	</select>
             	</div>
-            	<c:forEach var="necessidade" items="${necessidadesResponse}">
+            	<c:forEach var="response" items="${necessidadesList}">
 					<div class="form-group">
-			            <input id="necessidadeId" type="hidden" name="necessidadeId" value="${necessidade.id}"/>
-						<input id="quantidade" type="hidden" name="quantidade" value="${necessidade.quantidadeLocal}"/>
-						<label for="fornecedorId"><b>Recurso:</b> ${necessidade.recurso.nome}</label>
+			            <input id="necessidadeId" type="hidden" name="necessidadeId" value="${response.necessidade.id}"/>
+						<input id="quantidade" type="hidden" name="quantidade" value="${response.necessidade.quantidadeTotal}"/>
+						<label for="fornecedorId"><b>Recurso:</b> ${response.recurso.nome}</label>
 			            <select class="form-control" id="fornecedorId" name="fornecedorId">
 			            	<option value="">Escolher fornecedor</option>
 			            <c:forEach var="fornecedor" items="${fornecedoresList}">
