@@ -30,7 +30,7 @@
 					<div class="form-group">
 			            <input id="necessidadeId" type="hidden" name="necessidadeId" value="${response.necessidade.id}"/>
 						<input id="quantidade" type="hidden" name="quantidade" value="${response.necessidade.quantidadeTotal}"/>
-						<label for="fornecedorId"><b>Recurso:</b> ${response.recurso.nome}</label>
+						<label for="fornecedorId">Recurso: <span style="font-weight:normal;">${response.necessidade.quantidadeTotal} x</span> ${response.recurso.nome}</label>
 			            <select class="form-control" id="fornecedorId" name="fornecedorId">
 			            	<option value="">Escolher fornecedor</option>
 			            <c:forEach var="fornecedor" items="${fornecedoresList}">

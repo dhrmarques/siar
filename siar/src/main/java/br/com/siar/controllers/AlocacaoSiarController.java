@@ -88,13 +88,13 @@ public class AlocacaoSiarController extends BasicController implements Applicati
 			return new RedirectView(Const.HOME_ADDRESS);
 		
 		ObjectId missaoId = new ObjectId(request.getParameter("missaoId"));
+		ObjectId chefeId = new ObjectId(request.getParameter("chefeId"));
 		
 		String[] idNecessidades = request.getParameterValues("necessidadeId");
 		String[] idFornecedores = request.getParameterValues("fornecedorId");
 		String[] quantidades = request.getParameterValues("quantidade");
 		
 		List<SolicitacaoRecursoSiar> solicitacoes = new ArrayList<SolicitacaoRecursoSiar>();
-		
 		for (int i = 0 ; i < idNecessidades.length ; i++) {
 			solicitacoes.add(new SolicitacaoRecursoSiar(
 					idNecessidades[i],
@@ -102,10 +102,11 @@ public class AlocacaoSiarController extends BasicController implements Applicati
 					Integer.parseInt(quantidades[i])
 			));
 		}
-		
 		getSolicitacaoRecursoService().saveSolicitacoes(solicitacoes);
+		
 		MissaoSiar missao = getMissaoService().findMissaoById(missaoId.toString()).getMissao();
 		missao.setStatus(StatusMissao.AGUARDANDO_RECURSOS);
+		missao.setChefeId(chefeId);
 		getMissaoService().saveMissao(missao);
 		
 		return new RedirectView(Const.SIAR + ALOCACAO);

@@ -22,7 +22,10 @@ public class SolicitacaoRecursoService extends BasicService {
 	private MongoTemplate siarmongoTemplate;
 	
 	public void saveSolicitacoes(List<SolicitacaoRecursoSiar> solicitacoes) {
-		// TODO Auto-generated method stub
+		for (SolicitacaoRecursoSiar solicitacao : solicitacoes) {
+			// TODO request external URL
+			saveModel(SolicitacaoRecursoSiar.class, solicitacao);
+		}
 	}
 	
 	@Override
