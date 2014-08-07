@@ -17,8 +17,8 @@ public class AcidenteSiarService extends BasicService {
 	private MongoTemplate siarmongoTemplate;
 	
 	public List<AcidenteSiar> listActiveAcidentes() {
-		Query q = new Query(); // TODO
-		q.addCriteria(Criteria.where("prioridade").is("Baixa"));
+		Query q = queryAtiva();
+		q.addCriteria(Criteria.where("prioridade").is("Baixa")); // TODO
 		
 		return siarmongoTemplate.find(q, AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME);
 	}

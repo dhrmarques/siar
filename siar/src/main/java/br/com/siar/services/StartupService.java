@@ -21,6 +21,7 @@ public class StartupService extends BasicService {
 		alpha.setSenha("1234");
 		alpha.setCpf("201.411.213-86");
 		alpha.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+		alpha.setAtivo(true);
 		
 		String collectionName = UsuarioSiar.COLLECTION_NAME;
 		if (!siarmongoTemplate.collectionExists(collectionName)) {

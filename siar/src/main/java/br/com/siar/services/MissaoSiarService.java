@@ -37,7 +37,8 @@ public class MissaoSiarService extends BasicService {
 	
 	public List<MissaoResponse> listMissoesPendentes() {
 
-		Query q = new Query(Criteria.where("status").is(StatusMissao.PENDENTE));
+		Query q = queryAtiva();
+		q.addCriteria(Criteria.where("status").is(StatusMissao.PENDENTE));
 		List<MissaoSiar> missoes = siarmongoTemplate.find(q, MissaoSiar.class, getCollectionName());
 		
 		List<MissaoResponse> responseList = new ArrayList<MissaoResponse>();
@@ -91,7 +92,7 @@ public class MissaoSiarService extends BasicService {
 	
 	public MissaoResponse missaoForChefe(String chefeId) {
 		
-		Query q = new Query();
+		Query q = queryAtiva();
 		q.addCriteria(Criteria.where("chefeId").is(new ObjectId(chefeId)));
 		q.addCriteria(Criteria.where("status").in(
 				StatusMissao.AGUARDANDO_RECURSOS, 

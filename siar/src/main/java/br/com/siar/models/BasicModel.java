@@ -18,6 +18,8 @@ public abstract class BasicModel {
 	@Id
 	private ObjectId _id;
 	
+	private Boolean ativo;
+
 	public ObjectId getId() {
 		return _id;
 	}
@@ -38,5 +40,13 @@ public abstract class BasicModel {
 	public String getDataCriacao2() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-EEE-YYYY");
 		return sdf.format(getDataCriacao());
+	}
+	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 }
