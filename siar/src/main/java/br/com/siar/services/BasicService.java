@@ -42,6 +42,7 @@ public abstract class BasicService {
 		if (!getSiarmongoTemplate().collectionExists(entityClass)) {
 			getSiarmongoTemplate().createCollection(entityClass);
 		}
+		model.setAtivo(true);
 		getSiarmongoTemplate().save(model, getCollectionName());
 	}
 	

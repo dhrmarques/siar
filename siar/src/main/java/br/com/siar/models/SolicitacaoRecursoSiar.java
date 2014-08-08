@@ -4,7 +4,6 @@
 package br.com.siar.models;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 
 /**
  * @author Leo

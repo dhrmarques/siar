@@ -27,7 +27,7 @@
 				        <form action="/siar/acidentes/save" method="post" role="form">
 							<div>
 								<div class="row">
-									<div col-sm-12>
+									<div class="col-sm-12">
 							        	<div class="form-group">
 								            <label for="descricao">Descrição</label>
 								            <input class="form-control" type="text" id="descricao" name="descricao"/>
@@ -35,7 +35,7 @@
 							         
 							            <div class="form-group">
 								            <label for="prioridade">Prioridade</label>
-								            <select class="form-control" type="text" id="prioridade" name="prioridade">
+								            <select class="form-control" id="prioridade" name="prioridade">
 								            	<option>Muito Grave</option>
 								            	<option>Grave</option>
 								            	<option>Média</option>

@@ -54,7 +54,7 @@ public class UsuarioSiarService extends BasicService {
 	public void saveUsuario(UsuarioSiar usuarioSiar) {
 		saveModel(UsuarioSiar.class, usuarioSiar);
 	}
-		
+	
 	//Removes an user from the repository.
 	public void removeUsuario(String id) {
 		// TODO check if it CAN be removed
