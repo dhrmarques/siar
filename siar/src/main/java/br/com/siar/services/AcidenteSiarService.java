@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.AcidenteSiar;
@@ -17,8 +16,8 @@ public class AcidenteSiarService extends BasicService {
 	private MongoTemplate siarmongoTemplate;
 	
 	public List<AcidenteSiar> listActiveAcidentes() {
-		Query q = queryAtiva();
-		q.addCriteria(Criteria.where("prioridade").is("Baixa")); // TODO
+		Query q = queryAtiva(); // TODO
+		// Qual a regra que permite ou não a criação de missões no acidente?
 		
 		return siarmongoTemplate.find(q, AcidenteSiar.class, AcidenteSiar.COLLECTION_NAME);
 	}
