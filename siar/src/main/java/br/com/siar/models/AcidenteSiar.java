@@ -1,5 +1,9 @@
 package br.com.siar.models;
 
+import java.util.Locale;
+
+import org.springframework.format.number.NumberFormatter;
+
 
 public class AcidenteSiar extends BasicModel {
 	
@@ -16,6 +20,22 @@ public class AcidenteSiar extends BasicModel {
 	private String referencia;
 	private String cidade;
 	private String uf;
+	
+	public String getLocalResumido() {
+		String str = "";
+		
+		if (logradouro == null || logradouro.isEmpty())
+			logradouro = "???";
+		str += logradouro;
+		if (numero > 0)
+			str += String.format(", %d", numero);
+		str += "\n";
+		
+		if (latitude != 0 && longitude != 0)
+			str += String.format("( %.4f , %.4f )", latitude, longitude);
+		
+		return str;
+	}
 	
 	public Prioridade getPrioridade() {
 		return prioridade;

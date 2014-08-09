@@ -90,6 +90,7 @@
 				<tr>
 					<th>Descrição</th>
 					<th>Prioridade</th>
+					<th>Local</th>
 					<th>Atualizar</th>
 					<th>Remover</th>
 				</tr>
@@ -97,6 +98,7 @@
 				<tr>
 						<td><span>${acidente.descricao}</span></td>
 						<td><span>${acidente.prioridade.desc}</span></td>
+						<td><span>${acidente.localResumido}</span></td>
 						<td><a href="/siar/acidentes/update/${acidente.id}"><button class="btn btn-warning">Update</button></a></td>
 						<td><a href="/siar/acidentes/delete/${acidente.id}"><button class="btn">Remove</button></a></td>
 				</tr>

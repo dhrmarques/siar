@@ -114,6 +114,14 @@ public class HomeController extends BasicController implements ApplicationContex
 		return new RedirectView(Const.ROOT_ADDRESS);
 	}
 	
+	@RequestMapping(value = "/secretPathBetweenTheMistyMountains")
+	public View startup2(HttpServletRequest request) {
+		
+		getStartupService().createTiposDeMissao();
+		
+		return new RedirectView(Const.ROOT_ADDRESS);
+	}
+	
 	private StartupService getStartupService() {
 		return appContext.getBean(StartupService.class);
 	}
