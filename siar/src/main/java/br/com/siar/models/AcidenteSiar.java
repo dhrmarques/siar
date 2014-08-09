@@ -5,18 +5,23 @@ public class AcidenteSiar extends BasicModel {
 	
 	public static final String COLLECTION_NAME = "acidenteSiar";
 
-	public String descricao;
-	public String prioridade;
+	private Prioridade prioridade;
+	private String descricao;
+
+	// Local
+	private float latitude;
+	private float longitude;
+	private String logradouro;
+	private int numero;
+	private String referencia;
+	private String cidade;
+	private String uf;
 	
-	public AcidenteSiar() {
-		
-	}
-	
-	public String getPrioridade() {
+	public Prioridade getPrioridade() {
 		return prioridade;
 	}
 
-	public void setPrioridade(String prioridade) {
+	public void setPrioridade(Prioridade prioridade) {
 		this.prioridade = prioridade;
 	}
 	
@@ -27,4 +32,79 @@ public class AcidenteSiar extends BasicModel {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public String getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public enum Prioridade implements Comparable<Prioridade> {
+		MUITO_BAIXA("Muito baixa"),
+		BAIXA("Baixa"),
+		NORMAL("Normal"),
+		ALTA("Alta"),
+		MUITO_ALTA("Muito alta");
+		
+		Prioridade(String str) {
+			desc = str;
+		}
+		
+		private String desc;
+		
+		public String getDesc() {
+			return desc;
+		}
+	}
+
 }

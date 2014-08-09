@@ -13,7 +13,7 @@ import org.springframework.data.annotation.Id;
  * @author Leo
  *
  */
-public abstract class BasicModel {
+public abstract class BasicModel implements Comparable<BasicModel> {
 
 	@Id
 	private ObjectId _id;
@@ -48,5 +48,11 @@ public abstract class BasicModel {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	@Override
+	public int compareTo(BasicModel model) {
+		
+		return this.getDataCriacao().compareTo(model.getDataCriacao());
 	}
 }

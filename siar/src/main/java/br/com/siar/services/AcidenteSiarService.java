@@ -35,9 +35,16 @@ public class AcidenteSiarService extends BasicService {
 		saveModel(AcidenteSiar.class, acidenteSiar);
 	}
 	
-	public void removeAcidente(String id) {
-		// TODO check if it CAN be removed
-		removeModelById(AcidenteSiar.class, id);
+	public boolean removeAcidente(String id) {
+		
+		boolean podeDesativar = true; // TODO
+		// Não pode desativar caso haja missões não finalizadas atribuídas a esse acidente
+		
+		if (podeDesativar) {
+			removeModelById(AcidenteSiar.class, id);
+		}
+		
+		return podeDesativar;
 	}
 
 	@Override

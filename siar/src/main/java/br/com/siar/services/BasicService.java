@@ -53,11 +53,6 @@ public abstract class BasicService {
 			Update u = new Update();
 			u.set("ativo", false);
 			getSiarmongoTemplate().updateFirst(q, u, getCollectionName());
-			
-//			T entity = getSiarmongoTemplate().findById(new ObjectId(id), entityClass, getCollectionName());
-//			entityClass.cast(entity);
-//			entity.setAtivo(false);
-//			getSiarmongoTemplate().remove(entity, getCollectionName());
 		} catch(Exception e) {
 			getLogger().warn("Houve um erro ao remover a entidade", e);
 		}
