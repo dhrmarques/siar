@@ -111,7 +111,7 @@ public class HomeController extends BasicController implements ApplicationContex
 		
 		getStartupService().createFirstAdmin();
 		
-		return new RedirectView(Const.ROOT_ADDRESS);
+		return new RedirectView(Const.SIAR);
 	}
 	
 	private StartupService getStartupService() {
