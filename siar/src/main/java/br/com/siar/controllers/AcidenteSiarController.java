@@ -1,5 +1,7 @@
 package br.com.siar.controllers;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ public class AcidenteSiarController extends BasicController {
 			return Const.REDIRECT_UNAUTHORIZED;
 		
 		model.addAttribute("acidenteSiarList", acidenteSiarService.listAcidentes());
+		model.addAttribute("prioridadesList", Arrays.asList(AcidenteSiar.Prioridade.values()));
 
 		model.addAttribute(Const.ATTR_TITLE, "Acidentes");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_ACIDENTES.getPath());

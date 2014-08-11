@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="header_container">
 	<div id="header_left">
 		<div id="header_logo"><img src="<c:url value="/resources/img/logotipo.png" />"/></div>
