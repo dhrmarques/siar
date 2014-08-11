@@ -67,6 +67,5 @@
     	<div class="footer col-sm-12">
     		
     	</div>
-    </div>
-</body>
+	</body>
 </html>

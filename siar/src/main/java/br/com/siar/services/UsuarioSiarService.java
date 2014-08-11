@@ -43,7 +43,8 @@ public class UsuarioSiarService extends BasicService {
 	
 	public List<UsuarioSiar> listChefesDeMissao() {
 		
-		Query q = new Query(Criteria.where("tipoUsuario").is(TipoUsuario.CHEFE_MISSAO));
+		Query q = queryAtiva();
+		q.addCriteria(Criteria.where("tipoUsuario").is(TipoUsuario.CHEFE_MISSAO));
 		List<UsuarioSiar> chefes = siarmongoTemplate.find(q, UsuarioSiar.class, getCollectionName());
 		
 		return chefes;
@@ -53,7 +54,7 @@ public class UsuarioSiarService extends BasicService {
 	public void saveUsuario(UsuarioSiar usuarioSiar) {
 		saveModel(UsuarioSiar.class, usuarioSiar);
 	}
-		
+	
 	//Removes an user from the repository.
 	public void removeUsuario(String id) {
 		// TODO check if it CAN be removed
@@ -62,7 +63,7 @@ public class UsuarioSiarService extends BasicService {
 	
 	public UsuarioSiar verify(String email, String senha) {
 		
-		Query q = new Query();
+		Query q = queryAtiva();
 		q.addCriteria(Criteria.where("email").is(email).and("senha").is(senha));
 
 		System.out.print("Query: " + q + "\nSMT: " + siarmongoTemplate);

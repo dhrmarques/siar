@@ -38,6 +38,7 @@ public abstract class BasicController {
 			
 			model.addAttribute(Const.ATTR_NAME, usuario.getNome());
 			model.addAttribute(Const.ATTR_USER_TYPE, tipoUser);
+			model.addAttribute(Const.ATTR_USER_ID, usuario.getId());
 			model = adicionarLinks(model, tipoUser);
 			
 			return true;

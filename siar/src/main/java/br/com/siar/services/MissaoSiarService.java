@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.MissaoSiar;
@@ -36,7 +37,8 @@ public class MissaoSiarService extends BasicService {
 	
 	public List<MissaoResponse> listMissoesPendentes() {
 
-		Query q = new Query(Criteria.where("status").is(StatusMissao.PENDENTE));
+		Query q = queryAtiva();
+		q.addCriteria(Criteria.where("status").is(StatusMissao.PENDENTE));
 		List<MissaoSiar> missoes = siarmongoTemplate.find(q, MissaoSiar.class, getCollectionName());
 		
 		List<MissaoResponse> responseList = new ArrayList<MissaoResponse>();
@@ -86,6 +88,34 @@ public class MissaoSiarService extends BasicService {
 	public void removeMissao(String id) {
 		// TODO check if it CAN be removed
 		removeModelById(MissaoSiar.class, id);
+	}
+	
+	public MissaoResponse missaoForChefe(String chefeId) {
+		
+		Query q = queryAtiva();
+		q.addCriteria(Criteria.where("chefeId").is(new ObjectId(chefeId)));
+		q.addCriteria(Criteria.where("status").in(
+				StatusMissao.AGUARDANDO_RECURSOS, 
+				StatusMissao.EM_ANDAMENTO_FALTANDO_RECURSOS,
+				StatusMissao.EM_ANDAMENTO,
+				StatusMissao.FINALIZANDO));
+		q.with(new Sort(Direction.DESC, "_id"));
+		
+		MissaoSiar missao = siarmongoTemplate.findOne(q, MissaoSiar.class);
+		if (missao == null) {
+			getLogger().info("Não há missões para o chefe de id " + chefeId);
+			return null;
+		}
+		getLogger().info("Chefiando a missão de id " + missao.getId());
+		return responseFromModel(missao);
+	}
+	
+	public void updateMissaoStatus(ObjectId missaoId, StatusMissao status) {
+		
+		Query q = new Query(Criteria.where("_id").is(missaoId));
+		Update u = new Update();
+		u.set("status", status);
+		siarmongoTemplate.upsert(q, u, getCollectionName());
 	}
 
 	@Override

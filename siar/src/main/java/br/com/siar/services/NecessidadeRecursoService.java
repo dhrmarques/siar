@@ -29,7 +29,8 @@ public class NecessidadeRecursoService extends BasicService {
 	
 	public List<NecessidadeRecursoResponse> listNecessidadesForMissao(String missaoId) {
 		
-		Query q = new Query(Criteria.where("missaoId").is(new ObjectId(missaoId)));
+		Query q = queryAtiva();
+		q.addCriteria(Criteria.where("missaoId").is(new ObjectId(missaoId)));
 		List<NecessidadeRecursoSiar> necessidades =  siarmongoTemplate.find(q, NecessidadeRecursoSiar.class, getCollectionName());
 		
 		List<NecessidadeRecursoResponse> response = new ArrayList<NecessidadeRecursoResponse>();
