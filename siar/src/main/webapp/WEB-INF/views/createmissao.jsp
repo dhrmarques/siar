@@ -22,13 +22,33 @@
 				<div class="form-group">
 		            <label for="tipoMissaoId">Tipo de missão</label>
 		            <select class="form-control" id="tipoMissaoId" name="tipoMissaoId">
-		            	<option value="0">Escolher tipo de missão</option>
+		            	<option value="">Escolher tipo de missão</option>
 		            <c:forEach var="tipoMissao" items="${tiposMissao}">
 		            	<option value="${tipoMissao.id}">${tipoMissao.titulo}</option>
 		            </c:forEach>
 		        	</select>
             	</div>
-				<input type="submit" value="Criar" class="btn btn-default"/>
+				<div class="form-group">
+		            <label for="recursoId">Recurso:</label>
+		            <input id="quantidade" type="text" name="quantidade" class="form-control" value="1" style="max-width:100px;display:inline-block;"/>
+		            <select class="form-control" id="recursoId" name="recursoId" style="max-width:50%;display:inline-block;">
+		            	<option value="">Incluir recurso</option>
+		            <c:forEach var="recurso" items="${recursos}">
+		            	<option value="${recurso.id}">${recurso.nome}</option>
+		            </c:forEach>
+		        	</select>
+            	</div>
+				<div class="form-group">
+		            <label for="recursoId">Recurso:</label>
+		            <input id="quantidade" type="text" name="quantidade" class="form-control" value="1" style="max-width:100px;display:inline-block;"/>
+		            <select class="form-control" id="recursoId" name="recursoId" style="max-width:50%;display:inline-block;">
+		            	<option value="">Incluir recurso</option>
+		            <c:forEach var="recurso" items="${recursos}">
+		            	<option value="${recurso.id}">${recurso.nome}</option>
+		            </c:forEach>
+		        	</select>
+            	</div>
+				<input type="submit" value="Criar" class="form-control btn btn-default"/>
 			</form>
 		</div>
 	
