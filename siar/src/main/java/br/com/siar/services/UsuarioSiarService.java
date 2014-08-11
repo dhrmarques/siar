@@ -2,49 +2,31 @@ package br.com.siar.services;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.UsuarioSiar;
+import br.com.siar.models.UsuarioSiar.TipoUsuario;
 
 /**
  * Service created for the CRUD manipulation operations.
  * @author dmarques
  *
  */
-public class UsuarioSiarService {
+public class UsuarioSiarService extends BasicService {
 
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
 	
-	public MongoTemplate getSiarmongoTemplate() {
-		return siarmongoTemplate;
+	//Finds an user by its id in the repository.
+	public UsuarioSiar findUsuarioById(String id){
+		return findModelById(UsuarioSiar.class, id);
 	}
 
-	public void setSiarmongoTemplate(MongoTemplate siarmongoTemplate) {
-		this.siarmongoTemplate = siarmongoTemplate;
-	}
-
-	//Creating an user in the repository.
-	public void saveUsuario(UsuarioSiar usuarioSiar) {
-		if (!siarmongoTemplate.collectionExists(UsuarioSiar.class)) {
-			siarmongoTemplate.createCollection(UsuarioSiar.class);
-		}
-		
-		if(usuarioSiar.getId() == null) {
-			siarmongoTemplate.insert(usuarioSiar, UsuarioSiar.COLLECTION_NAME);
-		} else {
-			try {
-				updateUsuario(usuarioSiar);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	//Updating the info from an existing user.
 	public void updateUsuario(UsuarioSiar usuarioSiar) throws Exception {
 		UsuarioSiar existingUser = siarmongoTemplate.findById(usuarioSiar.getId(), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
@@ -56,26 +38,32 @@ public class UsuarioSiarService {
 	
 	//Listing the existing users from repository.
 	public List<UsuarioSiar> listUsuarios() {
-		return siarmongoTemplate.findAll(UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
+		return listModels(UsuarioSiar.class);
+	}
+	
+	public List<UsuarioSiar> listChefesDeMissao() {
+		
+		Query q = queryAtiva();
+		q.addCriteria(Criteria.where("tipoUsuario").is(TipoUsuario.CHEFE_MISSAO));
+		List<UsuarioSiar> chefes = siarmongoTemplate.find(q, UsuarioSiar.class, getCollectionName());
+		
+		return chefes;
+	}
+	
+	//Creating an user in the repository.
+	public void saveUsuario(UsuarioSiar usuarioSiar) {
+		saveModel(UsuarioSiar.class, usuarioSiar);
 	}
 	
 	//Removes an user from the repository.
-	public void removeUsuario(String id) throws Exception {
-		UsuarioSiar existingUser = siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
-		if(existingUser == null) {
-			throw new Exception("User not found");
-		}
-		siarmongoTemplate.remove(existingUser, UsuarioSiar.COLLECTION_NAME);
-	}
-	
-	//Finds an user by its id in the repository.
-	public UsuarioSiar findUsuarioById(String id){
-		return siarmongoTemplate.findById(new ObjectId(id), UsuarioSiar.class, UsuarioSiar.COLLECTION_NAME);
+	public void removeUsuario(String id) {
+		// TODO check if it CAN be removed
+		removeModelById(UsuarioSiar.class, id);
 	}
 	
 	public UsuarioSiar verify(String email, String senha) {
 		
-		Query q = new Query();
+		Query q = queryAtiva();
 		q.addCriteria(Criteria.where("email").is(email).and("senha").is(senha));
 
 		System.out.print("Query: " + q + "\nSMT: " + siarmongoTemplate);
@@ -84,5 +72,25 @@ public class UsuarioSiarService {
 		if (user != null) 
 			return user;
 		return null;
+	}
+	
+	@Override
+	public MongoTemplate getSiarmongoTemplate() {
+		return siarmongoTemplate;
+	}
+
+	@Override
+	public void setSiarmongoTemplate(MongoTemplate siarmongoTemplate) {
+		this.siarmongoTemplate = siarmongoTemplate;
+	}
+
+	@Override
+	public String getCollectionName() {
+		return UsuarioSiar.COLLECTION_NAME;
+	}
+
+	@Override
+	public Logger getLogger() {
+		return LoggerFactory.getLogger(this.getClass());
 	}
 }

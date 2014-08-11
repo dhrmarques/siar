@@ -3,8 +3,12 @@
  */
 package br.com.siar.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -19,10 +23,13 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.MissaoSiar;
+import br.com.siar.models.NecessidadeRecursoSiar;
 import br.com.siar.models.StatusMissao;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.AcidenteSiarService;
 import br.com.siar.services.MissaoSiarService;
+import br.com.siar.services.NecessidadeRecursoService;
+import br.com.siar.services.RecursoSiarService;
 import br.com.siar.services.TipoMissaoSiarService;
 import br.com.siar.utils.Const;
 
@@ -42,6 +49,12 @@ public class MissaoSiarController extends BasicController implements Application
 	private TipoMissaoSiarService getTipoMissaoService() {
 		return appContext.getBean(TipoMissaoSiarService.class);
 	}
+	private RecursoSiarService getRecursoService() {
+		return appContext.getBean(RecursoSiarService.class);
+	}
+	private NecessidadeRecursoService getNecessidadeRecursoService() {
+		return appContext.getBean(NecessidadeRecursoService.class);
+	}
 	
 	@RequestMapping(value = MISSOES, method = RequestMethod.GET)
 	public String getMissoesList(HttpServletRequest request, ModelMap model) {
@@ -60,9 +73,26 @@ public class MissaoSiarController extends BasicController implements Application
 		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		if (missao.getStatus() == null) missao.setStatus(StatusMissao.PENDENTE);
+		if (missao.getStatus() == null)
+			missao.setStatus(StatusMissao.PENDENTE);
+		else if (!missao.getStatus().equals(StatusMissao.PENDENTE))
+			return new RedirectView(Const.HOME_ADDRESS); // TODO: mensagem de erro (Não pode mais alterar)
+			
+		ObjectId missaoId = missaoService.saveMissao(missao);
 		
-		missaoService.saveMissao(missao);
+		List<NecessidadeRecursoSiar> necessidades = new ArrayList<NecessidadeRecursoSiar>();
+		String[] idRecursos = request.getParameterValues("recursoId");
+		String[] quantidades = request.getParameterValues("quantidade");
+		for (int i = 0 ; i < idRecursos.length ; i++) {
+			NecessidadeRecursoSiar nrs = new NecessidadeRecursoSiar();
+			nrs.setRecursoId(new ObjectId(idRecursos[i]));
+			nrs.setMissaoId(missaoId);
+			nrs.setQuantidadeTotal(Integer.parseInt(quantidades[i]));
+			nrs.setId(new ObjectId());
+			necessidades.add(nrs);
+		}
+		
+		getNecessidadeRecursoService().saveNecessidades(necessidades);
 		return new RedirectView(Const.SIAR + MISSOES);
 	}
 	
@@ -84,9 +114,10 @@ public class MissaoSiarController extends BasicController implements Application
 		
 		model.addAttribute("acidente", getAcidenteService().findAcidenteById(acidenteId));
 		model.addAttribute("tiposMissao", getTipoMissaoService().listTiposMissao());
+		model.addAttribute("recursos", getRecursoService().listRecursos());
 
 		model.addAttribute(Const.ATTR_TITLE, "Criar missão");
-		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_MISSOES.getPath());
+		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_EMERGENCIAS.getPath());
 		return "createmissao";
 	}
 	

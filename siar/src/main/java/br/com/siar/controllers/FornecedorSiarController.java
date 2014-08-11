@@ -29,11 +29,11 @@ public class FornecedorSiarController extends BasicController {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
 
-		model.addAttribute("amsList", fornecedorService.listarFornecedores());
+		model.addAttribute("fornecedoresList", fornecedorService.listarFornecedores());
 		
 		model.addAttribute(Const.ATTR_TITLE, "Fornecedores");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_FORNECEDORES.getPath());
-		return "fornecedor";
+		return "fornecedores";
 	}
 	
 	@RequestMapping(value = FORNECEDORES + Const.SAVE, method = RequestMethod.POST)
@@ -50,7 +50,7 @@ public class FornecedorSiarController extends BasicController {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return Const.REDIRECT_UNAUTHORIZED;
 
-		model.addAttribute("fornecedorUpdate", fornecedorService.findFornecedorById(id));
+		model.addAttribute("fornecedor", fornecedorService.findFornecedorById(id));
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar Fornecedor");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_FORNECEDORES.getPath());

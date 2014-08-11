@@ -26,7 +26,7 @@
 			            <input placeholder="CPF" class="form-control" type="text" id="cpf" name="cpf"/>
 		            </div>
 		            <div class="form-group">
-			            <select placeholder="Tipo de usuário" class="form-control" id="tipoUsuario" name="tipoUsuario">
+			            <select class="form-control" id="tipoUsuario" name="tipoUsuario">
 			            	<option value="ADMINISTRADOR">Administrador</option>
 			            	<option value="COORDENADOR">Coordenador</option>
 			            	<option value="ESPECIALISTA">Especialista</option>

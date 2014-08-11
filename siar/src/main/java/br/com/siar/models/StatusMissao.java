@@ -9,13 +9,13 @@ package br.com.siar.models;
  *
  */
 public enum StatusMissao {
-	PENDENTE, // aguardando alocação por parte do coordenador
-	AGUARDANDO_RECURSOS, // após alocação, enquanto o Chefe de Missão ainda não fez nenhuma Atualização
-	EM_ANDAMENTO_FALTANDO_RECURSOS, // Quando parte dos recursos chegou e pôde ser iniciada a missão
-	EM_ANDAMENTO, // Quando todos os recursos chegaram e a missão já foi iniciada
-	FINALIZANDO, // Quando a missão parece finalizada, mas o Chefe de Missão quer ter certeza disso
-	FINALIZADA_SUCESSO, // Missão concluída com sucesso
-	FINALIZADA_PROBLEMA; // A missão falhou (em parte? especificar no comentário)
+	PENDENTE("Pendente"), // aguardando alocação por parte do coordenador
+	AGUARDANDO_RECURSOS("Aguardando recursos"), // após alocação, enquanto o Chefe de Missão ainda não fez nenhuma Atualização
+	EM_ANDAMENTO_FALTANDO_RECURSOS("Em andamento, mas faltando recursos"), // Quando parte dos recursos chegou e pôde ser iniciada a missão
+	EM_ANDAMENTO("Em andamento"), // Quando todos os recursos chegaram e a missão já foi iniciada
+	FINALIZANDO("Finalizando"), // Quando a missão parece finalizada, mas o Chefe de Missão quer ter certeza disso
+	FINALIZADA_SUCESSO("Finalizada com sucesso"), // Missão concluída com sucesso
+	FINALIZADA_PROBLEMA("Encerrada devido a problemas"); // A missão falhou (em parte? especificar no comentário)
 	
 	private StatusMissao(String legivel) {
 		this.legivel = legivel;

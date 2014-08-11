@@ -19,5 +19,5 @@ spring-data-mongodb-1.2.0-RELEASE/
 
 # Misc Files #
 .metadata/*
-*/pom.properties
-*/MANIFEST.MF
+*.properties
+*.MF

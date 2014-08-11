@@ -5,6 +5,9 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -12,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
+import br.com.siar.services.StartupService;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
 
@@ -23,7 +29,7 @@ import br.com.siar.utils.SessionHelper;
  */
 @Controller
 @SessionAttributes({"erro", "email"})
-public class HomeController extends BasicController {
+public class HomeController extends BasicController implements ApplicationContextAware {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -86,6 +92,8 @@ public class HomeController extends BasicController {
 		
 		if (tipoUser == null)
 			return Const.REDIRECT_NOT_LOGGED;
+		else if (tipoUser.equals(TipoUsuario.CHEFE_MISSAO))
+			return Const.REDIRECT_CHEFEMISSAO;
 		
 		return tipoUser.homefile;
 	}
@@ -98,4 +106,22 @@ public class HomeController extends BasicController {
 		return Const.REDIRECT_NOT_LOGGED;
 	}
 	
+	@RequestMapping(value = "/secretPathThatNoOneWillEverFindOutUnlessTheyCheckOurCode")
+	public View startup(HttpServletRequest request) {
+		
+		getStartupService().createFirstAdmin();
+		
+		return new RedirectView(Const.SIAR);
+	}
+	
+	private StartupService getStartupService() {
+		return appContext.getBean(StartupService.class);
+	}
+		
+	private ApplicationContext appContext;
+	@Override
+	public void setApplicationContext(ApplicationContext arg0)
+			throws BeansException {
+		appContext = arg0;
+	}
 }

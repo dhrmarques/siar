@@ -33,7 +33,7 @@ http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	<!-- Define the MongoTemplate which handles connectivity with MongoDB -->
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate" depends-on="mongo">
 	    <constructor-arg name="mongo" ref="mongo"/>
-	    <constructor-arg name="databaseName" value="acidenteSiarTable"/>
+	    <constructor-arg name="databaseName" value="siar"/>
 	</bean>
 	<bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
 		<property name="host" value="localhost" />
@@ -64,5 +64,13 @@ http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	<bean id="fornecedorService" class="br.com.siar.services.FornecedorSiarService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
-	
+	<bean id="necessidadeRecursoService" class="br.com.siar.services.NecessidadeRecursoService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
+	<bean id="solicitacaoRecursoService" class="br.com.siar.services.SolicitacaoRecursoService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
+	<bean id="startupService" class="br.com.siar.services.StartupService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
 </beans> 

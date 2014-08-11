@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package br.com.siar.services;
 
 import java.util.List;
@@ -7,32 +10,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import br.com.siar.models.AtualizacaoMissaoSiar;
+import br.com.siar.models.SolicitacaoRecursoSiar;
 
 /**
- * Service to maintain the recorded data from the missions.
- * @author dmarques
+ * @author Leo
  *
  */
-public class AtualizacaoMissaoSiarService extends BasicService {
-
-	private static final String COLLECTION_NAME = AtualizacaoMissaoSiar.COLLECTION_NAME;
+public class SolicitacaoRecursoService extends BasicService {
 	
 	@Autowired
 	private MongoTemplate siarmongoTemplate;
 	
-	public void saveAtualizacao(AtualizacaoMissaoSiar ams) {
-		saveModel(AtualizacaoMissaoSiar.class, ams);
+	public void saveSolicitacoes(List<SolicitacaoRecursoSiar> solicitacoes) {
+		for (SolicitacaoRecursoSiar solicitacao : solicitacoes) {
+			// TODO request external URL
+			saveModel(SolicitacaoRecursoSiar.class, solicitacao);
+		}
 	}
 	
-	public AtualizacaoMissaoSiar findAtualizacaoById(String id) {
-		return findModelById(AtualizacaoMissaoSiar.class, id);
-	}
-	
-	public List<AtualizacaoMissaoSiar> listarAtualizacoes() {
-		return siarmongoTemplate.findAll(AtualizacaoMissaoSiar.class, COLLECTION_NAME);
-	}
-
 	@Override
 	public MongoTemplate getSiarmongoTemplate() {
 		return siarmongoTemplate;
@@ -45,11 +40,12 @@ public class AtualizacaoMissaoSiarService extends BasicService {
 
 	@Override
 	protected String getCollectionName() {
-		return COLLECTION_NAME;
+		return SolicitacaoRecursoSiar.COLLECTION_NAME;
 	}
 
 	@Override
 	protected Logger getLogger() {
 		return LoggerFactory.getLogger(this.getClass());
 	}
+
 }

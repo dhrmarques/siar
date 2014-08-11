@@ -14,13 +14,6 @@
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 	    
-	    <div class="col-sm-12">
-	    	<ul class="menu nav nav-tabs">
-	    		<li class="active"><a href="#">Acidentes</a></li>
-	    		<li><a href="recursosiar">Recursos</a></li>
-	    	</ul>
-	    </div>
-	    
 	    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 			new
 		</button>
@@ -31,10 +24,10 @@
  					<div class="modal-header">
  					</div>
  					<div class="modal-body">
-				        <form action="/siar/acidentesiar/save" method="post" role="form">
+				        <form action="/siar/acidentes/save" method="post" role="form">
 							<div>
 								<div class="row">
-									<div col-sm-12>
+									<div class="col-sm-12">
 							        	<div class="form-group">
 								            <label for="descricao">Descrição</label>
 								            <input class="form-control" type="text" id="descricao" name="descricao"/>
@@ -42,7 +35,7 @@
 							         
 							            <div class="form-group">
 								            <label for="prioridade">Prioridade</label>
-								            <select class="form-control" type="text" id="prioridade" name="prioridade">
+								            <select class="form-control" id="prioridade" name="prioridade">
 								            	<option>Muito Grave</option>
 								            	<option>Grave</option>
 								            	<option>Média</option>

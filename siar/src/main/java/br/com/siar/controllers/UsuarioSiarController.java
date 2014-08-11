@@ -48,7 +48,7 @@ public class UsuarioSiarController extends BasicController {
 		return new RedirectView(Const.SIAR + USUARIOS);
 	}
 	
-	@RequestMapping(value = USUARIOS + Const.UPDATE)
+	@RequestMapping(value = USUARIOS + Const.DELETE)
 	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.ROOT_ADDRESS);
