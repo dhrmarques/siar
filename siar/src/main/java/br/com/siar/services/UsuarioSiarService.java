@@ -41,6 +41,20 @@ public class UsuarioSiarService extends BasicService {
 		return listModels(UsuarioSiar.class);
 	}
 	
+	public int findUsuarioByTipoUsuario(String id) {
+		UsuarioSiar user = findUsuarioById(id);
+		
+		Query q = new Query();
+		q.addCriteria(Criteria.where("tipoUsuario").is(user.getTipoUsuario()).and("ativo").is(true));
+		return siarmongoTemplate.find(q, UsuarioSiar.class, getCollectionName()).size();
+	}
+	
+	public UsuarioSiar findUsuarioByEmail(String email) {
+		Query q = new Query();
+		q.addCriteria(Criteria.where("email").is(email));
+		return siarmongoTemplate.findOne(q, UsuarioSiar.class, getCollectionName());
+	}
+	
 	public List<UsuarioSiar> listChefesDeMissao() {
 		
 		Query q = queryAtiva();
