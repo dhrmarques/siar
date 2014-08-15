@@ -14,7 +14,7 @@
 	</head>
 	
 	<body>
-		<div id="error-container" class="well">${box_text}</div>
+		<div id="error-container" class="well ${cls}">${box_text}</div>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 	    
 	    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">

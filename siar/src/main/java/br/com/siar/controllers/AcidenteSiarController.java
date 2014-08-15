@@ -58,20 +58,26 @@ public class AcidenteSiarController extends BasicController {
 			return new RedirectView(Const.HOME_ADDRESS);
 		if(acidenteSiar.getDescricao().equals("")){
 			request.getSession().setAttribute(Const.SESSION_ERROR_CODE, Const.ERROR_LOGIN_NO_MATCH);
-			redirectAttributes.addFlashAttribute("box_text", "Successfully not added..");
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
 		}else{
 			acidenteSiarService.saveAcidente(acidenteSiar);
-			redirectAttributes.addFlashAttribute("box_text", "Successfully added..");
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
 		}
 		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
 	
 	@RequestMapping(value = ACIDENTES + Const.DELETE, method = RequestMethod.GET)
-	public View removeAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model) {
-		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
+	public View removeAcidente(HttpServletRequest request, @PathVariable String id, ModelMap model, final RedirectAttributes redirectAttributes) {
+		if (!autorizado(request, model, TipoUsuario.COORDENADOR)){
 			return new RedirectView(Const.HOME_ADDRESS);
+		}
 		
+		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+		redirectAttributes.addFlashAttribute("box_text", Const.ACIDENTE_DELETED);
 		acidenteSiarService.removeAcidente(id);
+		
 		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
 	

@@ -4,27 +4,31 @@
 		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/lista.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/components.css" />" rel="stylesheet">
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="<c:url value="/resources/js/error.js" />"></script>
 		<style type="text/css">
 		</style>
 		<title>${title}</title>
 	</head>
 	
 	<body>
+		<div id="error-container" class="well ${cls}">${box_text}</div>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 
  		<div class="col-sm-12">
- 			<div class="new-tipomissao-form">
-	        <form action="/siar/tiposmissao/save" method="post" role="form">
+ 			<div class="new-tipomissao-form with-padding-top">
+	        <form class="form-inline" action="/siar/tiposmissao/save" method="post" role="form">
 	        	<div class="container">
-		        	<div class="form-group col-sm-2">
+		        	<div class="form-group">
 			            <label for="titulo">Título</label>
 			            <input class="form-control" type="text" id="titulo" name="titulo"/>
 		            </div>
-		        	<div class="form-group col-sm-6">
+		        	<div class="form-group">
 			            <label for="descricao">Descrição</label>
 			            <input class="form-control" type="text" id="descricao" name="descricao"/>
 		            </div>
-	            	<div class="form-group col-sm-2">
+	            	<div class="form-group">
 	            		<button class="btn btn-success" type="submit">submit</button>
 	            	</div>
 	    		</div>

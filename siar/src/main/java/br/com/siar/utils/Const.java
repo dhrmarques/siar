@@ -2,7 +2,12 @@ package br.com.siar.utils;
 
 public class Const {
 
-	public static final String FORM_INCOMPLETE = "Preencha todos os campos";
+	public static final String ACIDENTE_DELETED = "Acidente removido com sucesso";
+	public static final String FORM_INCOMPLETE = "Formulário incompleto";
+	public static final String SUCCESS = "Tá otimo";
+	public static final String CSS_ERROR_CLASS = "error";
+	public static final String CSS_SUCCESS_CLASS = "success";
+	
 
 	/**
 	 * Session object keys

@@ -1,7 +1,7 @@
 $( document ).ready(function() {
-  if($("#error-container").text() == "" || $("#error-container").text() == null){
-	  $("#error-container").css("display", "none");
-  }else{
+  if($("#error-container").hasClass("success") || $("#error-container").hasClass("error")){
 	  $("#error-container").css("display", "block");
+  }else{
+	  $("#error-container").css("display", "none");
   }
 });
