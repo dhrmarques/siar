@@ -2,6 +2,7 @@ package br.com.siar.services;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.AcidenteSiar;
+import br.com.siar.models.BasicModel;
+import br.com.siar.models.TipoMissaoSiar;
 
 public class AcidenteSiarService extends BasicService {
 	
@@ -26,6 +29,12 @@ public class AcidenteSiarService extends BasicService {
 	public AcidenteSiar findAcidenteById(String id){
 		return findModelById(AcidenteSiar.class, id);
 	}
+	
+	public TipoMissaoSiar findAcidenteByDescricao(String descricao) {
+		Query q = new Query(Criteria.where("descricao").is(descricao));
+		return getSiarmongoTemplate().findOne(q, TipoMissaoSiar.class, getCollectionName());
+	}
+	
 	
 	public List<AcidenteSiar> listAcidentes() {
 		return listModels(AcidenteSiar.class);

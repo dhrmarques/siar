@@ -2,7 +2,8 @@ package br.com.siar.utils;
 
 public class Const {
 
-	public static final String ACIDENTE_DELETED = "Acidente removido com sucesso";
+	public static final String ALREADY_EXISTS = "Já existe com esse nome um elemento do tipo: ";
+	public static final String DELETED = " removido com sucesso";
 	public static final String FORM_INCOMPLETE = "Formulário incompleto";
 	public static final String SUCCESS = "Tá otimo";
 	public static final String CSS_ERROR_CLASS = "error";

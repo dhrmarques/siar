@@ -5,7 +5,10 @@ package br.com.siar.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.TipoMissaoSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
+import br.com.siar.services.StartupService;
 import br.com.siar.services.TipoMissaoSiarService;
 import br.com.siar.utils.Const;
 
@@ -26,7 +30,7 @@ import br.com.siar.utils.Const;
  *
  */
 @Controller
-public class TipoMissaoSiarController extends BasicController {
+public class TipoMissaoSiarController extends BasicController implements ApplicationContextAware{
 
 	RedirectAttributes redirectAttributes;
 	
@@ -52,6 +56,9 @@ public class TipoMissaoSiarController extends BasicController {
 		if(tipo.getTitulo().equals("") || tipo.getDescricao().equals("") ){
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
+		}else if(getTipoMissaoService().findTipoMissaoByTitulo(tipo.getTitulo()) != null){
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + TipoMissaoSiar.class.toString());
 		}else{
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
@@ -80,5 +87,16 @@ public class TipoMissaoSiarController extends BasicController {
 		model.addAttribute(Const.ATTR_TITLE, "Editar missão");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_TIPOSMISSAO.getPath());
 		return "updatetipomissao";
+	}
+	
+	private TipoMissaoSiarService getTipoMissaoService() {
+		return appContext.getBean(TipoMissaoSiarService.class);
+	}
+		
+	private ApplicationContext appContext;
+	@Override
+	public void setApplicationContext(ApplicationContext arg0)
+			throws BeansException {
+		appContext = arg0;
 	}
 }
