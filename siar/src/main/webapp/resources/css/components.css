@@ -13,3 +13,10 @@
 	margin-bottom: 20px;
 	width: auto;
 }
+
+#error-container{
+	display: block;
+	color: #a65 !important;
+	text-align: center;
+	background-color: #ffb3a0 !important;
+}

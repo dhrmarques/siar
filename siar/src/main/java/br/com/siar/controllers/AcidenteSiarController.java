@@ -2,6 +2,8 @@ package br.com.siar.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.siar.utils.Const;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,16 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.AcidenteSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.AcidenteSiarService;
-import br.com.siar.utils.Const;
 
 @Controller
 public class AcidenteSiarController extends BasicController {
 
+	RedirectAttributes redirectAttributes;
+	
 	@Autowired
 	private AcidenteSiarService acidenteSiarService;
 	
@@ -32,6 +36,7 @@ public class AcidenteSiarController extends BasicController {
 
 		model.addAttribute(Const.ATTR_TITLE, "Acidentes");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_ACIDENTES.getPath());
+				
 		return "acidentes";
 	}
 	
@@ -48,11 +53,16 @@ public class AcidenteSiarController extends BasicController {
 	}
 	
 	@RequestMapping(value = ACIDENTES + Const.SAVE, method = RequestMethod.POST)
-	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model) {
+	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
-		
-		acidenteSiarService.saveAcidente(acidenteSiar);
+		if(acidenteSiar.getDescricao().equals("")){
+			request.getSession().setAttribute(Const.SESSION_ERROR_CODE, Const.ERROR_LOGIN_NO_MATCH);
+			redirectAttributes.addFlashAttribute("box_text", "Successfully not added..");
+		}else{
+			acidenteSiarService.saveAcidente(acidenteSiar);
+			redirectAttributes.addFlashAttribute("box_text", "Successfully added..");
+		}
 		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
 	

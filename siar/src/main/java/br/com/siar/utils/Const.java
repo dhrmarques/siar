@@ -2,6 +2,8 @@ package br.com.siar.utils;
 
 public class Const {
 
+	public static final String FORM_INCOMPLETE = "Preencha todos os campos";
+
 	/**
 	 * Session object keys
 	 */
@@ -14,7 +16,6 @@ public class Const {
 	 */
 	public static final int ERROR_FORM_INCOMPLETE = 2;
 	public static final int ERROR_FORM_INVALID = 3;
-	
 	public static final int ERROR_LOGIN_NO_MATCH = 5;
 
 	/** 
