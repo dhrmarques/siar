@@ -63,7 +63,11 @@ public class AcidenteSiarController extends BasicController implements Applicati
 	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
-		if(acidenteSiar.getDescricao().equals("")){
+		if(
+				request.getParameter("numero").equals("") || request.getParameter("longitude").equals("") || request.getParameter("latitude").equals("") ||
+				acidenteSiar.getDescricao().equals("") || acidenteSiar.getDescricao() == null|| 
+				acidenteSiar.getCidade().equals("") || acidenteSiar.getCidade() == null ||
+				acidenteSiar.getLogradouro().equals("") || acidenteSiar.getLogradouro() == null){
 			request.getSession().setAttribute(Const.SESSION_ERROR_CODE, Const.ERROR_LOGIN_NO_MATCH);
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
