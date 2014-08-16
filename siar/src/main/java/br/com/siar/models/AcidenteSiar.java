@@ -1,8 +1,5 @@
 package br.com.siar.models;
 
-import java.util.Locale;
-
-import org.springframework.format.number.NumberFormatter;
 
 
 public class AcidenteSiar extends BasicModel {
@@ -13,10 +10,10 @@ public class AcidenteSiar extends BasicModel {
 	private String descricao;
 
 	// Local
-	private float latitude;
-	private float longitude;
+	private Float latitude;
+	private Float longitude;
 	private String logradouro;
-	private int numero;
+	private Integer numero;
 	private String referencia;
 	private String cidade;
 	private String uf;

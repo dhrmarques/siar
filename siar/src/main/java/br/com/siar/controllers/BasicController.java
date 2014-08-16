@@ -9,11 +9,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.Link;
+import br.com.siar.utils.MyCustomNumberEditor;
 import br.com.siar.utils.SessionHelper;
 
 /**
@@ -21,6 +24,14 @@ import br.com.siar.utils.SessionHelper;
  *
  */
 public abstract class BasicController {
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(float.class, new MyCustomNumberEditor(Float.class, true));
+		binder.registerCustomEditor(int.class, new MyCustomNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(Float.class, new MyCustomNumberEditor(Float.class, true));
+		binder.registerCustomEditor(Integer.class, new MyCustomNumberEditor(Integer.class, true));
+	}
 	
 	protected boolean autorizado(HttpServletRequest request, ModelMap model) {
 
