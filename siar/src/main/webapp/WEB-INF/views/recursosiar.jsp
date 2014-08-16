@@ -4,10 +4,14 @@
 		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/lista.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/components.css" />" rel="stylesheet">
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="<c:url value="/resources/js/error.js" />"></script>
 		<title>${title}</title>
 	</head>
 	
 	<body>
+		<div id="error-container" class="well ${cls}">${box_text}</div>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 
  		<div class="col-sm-12">
@@ -29,14 +33,14 @@
 		        		<label>
 		        			Quantidade: 
 			        		<select class="form-control" id="qtdPropria" name="qtdPropria">
-				        		<c:forEach var="i" begin="0" end="20">
+				        		<c:forEach var="i" begin="1" end="20">
 				        			<option><c:out value="${i}"/></option>
 								</c:forEach>
 				            </select>
 			            </label>
 		            </div>
 	            	<div class="form-group">
-	            		<button class="btn btn-success" type="submit">submit</button>
+	            		<button class="btn btn-success" type="submit">Criar</button>
 	            	</div>
 	    	</form>
 	    	</div>

@@ -5,17 +5,13 @@ $( document ).ready(function() {
 	  $("#error-container").css("display", "none");
   }
   
-  $("input").on("keypress", function(){
-	  if(
-			  $('input#descricao').val() == "" || $('input#latitude').val() == "" ||
-			  $('input#longitude').val() == "" || $('input#logradouro').val() == "" ||
-			  $('input#numero').val() == "" || $('input#referencia').val() == "" || $('input#cidade').val() == "" )
-	  { 
-		  $("button[type=submit]").addClass("disabled");
-	  }else{
-		  $("button[type=submit]").removeClass("enabled");
-	  } 
-  });
+  $("input[type=submit]").addClass("disabled");
   
+  $("form").keyup(function() {
+      if ($("input").val() == "" || $("select#tipoMissaoId").val() == "") {
+    	  $("input[type=submit]").addClass("disabled");
+      } else {
+    	  $("input[type=submit]").removeClass("disabled");
+      }
+  });
 });
-

@@ -64,7 +64,7 @@ public class AcidenteSiarController extends BasicController implements Applicati
 		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
 		if(
-				request.getParameter("numero").equals("") || request.getParameter("longitude").equals("") || request.getParameter("latitude").equals("") ||
+				acidenteSiar.getLongitude() == 0 || acidenteSiar.getLatitude() == 0 || acidenteSiar.getNumero() == 0 ||
 				acidenteSiar.getDescricao().equals("") || acidenteSiar.getDescricao() == null|| 
 				acidenteSiar.getCidade().equals("") || acidenteSiar.getCidade() == null ||
 				acidenteSiar.getLogradouro().equals("") || acidenteSiar.getLogradouro() == null){
@@ -104,6 +104,8 @@ public class AcidenteSiarController extends BasicController implements Applicati
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar acidente");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_ACIDENTES.getPath());
+		
+		model.addAttribute("prioridadesList", Arrays.asList(AcidenteSiar.Prioridade.values()));
 		return "updateacidente";
 	}
 	
