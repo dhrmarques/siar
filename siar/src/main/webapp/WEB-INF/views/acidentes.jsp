@@ -75,7 +75,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group">
-										<button class="btn btn-success" type="submit">Criar</button>
+										<input class="btn btn-success" type="submit" value="Criar"/>
 									</div>
 								</div>
 							</div>
