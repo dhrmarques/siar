@@ -8,6 +8,7 @@
 		<title>${title}</title>
 	</head>
 	<body>
+		<div id="error-container" class="well ${cls}">${box_text}</div>
 	    <%@ include file="/WEB-INF/views/layout_header.jsp" %>
 
 		<div class="col-sm-12">

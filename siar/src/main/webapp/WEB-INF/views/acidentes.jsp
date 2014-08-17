@@ -4,14 +4,17 @@
 		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/lista.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/components.css" />" rel="stylesheet">
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="<c:url value="/resources/js/bootstrap.js" />"></script>
+		<script src="<c:url value="/resources/js/error.js" />"></script>
 		<style type="text/css">
 		</style>
 		<title>${title}</title>
 	</head>
 	
 	<body>
+		<div id="error-container" class="well ${cls}">${box_text}</div>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 		
 		<div class="form-group col-sm-12" style="margin-top:15px;">

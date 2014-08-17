@@ -13,8 +13,12 @@
             <label for="descricao">Descrição</label>
             <input type="text" id="descricao" name="descricao" value="${acidenteUpdate.descricao}"/>
             <label for="prioridade">Prioridade</label>
-            <input type="text" id="prioridade" name="prioridade" value="${acidenteUpdate.prioridade}"/>
-            
+            <select id="prioridade" name="prioridade" value="${acidenteUpdate.prioridade}">
+			  	<option>Muito Grave</option>
+			  	<option>Grave</option>
+			   	<option>Média</option>
+			  	<option>Baixa</option>
+			</select>
             <input type="submit" value="Submit"/>
         </form>
 	</body>

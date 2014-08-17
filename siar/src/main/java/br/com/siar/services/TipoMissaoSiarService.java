@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.TipoMissaoSiar;
 
@@ -25,6 +27,11 @@ public class TipoMissaoSiarService extends BasicService {
 
 	public TipoMissaoSiar findTipoMissaoById(String id){
 		return findModelById(TipoMissaoSiar.class, id);
+	}
+	
+	public TipoMissaoSiar findTipoMissaoByTitulo(String titulo) {
+		Query q = new Query(Criteria.where("titulo").is(titulo));
+		return getSiarmongoTemplate().findOne(q, TipoMissaoSiar.class, getCollectionName());
 	}
 	
 	public List<TipoMissaoSiar> listTiposMissao() {

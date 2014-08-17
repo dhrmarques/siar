@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.UsuarioSiar;
@@ -21,7 +22,7 @@ import br.com.siar.utils.SessionHelper;
 
 @Controller
 @SessionAttributes({"erro", "email"})
-public class UsuarioSiarController extends BasicController {
+public class UsuarioSiarController extends BasicController{
 	
 	@Autowired
 	private UsuarioSiarService usuarioSiarService;
@@ -40,20 +41,38 @@ public class UsuarioSiarController extends BasicController {
 	}
 	
 	@RequestMapping(value = USUARIOS + Const.SAVE, method = RequestMethod.POST)
-	public View saveUsuario(HttpServletRequest request, @ModelAttribute UsuarioSiar usuarioSiar, ModelMap model) {
+	public View saveUsuario(HttpServletRequest request, @ModelAttribute UsuarioSiar usuarioSiar, ModelMap model, final RedirectAttributes redirectAttributes) {
 		
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.ROOT_ADDRESS);
-		usuarioSiarService.saveUsuario(usuarioSiar);
+		if(usuarioSiar.getNome() == "" || usuarioSiar.getEmail() == "" || usuarioSiar.getSenha() == "" ||
+				usuarioSiar.getNome() == null || usuarioSiar.getEmail() == null || usuarioSiar.getSenha() == null){
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
+		}else if(usuarioSiarService.findUsuarioByEmail(usuarioSiar.getEmail()) != null){
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS_THAT_EMAIL + usuarioSiar.getEmail());
+		}else{
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
+			usuarioSiarService.saveUsuario(usuarioSiar);
+		}
 		return new RedirectView(Const.SIAR + USUARIOS);
 	}
 	
 	@RequestMapping(value = USUARIOS + Const.DELETE)
-	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.ROOT_ADDRESS);
 		try {
-			usuarioSiarService.removeUsuario(id);
+			if(usuarioSiarService.findUsuarioByTipoUsuario(id) == 1) {
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.THERE_IS_ONLY_ONE_USER + UsuarioSiar.class.getName());
+			}else {
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", UsuarioSiar.class.getName() + Const.SUCCESS);
+				usuarioSiarService.removeUsuario(id);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			//TODO Criar página de redirecionamento de erro
