@@ -13,3 +13,21 @@
 	margin-bottom: 20px;
 	width: auto;
 }
+
+.error{
+	display: block;
+	color: #a65 !important;
+	text-align: center;
+	background-color: #ffb3a0 !important;
+}
+
+.success{
+	display: block;
+	color: beige;
+	text-align: center;
+	background-color: #3AC93A;
+}
+
+.with-padding-top{
+	padding-top: 15px;
+}

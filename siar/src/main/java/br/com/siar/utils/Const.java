@@ -2,6 +2,16 @@ package br.com.siar.utils;
 
 public class Const {
 
+	public static final String ALREADY_EXISTS_THAT_EMAIL = "Já existe com esse email um elemento do tipo: ";
+	public static final String THERE_IS_ONLY_ONE_USER = "Há apenas um usuário do tipo: ";
+	public static final String ALREADY_EXISTS = "Já existe com esse nome um elemento do tipo: ";
+	public static final String DELETED = " removido com sucesso";
+	public static final String FORM_INCOMPLETE = "Formulário incompleto";
+	public static final String SUCCESS = "Tá otimo";
+	public static final String CSS_ERROR_CLASS = "error";
+	public static final String CSS_SUCCESS_CLASS = "success";
+	
+
 	/**
 	 * Session object keys
 	 */
@@ -14,7 +24,6 @@ public class Const {
 	 */
 	public static final int ERROR_FORM_INCOMPLETE = 2;
 	public static final int ERROR_FORM_INVALID = 3;
-	
 	public static final int ERROR_LOGIN_NO_MATCH = 5;
 
 	/** 

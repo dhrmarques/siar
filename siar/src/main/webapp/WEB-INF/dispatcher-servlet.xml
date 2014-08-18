@@ -3,15 +3,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-3.0.xsd
 http://www.springframework.org/schema/mvc
-http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+http://www.springframework.org/schema/task
+http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	<mvc:annotation-driven />
+	<task:annotation-driven />
+	<task:scheduler id="taskScheduler" pool-size="2"/>
 	<context:component-scan base-package="com.pretech" />
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
@@ -65,6 +71,9 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
 	<bean id="startupService" class="br.com.siar.services.StartupService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
+	<bean id="downloadService" class="br.com.siar.services.DownloadService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
 </beans> 
