@@ -92,7 +92,9 @@ public abstract class BasicController {
 	public static final Link LINK_ALOCACAO = new Link("Alocar recursos", ALOCACAO);
 	public static final String SVC = "/svc";
 	public static final Link LINK_SVC = new Link("Acesso SVC", SVC);
-	private static final List<Link> LINKS_COORD = Arrays.asList(LINK_ACIDENTES, LINK_ALOCACAO, LINK_SVC);
+	public static final String RELATORIOS = "/relatorios";
+	public static final Link LINK_RELATORIOS = new Link("Relatórios", RELATORIOS);
+	private static final List<Link> LINKS_COORD = Arrays.asList(LINK_ACIDENTES, LINK_ALOCACAO, LINK_SVC, LINK_RELATORIOS);
 
 	// Especialista
 	public static final String EMERGENCIAS = "/emergencias";
