@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.MissaoSiar;
 import br.com.siar.models.NecessidadeRecursoSiar;
 import br.com.siar.models.StatusMissao;
+import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.AcidenteSiarService;
 import br.com.siar.services.MissaoSiarService;
@@ -97,10 +99,11 @@ public class MissaoSiarController extends BasicController implements Application
 	}
 	
 	@RequestMapping(value = MISSOES + Const.DELETE, method = RequestMethod.GET)
-	public View removeMissao(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	public View removeMissao(HttpServletRequest request, @PathVariable String id, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return new RedirectView(Const.HOME_ADDRESS);
-		
+		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+		redirectAttributes.addFlashAttribute("box_text", MissaoSiar.class.getSimpleName() + Const.DELETED);
 		missaoService.removeMissao(id);
 		return new RedirectView(Const.SIAR + MISSOES);
 	}

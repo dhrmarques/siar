@@ -28,9 +28,9 @@ public class AcidenteSiarService extends BasicService {
 		return findModelById(AcidenteSiar.class, id);
 	}
 	
-	public TipoMissaoSiar findAcidenteByDescricao(String descricao) {
+	public AcidenteSiar findAcidenteByDescricao(String descricao) {
 		Query q = new Query(Criteria.where("descricao").is(descricao));
-		return getSiarmongoTemplate().findOne(q, TipoMissaoSiar.class, getCollectionName());
+		return getSiarmongoTemplate().findOne(q, AcidenteSiar.class, getCollectionName());
 	}
 	
 	

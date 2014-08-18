@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.FornecedorSiar;
+import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.FornecedorSiarService;
 import br.com.siar.utils.Const;
@@ -46,8 +47,15 @@ public class FornecedorSiarController extends BasicController {
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
 		}else if(fornecedorService.findFornecedorByNome(fornecedor.getNome()) >= 1){
-			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS);
+			if(fornecedor.getId() == null){
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS);
+			}else{
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", FornecedorSiar.class.getSimpleName() + Const.UPDATED);
+				fornecedorService.saveFornecedor(fornecedor);
+			}
+			
 		}else{
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
@@ -70,7 +78,7 @@ public class FornecedorSiarController extends BasicController {
 	}
 	
 	@RequestMapping(value = FORNECEDORES + Const.DELETE)
-	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.ROOT_ADDRESS);
 		try {
@@ -80,6 +88,8 @@ public class FornecedorSiarController extends BasicController {
 			//TODO Criar página de redirecionamento de erro
 			return new RedirectView("/siar/fornecedor/error");
 		}
+		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+		redirectAttributes.addFlashAttribute("box_text", FornecedorSiar.class.getSimpleName() + Const.DELETED);
 		return new RedirectView(Const.SIAR + FORNECEDORES);
 	}	
 }

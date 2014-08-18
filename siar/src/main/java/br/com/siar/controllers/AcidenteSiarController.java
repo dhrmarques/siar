@@ -72,12 +72,19 @@ public class AcidenteSiarController extends BasicController implements Applicati
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
 		}else if(getAcidenteSiarService().findAcidenteByDescricao(acidenteSiar.getDescricao()) != null){
-			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + AcidenteSiar.class.toString());
+			if(acidenteSiar.getId() == null){
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + acidenteSiar.getDescricao());
+			}else{
+				acidenteSiarService.saveAcidente(getAcidenteSiarService().findAcidenteByDescricao(acidenteSiar.getDescricao()));
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.UPDATED);
+			}
+			
 		}else{
 			acidenteSiarService.saveAcidente(acidenteSiar);
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
+			redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.CREATED);
 		}
 		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
@@ -89,7 +96,7 @@ public class AcidenteSiarController extends BasicController implements Applicati
 		}
 		
 		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-		redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.toString() + Const.DELETED);
+		redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.DELETED);
 		acidenteSiarService.removeAcidente(id);
 		
 		return new RedirectView(Const.SIAR + ACIDENTES);

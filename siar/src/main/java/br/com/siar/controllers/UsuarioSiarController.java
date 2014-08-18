@@ -50,11 +50,18 @@ public class UsuarioSiarController extends BasicController{
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
 		}else if(usuarioSiarService.findUsuarioByEmail(usuarioSiar.getEmail()) != null){
-			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS_THAT_EMAIL + usuarioSiar.getEmail());
+			if(usuarioSiar.getId() == null){
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS_THAT_EMAIL + usuarioSiar.getEmail());
+			}else{
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", UsuarioSiar.class.getSimpleName() + Const.UPDATED);
+				usuarioSiarService.saveUsuario(usuarioSiar);
+			}
+			
 		}else{
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
+			redirectAttributes.addFlashAttribute("box_text", UsuarioSiar.class.getSimpleName() + Const.CREATED);
 			usuarioSiarService.saveUsuario(usuarioSiar);
 		}
 		return new RedirectView(Const.SIAR + USUARIOS);
@@ -67,10 +74,10 @@ public class UsuarioSiarController extends BasicController{
 		try {
 			if(usuarioSiarService.findUsuarioByTipoUsuario(id) == 1) {
 				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-				redirectAttributes.addFlashAttribute("box_text", Const.THERE_IS_ONLY_ONE_USER + UsuarioSiar.class.getName());
+				redirectAttributes.addFlashAttribute("box_text", Const.THERE_IS_ONLY_ONE_USER + UsuarioSiar.class.getSimpleName());
 			}else {
 				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-				redirectAttributes.addFlashAttribute("box_text", UsuarioSiar.class.getName() + Const.SUCCESS);
+				redirectAttributes.addFlashAttribute("box_text", UsuarioSiar.class.getSimpleName() + Const.DELETED);
 				usuarioSiarService.removeUsuario(id);
 			}
 		} catch (Exception e) {

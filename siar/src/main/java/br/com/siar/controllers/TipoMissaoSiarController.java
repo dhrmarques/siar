@@ -57,11 +57,18 @@ public class TipoMissaoSiarController extends BasicController implements Applica
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
 		}else if(getTipoMissaoService().findTipoMissaoByTitulo(tipo.getTitulo()) != null){
-			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + TipoMissaoSiar.class.toString());
+			if(tipo.getId() == null){
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + TipoMissaoSiar.class.getSimpleName());
+			}else{
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", TipoMissaoSiar.class.getSimpleName() + Const.UPDATED);
+				tipoMissaoService.saveTipoMissao(tipo);
+			}
+
 		}else{
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
+			redirectAttributes.addFlashAttribute("box_text", TipoMissaoSiar.class.getSimpleName() + Const.CREATED);
 			tipoMissaoService.saveTipoMissao(tipo);
 		}
 		
@@ -69,10 +76,12 @@ public class TipoMissaoSiarController extends BasicController implements Applica
 	}
 	
 	@RequestMapping(value = TIPOSMISSAO + Const.DELETE, method = RequestMethod.GET)
-	public View removeTipoMissao(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	public View removeTipoMissao(HttpServletRequest request, @PathVariable String id, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
+		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+		redirectAttributes.addFlashAttribute("box_text", TipoMissaoSiar.class.getSimpleName() + Const.DELETED);
 		tipoMissaoService.removeTipoMissao(id);
 		return new RedirectView(Const.SIAR + TIPOSMISSAO);
 	}

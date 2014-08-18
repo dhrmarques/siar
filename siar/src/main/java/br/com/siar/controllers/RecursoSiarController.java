@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.RecursoSiar;
+import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.RecursoSiarService;
 import br.com.siar.services.TipoMissaoSiarService;
@@ -56,12 +57,19 @@ public class RecursoSiarController extends BasicController implements Applicatio
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
 		}else if(getRecursoService().findRecursoByName(recurso.getNome()) >= 1){
-			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS);
-			return new RedirectView("/siar/recursos");
+			if(recurso.getId() == null){
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS);
+			}else{
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", RecursoSiar.class.getSimpleName() + Const.UPDATED);
+				recursoService.saveRecurso(recurso);
+			}
+			
+
 		}else{
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
+			redirectAttributes.addFlashAttribute("box_text", UsuarioSiar.class.getSimpleName() + Const.CREATED);
 			recursoService.saveRecurso(recurso);
 		}
 		
@@ -69,10 +77,11 @@ public class RecursoSiarController extends BasicController implements Applicatio
 	}
 	
 	@RequestMapping(value = RECURSOS + Const.DELETE, method = RequestMethod.GET)
-	public View removeRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	public View removeRecurso(HttpServletRequest request, @PathVariable String id, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
-		
+		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+		redirectAttributes.addFlashAttribute("box_text", RecursoSiar.class.getSimpleName() + Const.DELETED);
 		recursoService.removeRecurso(id);
 		return new RedirectView("/siar/recursos");
 	}
