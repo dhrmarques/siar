@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.RecursoSiar;
 
@@ -25,6 +27,11 @@ public class RecursoSiarService extends BasicService {
 	
 	public RecursoSiar findRecursoById(String id){
 		return findModelById(RecursoSiar.class, id);
+	}
+	
+	public int findRecursoByName(String name){
+		Query q = new Query(Criteria.where("nome").is(name));
+		return siarmongoTemplate.find(q, RecursoSiar.class, RecursoSiar.COLLECTION_NAME).size();
 	}
 	
 	public List<RecursoSiar> listRecursos() {

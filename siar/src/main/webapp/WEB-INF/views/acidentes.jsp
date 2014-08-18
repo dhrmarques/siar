@@ -73,9 +73,9 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-offset-4 col-sm-4">
+								<div class="col-sm-12">
 									<div class="form-group">
-										<button class="btn btn-success" type="submit">submit</button>
+										<input class="btn btn-success" type="submit" value="Criar"/>
 									</div>
 								</div>
 							</div>

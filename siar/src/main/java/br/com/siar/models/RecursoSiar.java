@@ -2,8 +2,6 @@
  * 
  */
 package br.com.siar.models;
-
-
 /**
  * @author Leo
  *

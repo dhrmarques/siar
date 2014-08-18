@@ -1,10 +1,11 @@
 package br.com.siar.utils;
 
 public class Const {
-
-	public static final String ALREADY_EXISTS_THAT_EMAIL = "Já existe com esse email um elemento do tipo: ";
+	public static final String UPDATED = " atualizado com sucesso";
+	public static final String CREATED = " criado com sucesso";
+	public static final String ALREADY_EXISTS_THAT_EMAIL = "Já existe um elemento com esse email: ";
 	public static final String THERE_IS_ONLY_ONE_USER = "Há apenas um usuário do tipo: ";
-	public static final String ALREADY_EXISTS = "Já existe com esse nome um elemento do tipo: ";
+	public static final String ALREADY_EXISTS = "Já existe um elemento com esse nome: ";
 	public static final String DELETED = " removido com sucesso";
 	public static final String FORM_INCOMPLETE = "Formulário incompleto";
 	public static final String SUCCESS = "Tá otimo";
