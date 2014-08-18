@@ -63,17 +63,28 @@ public class AcidenteSiarController extends BasicController implements Applicati
 	public View saveAcidente(HttpServletRequest request, @ModelAttribute AcidenteSiar acidenteSiar, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.COORDENADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
-		if(acidenteSiar.getDescricao().equals("")){
+		if(
+				acidenteSiar.getLongitude() == 0 || acidenteSiar.getLatitude() == 0 || acidenteSiar.getNumero() == 0 ||
+				acidenteSiar.getDescricao().equals("") || acidenteSiar.getDescricao() == null|| 
+				acidenteSiar.getCidade().equals("") || acidenteSiar.getCidade() == null ||
+				acidenteSiar.getLogradouro().equals("") || acidenteSiar.getLogradouro() == null){
 			request.getSession().setAttribute(Const.SESSION_ERROR_CODE, Const.ERROR_LOGIN_NO_MATCH);
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
 		}else if(getAcidenteSiarService().findAcidenteByDescricao(acidenteSiar.getDescricao()) != null){
-			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + AcidenteSiar.class.toString());
+			if(acidenteSiar.getId() == null){
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + acidenteSiar.getDescricao());
+			}else{
+				acidenteSiarService.saveAcidente(getAcidenteSiarService().findAcidenteByDescricao(acidenteSiar.getDescricao()));
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.UPDATED);
+			}
+			
 		}else{
 			acidenteSiarService.saveAcidente(acidenteSiar);
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
+			redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.CREATED);
 		}
 		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
@@ -85,7 +96,7 @@ public class AcidenteSiarController extends BasicController implements Applicati
 		}
 		
 		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-		redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.toString() + Const.DELETED);
+		redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.DELETED);
 		acidenteSiarService.removeAcidente(id);
 		
 		return new RedirectView(Const.SIAR + ACIDENTES);
@@ -100,6 +111,8 @@ public class AcidenteSiarController extends BasicController implements Applicati
 		
 		model.addAttribute(Const.ATTR_TITLE, "Editar acidente");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_ACIDENTES.getPath());
+		
+		model.addAttribute("prioridadesList", Arrays.asList(AcidenteSiar.Prioridade.values()));
 		return "updateacidente";
 	}
 	

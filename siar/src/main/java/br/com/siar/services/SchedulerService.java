@@ -20,6 +20,7 @@ public class SchedulerService{
 	 
 	@Scheduled(fixedRate=1000)
 	public void yay(){
+
 		//System.out.println("yay");
 	}
 }

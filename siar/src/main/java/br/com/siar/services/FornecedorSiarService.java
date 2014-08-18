@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import br.com.siar.models.FornecedorSiar;
 
@@ -25,6 +27,11 @@ public class FornecedorSiarService extends BasicService {
 	
 	public FornecedorSiar findFornecedorById(String id) {
 		return findModelById(FornecedorSiar.class, id);
+	}
+	
+	public int findFornecedorByNome(String name){
+		Query q = new Query(Criteria.where("nome").is(name));
+		return siarmongoTemplate.find(q, FornecedorSiar.class, FornecedorSiar.COLLECTION_NAME).size();
 	}
 	
 	public List<FornecedorSiar> listarFornecedores() {

@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.FornecedorSiar;
+import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.FornecedorSiarService;
 import br.com.siar.utils.Const;
@@ -37,11 +39,29 @@ public class FornecedorSiarController extends BasicController {
 	}
 	
 	@RequestMapping(value = FORNECEDORES + Const.SAVE, method = RequestMethod.POST)
-	public View saveFornecedor(HttpServletRequest request, @ModelAttribute FornecedorSiar fornecedor, ModelMap model) {
+	public View saveFornecedor(HttpServletRequest request, @ModelAttribute FornecedorSiar fornecedor, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		fornecedorService.saveFornecedor(fornecedor);
+		if(fornecedor.getNome() == "" || fornecedor.getUrlSolicitacao() == ""){
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
+		}else if(fornecedorService.findFornecedorByNome(fornecedor.getNome()) >= 1){
+			if(fornecedor.getId() == null){
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS);
+			}else{
+				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+				redirectAttributes.addFlashAttribute("box_text", FornecedorSiar.class.getSimpleName() + Const.UPDATED);
+				fornecedorService.saveFornecedor(fornecedor);
+			}
+			
+		}else{
+			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
+			fornecedorService.saveFornecedor(fornecedor);
+		}
+		
 		return new RedirectView(Const.SIAR + FORNECEDORES);
 	}
 	
@@ -58,7 +78,7 @@ public class FornecedorSiarController extends BasicController {
 	}
 	
 	@RequestMapping(value = FORNECEDORES + Const.DELETE)
-	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model) {
+	public View removeUsuario(HttpServletRequest request, @PathVariable String id, ModelMap model, final RedirectAttributes redirectAttributes) {
 		if (!autorizado(request, model, TipoUsuario.ADMINISTRADOR))
 			return new RedirectView(Const.ROOT_ADDRESS);
 		try {
@@ -68,6 +88,8 @@ public class FornecedorSiarController extends BasicController {
 			//TODO Criar página de redirecionamento de erro
 			return new RedirectView("/siar/fornecedor/error");
 		}
+		redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
+		redirectAttributes.addFlashAttribute("box_text", FornecedorSiar.class.getSimpleName() + Const.DELETED);
 		return new RedirectView(Const.SIAR + FORNECEDORES);
 	}	
 }

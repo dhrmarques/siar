@@ -3,12 +3,15 @@
 	<head>
 		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="<c:url value="/resources/js/error.js" />"></script>
 		<title>${title}</title>
 	</head>
 	<body>
+		<div id="error-container" class="well ${cls}">${box_text}</div>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 		
-		<div id="form_container">
+		<div id="form_container" class="col-sm-12">
 			<div id="form_info" class="well">
 				<strong>Acidente:</strong> ${acidente.descricao}<br/>
 				<strong>Prioridade:</strong> ${acidente.prioridade}
@@ -48,7 +51,7 @@
 		            </c:forEach>
 		        	</select>
             	</div>
-				<input type="submit" value="Criar" class="form-control btn btn-default"/>
+				<input type="submit" value="Criar" class="form-control btn btn-default btn-success"/>
 			</form>
 		</div>
 	

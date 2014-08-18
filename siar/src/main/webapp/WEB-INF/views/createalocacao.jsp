@@ -8,7 +8,7 @@
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 		
-		<div id="form_container">
+		<div id="form_container" class="col-sm-12">
 			<div id="form_info" class="well">
 				<strong>Acidente:</strong> ${missaoResponse.acidente.descricao}<br/>
 				<strong>Prioridade:</strong> ${missaoResponse.acidente.prioridade}<br/>

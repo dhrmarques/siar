@@ -29,7 +29,7 @@
 			            <input class="form-control" type="text" id="descricao" name="descricao"/>
 		            </div>
 	            	<div class="form-group">
-	            		<button class="btn btn-success" type="submit">submit</button>
+	            		<input class="btn btn-success" type="submit" value="Criar"/>
 	            	</div>
 	    		</div>
 	    	</form>
