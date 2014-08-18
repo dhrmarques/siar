@@ -73,4 +73,7 @@ http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	<bean id="startupService" class="br.com.siar.services.StartupService">
 		<property name="siarmongoTemplate" ref="mongoTemplate" />
 	</bean>
+	<bean id="downloadService" class="br.com.siar.services.DownloadService">
+		<property name="siarmongoTemplate" ref="mongoTemplate" />
+	</bean>
 </beans> 
