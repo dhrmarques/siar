@@ -1,6 +1,11 @@
 package br.com.siar.controllers;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
+import br.com.siar.services.DownloadService;
 import br.com.siar.services.StartupService;
 import br.com.siar.utils.Const;
 import br.com.siar.utils.SessionHelper;
@@ -105,6 +111,35 @@ public class HomeController extends BasicController implements ApplicationContex
 		status.setComplete();
 		return Const.REDIRECT_NOT_LOGGED;
 	}
+	
+	@RequestMapping(value = "/download")
+	public void downloadAcidentes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// This service uses an existing file to overwrite it (D:\workbook.xls)
+		String filename = "D:\\workbook.xls";
+		DownloadService ds = appContext.getBean(DownloadService.class);
+
+        ServletOutputStream out = response.getOutputStream();
+        FileInputStream in = new FileInputStream(filename);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.addHeader("content-disposition",
+                "attachment; filename=" + filename);
+        // Writing to the OutputStream the workbook
+        try {
+        	ds.reportAcidentes().write(out);
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+        // Writing over the existing file
+        int octet;
+        while((octet = in.read()) != -1)
+            out.write(octet);
+
+        in.close();
+        out.close();
+    }
 	
 	@RequestMapping(value = "/secretPathThatNoOneWillEverFindOutUnlessTheyCheckOurCode")
 	public View startup(HttpServletRequest request) {
