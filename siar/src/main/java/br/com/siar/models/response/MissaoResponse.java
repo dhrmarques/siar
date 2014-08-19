@@ -57,4 +57,8 @@ public class MissaoResponse {
 	public void setChefe(UsuarioSiar chefe) {
 		this.chefe = chefe;
 	}
+	
+	public void setDetalhes(String detalhes){
+		this.missao.setDetalhes(detalhes);
+	}
 }
