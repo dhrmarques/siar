@@ -1,9 +1,7 @@
 <%@ include file="/WEB-INF/views/headers.jsp" %>
 <html>
 	<head>
-		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
-		<title>${title}</title>
+		<%@ include file="/WEB-INF/views/include_head.jsp" %>
 	</head>
 	<body>
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>

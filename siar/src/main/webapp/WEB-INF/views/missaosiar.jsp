@@ -1,10 +1,8 @@
 <%@ include file="/WEB-INF/views/headers.jsp" %>
 <html>
 	<head>
-		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+		<%@ include file="/WEB-INF/views/include_head.jsp" %>
 		<link href="<c:url value="/resources/css/lista.css" />" rel="stylesheet">
-		<title>${title}</title>
 	</head>
 	
 	<body>
