@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
-		<title>${title}</title>
+		<%@ include file="/WEB-INF/views/include_head.jsp" %>
 		<style>
 			div#cameras_container {margin:50px;}
 			div#cameras_container iframe {margin:10px;display:inline-block;}

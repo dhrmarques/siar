@@ -77,7 +77,7 @@ public class MissaoSiarService extends BasicService {
 		return siarmongoTemplate.findOne(q, MissaoSiar.class, getCollectionName()).getId();
 	}
 	
-	private MissaoResponse responseFromModel(MissaoSiar missao) {
+	public MissaoResponse responseFromModel(MissaoSiar missao) {
 		
 		return new MissaoResponse(missao,
 				siarmongoTemplate.findById(missao.getAcidenteId(), AcidenteSiar.class),
