@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
-		<title>${title}</title>
+		<%@ include file="/WEB-INF/views/include_head.jsp" %>
 		<style type="text/css">
 			form div.form-group {
 				margin-right:20px;
