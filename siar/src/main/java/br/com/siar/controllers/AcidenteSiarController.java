@@ -1,6 +1,7 @@
 package br.com.siar.controllers;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.siar.models.AcidenteSiar;
+import br.com.siar.models.AcidenteSiar.Prioridade;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.services.AcidenteSiarService;
 import br.com.siar.services.TipoMissaoSiarService;
@@ -71,20 +73,10 @@ public class AcidenteSiarController extends BasicController implements Applicati
 			request.getSession().setAttribute(Const.SESSION_ERROR_CODE, Const.ERROR_LOGIN_NO_MATCH);
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
 			redirectAttributes.addFlashAttribute("box_text", Const.FORM_INCOMPLETE);
-		}else if(getAcidenteSiarService().findAcidenteByDescricao(acidenteSiar.getDescricao()) != null){
-			if(acidenteSiar.getId() == null){
-				redirectAttributes.addFlashAttribute("cls", Const.CSS_ERROR_CLASS);
-				redirectAttributes.addFlashAttribute("box_text", Const.ALREADY_EXISTS + acidenteSiar.getDescricao());
-			}else{
-				acidenteSiarService.saveAcidente(getAcidenteSiarService().findAcidenteByDescricao(acidenteSiar.getDescricao()));
-				redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-				redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.UPDATED);
-			}
-			
 		}else{
 			acidenteSiarService.saveAcidente(acidenteSiar);
 			redirectAttributes.addFlashAttribute("cls", Const.CSS_SUCCESS_CLASS);
-			redirectAttributes.addFlashAttribute("box_text", AcidenteSiar.class.getSimpleName() + Const.CREATED);
+			redirectAttributes.addFlashAttribute("box_text", Const.SUCCESS);
 		}
 		return new RedirectView(Const.SIAR + ACIDENTES);
 	}
@@ -112,7 +104,9 @@ public class AcidenteSiarController extends BasicController implements Applicati
 		model.addAttribute(Const.ATTR_TITLE, "Editar acidente");
 		model.addAttribute(Const.ATTR_LINK_ACTIVE, LINK_ACIDENTES.getPath());
 		
-		model.addAttribute("prioridadesList", Arrays.asList(AcidenteSiar.Prioridade.values()));
+		List<Prioridade> prioridades = Arrays.asList(AcidenteSiar.Prioridade.values());
+		model.addAttribute("prioridadesList", prioridades);
+		System.out.println(model.toString());
 		return "updateacidente";
 	}
 	
