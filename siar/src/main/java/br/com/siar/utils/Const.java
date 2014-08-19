@@ -8,7 +8,7 @@ public class Const {
 	public static final String ALREADY_EXISTS = "Já existe um elemento com esse nome: ";
 	public static final String DELETED = " removido com sucesso";
 	public static final String FORM_INCOMPLETE = "Formulário incompleto";
-	public static final String SUCCESS = "Tá otimo";
+	public static final String SUCCESS = "Operação realizada com sucesso";
 	public static final String CSS_ERROR_CLASS = "error";
 	public static final String CSS_SUCCESS_CLASS = "success";
 	

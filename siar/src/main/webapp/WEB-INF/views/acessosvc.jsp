@@ -12,16 +12,16 @@
 		<%@ include file="/WEB-INF/views/layout_header.jsp" %>
 	
 		<div class="well" id="cameras_container">
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/165_f6d32167-2a37-4f28-ab3c-91aedbf96949.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/137_016f714c-a033-413a-aa23-ebb60478f635.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/163_099e6132-e156-45b9-a034-fe20dfeb19a7.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/154_be892a06-682c-4122-ae27-1854293597dc.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/160_8fae4d5c-d11b-4c06-8d3f-9a48e81c6aac.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/171_4c1387fa-0063-49d3-bee3-d11cdb779b99.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/144_d59e98b8-40d1-4fe5-9550-77c0400a5a56.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/143_33630631-cf93-40bd-a6bb-a75fac2aea44.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/145_a7c9b5fa-5a59-44d3-ad9f-d2932203669a.gif"></iframe>
-			<iframe width="250" height="190" src="http://aws.olhonotransito.com.br/Images/Cameras/151_2ff0693e-9a8a-4833-8d9a-c35f82e067c8.gif"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/transito-av-paulista?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/rua-santa-efigenia-221-centro?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/rua-da-consolacao-2418?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/rua-da-consolacao-825?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/av-brigadeiro-luiz-antonio-273?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/av-nove-de-julho-3110?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/marginal-direita-tiete-952?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/elevado-costa-e-silva?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/av-ipiranga-esquina-com-av-sao-joao?type_embed=camera"></iframe>
+			<iframe width="250" height="190" src="http://www.vejoaovivo.com.br/embed/sp/sao-paulo/avenida-dos-bandeirantes-549?type_embed=camera"></iframe>
 		</div>
 	</body>
 </html>
