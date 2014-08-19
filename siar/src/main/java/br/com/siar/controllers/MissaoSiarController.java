@@ -26,7 +26,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import br.com.siar.models.MissaoSiar;
 import br.com.siar.models.NecessidadeRecursoSiar;
 import br.com.siar.models.StatusMissao;
-import br.com.siar.models.UsuarioSiar;
 import br.com.siar.models.UsuarioSiar.TipoUsuario;
 import br.com.siar.models.response.MissaoResponse;
 import br.com.siar.services.AcidenteSiarService;
@@ -76,14 +75,17 @@ public class MissaoSiarController extends BasicController implements Application
 		if (!autorizado(request, model, TipoUsuario.ESPECIALISTA))
 			return new RedirectView(Const.HOME_ADDRESS);
 		
-		if (missao.getStatus() == null)
+		boolean criando = false;
+		if (missao.getStatus() == null) {
 			missao.setStatus(StatusMissao.PENDENTE);
+			criando = true;
+		}
 		else if (!missao.getStatus().equals(StatusMissao.PENDENTE))
 			return new RedirectView(Const.HOME_ADDRESS); // TODO: mensagem de erro (Não pode mais alterar)
 			
 		ObjectId missaoId = missaoService.saveMissao(missao);
 		
-		if(missao.getId() == null){
+		if (criando) {
 			List<NecessidadeRecursoSiar> necessidades = new ArrayList<NecessidadeRecursoSiar>();
 			String[] idRecursos = request.getParameterValues("recursoId");
 			String[] quantidades = request.getParameterValues("quantidade");
