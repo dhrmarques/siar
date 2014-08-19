@@ -29,9 +29,9 @@
 									<div class="form-group">
 										<label for="prioridade">Prioridade</label>
 										<select class="form-control" id="prioridade" name="prioridade">
-										<c:forEach var="prioridade" items="${prioridadesList}">
-											<option value="${prioridade}">${prioridade.desc}</option>
-										</c:forEach>
+											<c:forEach var="prioridade" items="${prioridadesList}">
+												<option value="${prioridade}">${prioridade.desc}</option>
+											</c:forEach>
 										</select>
 									</div>
 									<h2>Local do acidente</h2>

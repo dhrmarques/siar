@@ -7,7 +7,7 @@ $( document ).ready(function() {
   
   $("input[type=submit]").addClass("disabled");
   
-  $("form").hover(function() {
+  $("div").hover(function() {
 	  var disable = false;
 	  $("form input").each(function(){
 		 if($(this).val() == ""){
